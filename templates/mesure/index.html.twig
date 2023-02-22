@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mesure index{% endblock %}
+
+{% block body %}
+    <h1>Mesure index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Date</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>Poitrine</th>
+                <th>Cuisse</th>
+                <th>Biceps</th>
+                <th>Age</th>
+                <th>Imc</th>
+                <th>Diagnostic</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mesure in mesures %}
+            <tr>
+                <td>{{ mesure.id }}</td>
+                <td>{{ mesure.createdat ? mesure.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mesure.updatedat ? mesure.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mesure.date ? mesure.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mesure.poids }}</td>
+                <td>{{ mesure.taille }}</td>
+                <td>{{ mesure.poitrine }}</td>
+                <td>{{ mesure.cuisse }}</td>
+                <td>{{ mesure.biceps }}</td>
+                <td>{{ mesure.age }}</td>
+                <td>{{ mesure.imc }}</td>
+                <td>{{ mesure.diagnostic }}</td>
+                <td>
+                    <a href="{{ path('app_mesure_show', {'id': mesure.id}) }}">show</a>
+                    <a href="{{ path('app_mesure_edit', {'id': mesure.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mesure_new') }}">Create new</a>
+{% endblock %}

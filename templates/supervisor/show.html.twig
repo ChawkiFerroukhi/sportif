@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supervisor{% endblock %}
+
+{% block body %}
+    <h1>Supervisor</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ supervisor.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ supervisor.createdat ? supervisor.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ supervisor.updatedat ? supervisor.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ supervisor.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ supervisor.prenom }}</td>
+            </tr>
+            <tr>
+                <th>NumTel</th>
+                <td>{{ supervisor.numTel }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ supervisor.cin }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ supervisor.adresse }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_supervisor_index') }}">back to list</a>
+
+    <a href="{{ path('app_supervisor_edit', {'id': supervisor.id}) }}">edit</a>
+
+    {{ include('supervisor/_delete_form.html.twig') }}
+{% endblock %}

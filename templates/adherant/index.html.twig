@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adherant index{% endblock %}
+
+{% block body %}
+    <h1>Adherant index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Birthdate</th>
+                <th>Birthplace</th>
+                <th>NiveauScolaire</th>
+                <th>Ecole</th>
+                <th>NumTel</th>
+                <th>Licence</th>
+                <th>Sexe</th>
+                <th>Maladie</th>
+                <th>DossierMedicalId</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adherant in adherants %}
+            <tr>
+                <td>{{ adherant.id }}</td>
+                <td>{{ adherant.createdat ? adherant.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ adherant.updatedat ? adherant.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ adherant.nom }}</td>
+                <td>{{ adherant.prenom }}</td>
+                <td>{{ adherant.birthdate ? adherant.birthdate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ adherant.birthplace }}</td>
+                <td>{{ adherant.niveauScolaire }}</td>
+                <td>{{ adherant.ecole }}</td>
+                <td>{{ adherant.numTel }}</td>
+                <td>{{ adherant.licence }}</td>
+                <td>{{ adherant.sexe }}</td>
+                <td>{{ adherant.maladie }}</td>
+                <td>{{ adherant.dossierMedicalId }}</td>
+                <td>
+                    <a href="{{ path('app_adherant_show', {'id': adherant.id}) }}">show</a>
+                    <a href="{{ path('app_adherant_edit', {'id': adherant.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adherant_new') }}">Create new</a>
+{% endblock %}

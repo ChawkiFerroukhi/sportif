@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dossiermedical{% endblock %}
+
+{% block body %}
+    <h1>Dossiermedical</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dossiermedical.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ dossiermedical.createdat ? dossiermedical.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ dossiermedical.updatedat ? dossiermedical.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dossiermedical_index') }}">back to list</a>
+
+    <a href="{{ path('app_dossiermedical_edit', {'id': dossiermedical.id}) }}">edit</a>
+
+    {{ include('dossiermedical/_delete_form.html.twig') }}
+{% endblock %}

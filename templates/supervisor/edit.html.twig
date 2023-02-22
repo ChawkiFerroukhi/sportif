@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Supervisor{% endblock %}
+
+{% block body %}
+    <h1>Edit Supervisor</h1>
+
+    {{ include('supervisor/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_supervisor_index') }}">back to list</a>
+
+    {{ include('supervisor/_delete_form.html.twig') }}
+{% endblock %}

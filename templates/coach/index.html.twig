@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coach index{% endblock %}
+
+{% block body %}
+    <h1>Coach index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>NumTel</th>
+                <th>Cin</th>
+                <th>Adresse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coach in coaches %}
+            <tr>
+                <td>{{ coach.id }}</td>
+                <td>{{ coach.createdat ? coach.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ coach.updatedat ? coach.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ coach.nom }}</td>
+                <td>{{ coach.prenom }}</td>
+                <td>{{ coach.numTel }}</td>
+                <td>{{ coach.cin }}</td>
+                <td>{{ coach.adresse }}</td>
+                <td>
+                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}">show</a>
+                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coach_new') }}">Create new</a>
+{% endblock %}

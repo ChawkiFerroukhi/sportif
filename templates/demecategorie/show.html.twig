@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demecategorie{% endblock %}
+
+{% block body %}
+    <h1>Demecategorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ demecategorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ demecategorie.createdat ? demecategorie.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ demecategorie.updatedat ? demecategorie.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ demecategorie.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_demecategorie_index') }}">back to list</a>
+
+    <a href="{{ path('app_demecategorie_edit', {'id': demecategorie.id}) }}">edit</a>
+
+    {{ include('demecategorie/_delete_form.html.twig') }}
+{% endblock %}

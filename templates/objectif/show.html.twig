@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objectif{% endblock %}
+
+{% block body %}
+    <h1>Objectif</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ objectif.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ objectif.createdat ? objectif.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ objectif.updatedat ? objectif.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ objectif.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_objectif_index') }}">back to list</a>
+
+    <a href="{{ path('app_objectif_edit', {'id': objectif.id}) }}">edit</a>
+
+    {{ include('objectif/_delete_form.html.twig') }}
+{% endblock %}

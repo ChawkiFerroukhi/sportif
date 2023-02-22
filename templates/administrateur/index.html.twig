@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administrateur index{% endblock %}
+
+{% block body %}
+    <h1>Administrateur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>NumTel</th>
+                <th>Cin</th>
+                <th>Adresse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for administrateur in administrateurs %}
+            <tr>
+                <td>{{ administrateur.id }}</td>
+                <td>{{ administrateur.createdat ? administrateur.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ administrateur.updatedat ? administrateur.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ administrateur.nom }}</td>
+                <td>{{ administrateur.prenom }}</td>
+                <td>{{ administrateur.numTel }}</td>
+                <td>{{ administrateur.cin }}</td>
+                <td>{{ administrateur.adresse }}</td>
+                <td>
+                    <a href="{{ path('app_administrateur_show', {'id': administrateur.id}) }}">show</a>
+                    <a href="{{ path('app_administrateur_edit', {'id': administrateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_administrateur_new') }}">Create new</a>
+{% endblock %}

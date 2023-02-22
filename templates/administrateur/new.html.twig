@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Administrateur{% endblock %}
+
+{% block body %}
+    <h1>Create new Administrateur</h1>
+
+    {{ include('administrateur/_form.html.twig') }}
+
+    <a href="{{ path('app_administrateur_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Club index{% endblock %}
+
+{% block body %}
+    <h1>Club index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>NumTel</th>
+                <th>DateFondation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for club in clubs %}
+            <tr>
+                <td>{{ club.id }}</td>
+                <td>{{ club.createdat ? club.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ club.updatedat ? club.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ club.nom }}</td>
+                <td>{{ club.adresse }}</td>
+                <td>{{ club.numTel }}</td>
+                <td>{{ club.dateFondation ? club.dateFondation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_club_show', {'id': club.id}) }}">show</a>
+                    <a href="{{ path('app_club_edit', {'id': club.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_club_new') }}">Create new</a>
+{% endblock %}

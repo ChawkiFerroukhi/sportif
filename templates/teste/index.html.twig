@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teste index{% endblock %}
+
+{% block body %}
+    <h1>Teste index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Date</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for teste in testes %}
+            <tr>
+                <td>{{ teste.id }}</td>
+                <td>{{ teste.createdat ? teste.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ teste.updatedat ? teste.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ teste.date ? teste.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ teste.nom }}</td>
+                <td>
+                    <a href="{{ path('app_teste_show', {'id': teste.id}) }}">show</a>
+                    <a href="{{ path('app_teste_edit', {'id': teste.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_teste_new') }}">Create new</a>
+{% endblock %}

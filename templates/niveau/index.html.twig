@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Niveau index{% endblock %}
+
+{% block body %}
+    <h1>Niveau index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for niveau in niveaux %}
+            <tr>
+                <td>{{ niveau.id }}</td>
+                <td>{{ niveau.createdat ? niveau.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ niveau.updatedat ? niveau.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ niveau.nom }}</td>
+                <td>
+                    <a href="{{ path('app_niveau_show', {'id': niveau.id}) }}">show</a>
+                    <a href="{{ path('app_niveau_edit', {'id': niveau.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_niveau_new') }}">Create new</a>
+{% endblock %}

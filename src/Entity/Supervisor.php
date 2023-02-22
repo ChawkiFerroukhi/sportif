@@ -27,7 +27,7 @@ class Supervisor
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="current_timestamp(3)"})
      */
-    private $createdat = 'current_timestamp(3)';
+    private $createdat  ;
 
     /**
      * @var \DateTime

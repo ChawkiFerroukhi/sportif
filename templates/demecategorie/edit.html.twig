@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Demecategorie{% endblock %}
+
+{% block body %}
+    <h1>Edit Demecategorie</h1>
+
+    {{ include('demecategorie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_demecategorie_index') }}">back to list</a>
+
+    {{ include('demecategorie/_delete_form.html.twig') }}
+{% endblock %}

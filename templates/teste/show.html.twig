@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teste{% endblock %}
+
+{% block body %}
+    <h1>Teste</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ teste.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ teste.createdat ? teste.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ teste.updatedat ? teste.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ teste.date ? teste.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ teste.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_teste_index') }}">back to list</a>
+
+    <a href="{{ path('app_teste_edit', {'id': teste.id}) }}">edit</a>
+
+    {{ include('teste/_delete_form.html.twig') }}
+{% endblock %}

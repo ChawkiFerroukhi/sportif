@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Master{% endblock %}
+
+{% block body %}
+    <h1>Create new Master</h1>
+
+    {{ include('master/_form.html.twig') }}
+
+    <a href="{{ path('app_master_index') }}">back to list</a>
+{% endblock %}

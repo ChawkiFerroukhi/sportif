@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Objectif{% endblock %}
+
+{% block body %}
+    <h1>Edit Objectif</h1>
+
+    {{ include('objectif/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_objectif_index') }}">back to list</a>
+
+    {{ include('objectif/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mesure{% endblock %}
+
+{% block body %}
+    <h1>Mesure</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mesure.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ mesure.createdat ? mesure.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ mesure.updatedat ? mesure.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ mesure.date ? mesure.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Poids</th>
+                <td>{{ mesure.poids }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ mesure.taille }}</td>
+            </tr>
+            <tr>
+                <th>Poitrine</th>
+                <td>{{ mesure.poitrine }}</td>
+            </tr>
+            <tr>
+                <th>Cuisse</th>
+                <td>{{ mesure.cuisse }}</td>
+            </tr>
+            <tr>
+                <th>Biceps</th>
+                <td>{{ mesure.biceps }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ mesure.age }}</td>
+            </tr>
+            <tr>
+                <th>Imc</th>
+                <td>{{ mesure.imc }}</td>
+            </tr>
+            <tr>
+                <th>Diagnostic</th>
+                <td>{{ mesure.diagnostic }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mesure_index') }}">back to list</a>
+
+    <a href="{{ path('app_mesure_edit', {'id': mesure.id}) }}">edit</a>
+
+    {{ include('mesure/_delete_form.html.twig') }}
+{% endblock %}
