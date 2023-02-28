@@ -1,4 +1,77 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Administrateurs                        
+                            </h1>
+                        </div>
+                        <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_administrateur_new') }}">
+                                <i class="me-1" data-feather="user-plus"></i>
+                                Ajouter Administrateur                                                                                    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>NumTel</th>
+                                    <th>Cin</th>
+                                    <th>Adresse</th>
+                                    <th>Joindate</th>
+                                    <th>actions</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for administrateur in administrateurs %}
+                                <tr>
+                                    <td>{{ administrateur.nom }}</td>
+                                    <td>{{ administrateur.prenom }}</td>
+                                    <td>{{ administrateur.numTel }}</td>
+                                    <td>{{ administrateur.cin }}</td>
+                                    <td>{{ administrateur.adresse }}</td>
+                                    <td>{{ administrateur.createdat ? administrateur.createdat|date('Y-m-d') : '' }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_administrateur_edit', {'id': administrateur.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('administrateur/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
 
 {% block title %}Administrateur index{% endblock %}
 
