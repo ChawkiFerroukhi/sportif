@@ -33,7 +33,6 @@ class AdministrateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // set createdAt and updatedAt to now
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
             $entityManager->persist($administrateur);

@@ -67,11 +67,17 @@
                             Administrateurs
                         </a>
                         {# {% endif %}  #}
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ path('app_adherant_index')}}">
                             Adherants                                 
                         </a>
                     </nav>
                 </div>
+                <a class="nav-link" href="{{ path('app_club_index')}}">
+                    <div class="nav-link-icon">
+                        <i data-feather="users"></i>
+                    </div>
+                    Clubs
+                </a>
             </div>
         </div>
         <div class="sidenav-footer">

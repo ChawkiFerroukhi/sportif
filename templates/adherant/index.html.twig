@@ -1,7 +1,81 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Adherant index{% endblock %}
-
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Adherants                        
+                            </h1>
+                        </div>
+                        <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_adherant_new') }}">
+                                <i class="me-1" data-feather="user-plus"></i>
+                                Ajouter Adherant                                                                                    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Birthdate</th>
+                                    <th>Birthplace</th>
+                                    <th>NiveauScolaire</th>
+                                    <th>Ecole</th>
+                                    <th>NumTel</th>
+                                    <th>actions</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for adherant in adherants %}
+                                <tr>
+                                    <td>{{ adherant.nom }}</td>
+                                    <td>{{ adherant.prenom }}</td>
+                                    <td>{{ adherant.birthdate ? adherant.birthdate|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ adherant.birthplace }}</td>
+                                    <td>{{ adherant.niveauScolaire }}</td>
+                                    <td>{{ adherant.ecole }}</td>
+                                    <td>{{ adherant.numTel }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_adherant_show', {'id': adherant.id}) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_adherant_edit', {'id': adherant.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('adherant/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
 {% block body %}
     <h1>Adherant index</h1>
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Club;
 use App\Form\ClubType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,9 @@ class ClubController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $club->setCreatedAt(new \DateTime());
+            $club->setUpdatedAt(new \DateTime());
+            $club->setDateFondation(new \DateTime());
             $entityManager->persist($club);
             $entityManager->flush();
 
