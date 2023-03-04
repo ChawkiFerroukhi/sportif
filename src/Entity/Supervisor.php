@@ -182,5 +182,9 @@ class Supervisor
         return $this;
     }
 
+    public function __ToString(): string {
+        return $this->nom." ".$this->prenom;
+    }
+
 
 }

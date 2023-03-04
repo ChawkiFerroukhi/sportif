@@ -52,9 +52,9 @@ class Adherant
     private $prenom;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="birthDate", type="datetime", nullable=false)
+     * @ORM\Column(name="birthDate", type="date", nullable=false)
      */
     private $birthdate;
 
@@ -108,9 +108,12 @@ class Adherant
     private $maladie;
 
     /**
-     * @var int|null
+     * @var \Dossiermedical
      *
-     * @ORM\Column(name="dossier_medicalId", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Dossiermedical")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dossier_medicalId", referencedColumnName="id")
+     * })
      */
     private $dossierMedicalId;
 
@@ -222,6 +225,13 @@ class Adherant
         return $this->birthdate;
     }
 
+    public function getFBirthdate(): ?string
+    {
+        $newDate = $this->birthdate->format('m/d/Y');
+
+        return $newDate;       
+    }
+
     public function setBirthdate(\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
@@ -313,12 +323,12 @@ class Adherant
         return $this;
     }
 
-    public function getDossierMedicalId(): ?int
+    public function getDossierMedicalId(): ?Dossiermedical
     {
         return $this->dossierMedicalId;
     }
 
-    public function setDossierMedicaId(?int $dossierMedicalid): self
+    public function setDossierMedicaId(?Dossiermedical $dossierMedicalid): self
     {
         $this->dossierMedicalId = $dossierMedicalid;
 

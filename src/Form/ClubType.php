@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Entity\Club;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +16,9 @@ class ClubType extends AbstractType
             ->add('nom')
             ->add('adresse')
             ->add('numTel')
+            ->add('dateFondation',DateType::class, [ 
+                'widget' => 'single_text',
+                ])
         ;
     }
 
