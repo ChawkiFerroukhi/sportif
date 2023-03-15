@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Administrateur;
+use App\Entity\Section;
 use App\Form\AdministrateurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,12 @@ class AdministrateurController extends AbstractController
         $administrateurs = $entityManager
             ->getRepository(Administrateur::class)
             ->findAll();
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('administrateur/index.html.twig', [
             'administrateurs' => $administrateurs,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,6 +35,9 @@ class AdministrateurController extends AbstractController
         $administrateur = new Administrateur();
         $form = $this->createForm(AdministrateurType::class, $administrateur);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
@@ -44,14 +51,19 @@ class AdministrateurController extends AbstractController
         return $this->renderForm('administrateur/new.html.twig', [
             'administrateur' => $administrateur,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_administrateur_show', methods: ['GET'])]
-    public function show(Administrateur $administrateur): Response
+    public function show(Administrateur $administrateur, EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('administrateur/show.html.twig', [
             'administrateur' => $administrateur,
+            'sections' => $sections,
         ]);
     }
 
@@ -60,6 +72,9 @@ class AdministrateurController extends AbstractController
     {
         $form = $this->createForm(AdministrateurType::class, $administrateur);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -70,6 +85,7 @@ class AdministrateurController extends AbstractController
         return $this->renderForm('administrateur/edit.html.twig', [
             'administrateur' => $administrateur,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

@@ -49,7 +49,7 @@
                                     <td>{{ administrateur.numTel }}</td>
                                     <td>{{ administrateur.cin }}</td>
                                     <td>{{ administrateur.adresse }}</td>
-                                    <td>{{ administrateur.createdat ? administrateur.createdat|date('Y-m-d') : '' }}</td>
+                                    <td>{{ administrateur.createdat ? administrateur.createdat|date('m/d/Y') : '' }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_administrateur_edit', {'id': administrateur.id}) }}">
                                             <i class="fa-solid fa-pen-to-square"></i>

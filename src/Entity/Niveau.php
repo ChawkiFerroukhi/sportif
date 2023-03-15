@@ -164,6 +164,16 @@ class Niveau
         }
 
         return $this;
+    public function getFCreatedat(): ?string
+    {
+        $newDate = $this->createdat->format('m/d/Y');
+
+        return $newDate;       
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 
 

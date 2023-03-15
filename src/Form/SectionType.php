@@ -12,8 +12,6 @@ class SectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdat')
-            ->add('updatedat')
             ->add('nom')
             ->add('clubid')
         ;

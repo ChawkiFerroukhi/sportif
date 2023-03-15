@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Mesure;
+use App\Entity\Section;
 use App\Form\MesureType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class MesureController extends AbstractController
         $mesures = $entityManager
             ->getRepository(Mesure::class)
             ->findAll();
+        $sections = $entityManager
+                ->getRepository(Section::class)
+                ->findAll();
 
         return $this->render('mesure/index.html.twig', [
             'mesures' => $mesures,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,6 +36,9 @@ class MesureController extends AbstractController
         $mesure = new Mesure();
         $form = $this->createForm(MesureType::class, $mesure);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($mesure);
@@ -42,14 +50,19 @@ class MesureController extends AbstractController
         return $this->renderForm('mesure/new.html.twig', [
             'mesure' => $mesure,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_mesure_show', methods: ['GET'])]
-    public function show(Mesure $mesure): Response
+    public function show(Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('mesure/show.html.twig', [
             'mesure' => $mesure,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +71,9 @@ class MesureController extends AbstractController
     {
         $form = $this->createForm(MesureType::class, $mesure);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +84,7 @@ class MesureController extends AbstractController
         return $this->renderForm('mesure/edit.html.twig', [
             'mesure' => $mesure,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

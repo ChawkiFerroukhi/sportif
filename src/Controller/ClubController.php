@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Club;
+use App\Entity\Section;
 use App\Form\ClubType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +21,12 @@ class ClubController extends AbstractController
         $clubs = $entityManager
             ->getRepository(Club::class)
             ->findAll();
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('club/index.html.twig', [
             'clubs' => $clubs,
+            'sections' => $sections,
         ]);
     }
 
@@ -32,11 +36,12 @@ class ClubController extends AbstractController
         $club = new Club();
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $club->setCreatedAt(new \DateTime());
             $club->setUpdatedAt(new \DateTime());
-            $club->setDateFondation(new \DateTime());
             $entityManager->persist($club);
             $entityManager->flush();
 
@@ -46,14 +51,19 @@ class ClubController extends AbstractController
         return $this->renderForm('club/new.html.twig', [
             'club' => $club,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_club_show', methods: ['GET'])]
-    public function show(Club $club): Response
+    public function show(Club $club, EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('club/show.html.twig', [
             'club' => $club,
+            'sections' => $sections,
         ]);
     }
 
@@ -62,7 +72,9 @@ class ClubController extends AbstractController
     {
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
@@ -72,6 +84,7 @@ class ClubController extends AbstractController
         return $this->renderForm('club/edit.html.twig', [
             'club' => $club,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
