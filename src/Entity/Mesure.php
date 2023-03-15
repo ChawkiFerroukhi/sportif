@@ -162,6 +162,12 @@ class Mesure
     {
         return $this->date;
     }
+    public function getFDate(): ?string
+    {
+        $newDate = $this->date->format('m/d/Y');
+
+        return $newDate;    
+    }
 
     public function setDate(\DateTimeInterface $date): self
     {

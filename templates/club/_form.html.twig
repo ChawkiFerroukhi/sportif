@@ -33,8 +33,18 @@
                         {{ form_errors(form.numTel) }}
                     </div>
                 </div>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.dateFondation, 'Date de Fondation', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.dateFondation, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.dateFondation) }}
+                    </div>
+                </div>
                 
-                <button class="fw-500 btn btn-primary">
+                <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>
             </div>

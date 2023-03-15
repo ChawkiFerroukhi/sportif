@@ -172,5 +172,8 @@ class Equipe
         return $this;
     }
 
+    public function __ToString(): string {
+        return $this->nom;
+    }
 
 }

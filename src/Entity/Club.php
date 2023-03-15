@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Club
@@ -63,6 +65,13 @@ class Club
      * @ORM\Column(name="date_fondation", type="datetime", nullable=false)
      */
     private $dateFondation;
+
+     /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="clubid")
+     */
+    private $adherants;
+
 
     public function getId(): ?int
     {
@@ -133,13 +142,50 @@ class Club
     {
         return $this->dateFondation;
     }
+    public function getFDateFondation(): ?string
+    {
+        $newDate = $this->dateFondation->format('m/d/Y');
 
+        return $newDate;       
+    }
     public function setDateFondation(\DateTimeInterface $dateFondation): self
     {
         $this->dateFondation = $dateFondation;
 
         return $this;
     }
+    public function __ToString(): string {
+        return $this->nom;
+    }
 
+     /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants(): Collection
+    {
+        return $this->adherants;
+    }
+
+    public function addAdherant(Adherant $adherant): self
+    {
+        if (!$this->adherants->contains($adherant)) {
+            $this->adherants[] = $adherant;
+            $adherants->setClubid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant(Adherant $adherant): self
+    {
+        if ($this->adherants->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getClubid() === $this) {
+                $adherant->setClubid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

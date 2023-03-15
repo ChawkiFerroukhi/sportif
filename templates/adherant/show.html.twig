@@ -2,73 +2,203 @@
 
 {% block title %}Adherant{% endblock %}
 
-{% block body %}
-    <h1>Adherant</h1>
+{% block content %}
+<main>
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Adhérant
+                            </h1>
+                        </div>
+                       <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_adherant_index') }}">
+                                <i class="me-1" data-feather="arrow-left"></i>
+                                Liste des Adhérants                           
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Adhérant</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.nom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Prenom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.prenom }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.numTel }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Naissance</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.fBirthdate }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Lieu de Naissance</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.birthplace }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Ecole</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.ecole }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Niveau Scolaire</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.niveauScolaire }}</p>
+                                    <hr>
+                                </div>
+                            </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ adherant.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ adherant.createdat ? adherant.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ adherant.updatedat ? adherant.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ adherant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ adherant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Birthdate</th>
-                <td>{{ adherant.birthdate ? adherant.birthdate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Birthplace</th>
-                <td>{{ adherant.birthplace }}</td>
-            </tr>
-            <tr>
-                <th>NiveauScolaire</th>
-                <td>{{ adherant.niveauScolaire }}</td>
-            </tr>
-            <tr>
-                <th>Ecole</th>
-                <td>{{ adherant.ecole }}</td>
-            </tr>
-            <tr>
-                <th>NumTel</th>
-                <td>{{ adherant.numTel }}</td>
-            </tr>
-            <tr>
-                <th>Licence</th>
-                <td>{{ adherant.licence }}</td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td>{{ adherant.sexe }}</td>
-            </tr>
-            <tr>
-                <th>Maladie</th>
-                <td>{{ adherant.maladie }}</td>
-            </tr>
-            <tr>
-                <th>DossierMedicalId</th>
-                <td>{{ adherant.dossierMedicalId }}</td>
-            </tr>
-        </tbody>
-    </table>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Licence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.licence }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
 
-    <a href="{{ path('app_adherant_index') }}">back to list</a>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Categorie</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.categrieid ? adherant.categrieid : "Aucune" }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">2éme Categorie</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.demeCategorieid ? adherant.demeCategorieid : "Aucune" }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Sexe</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.sexe == "M" ? "Male" : "Female" }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Maladie</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.maladie ? adherant.maladie : "Aucune" }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <a href="{{path('app_club_show',{'id' : adherant.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.clubid }}</p></a>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Parent</h2>
+                                    <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisorId.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisorId }}</p> </a>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Dossier Medicale</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th width="45%">
+                                                    Date
+                                                </th>
+                                                <th width="45%">
+                                                    Poids
+                                                </th>
+                                                <th width="45%">
+                                                    Taille
+                                                </th>
+                                                <th width="10%">
+                                                    IMC
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  mesure in  adherant.dossierMedicalId.mesures %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{  mesure.fDate }}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ mesure.poids }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ mesure.taille }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ mesure.imc }}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <a href="{{ path('app_adherant_edit', {'id': adherant.id}) }}">edit</a>
 
-    {{ include('adherant/_delete_form.html.twig') }}
 {% endblock %}

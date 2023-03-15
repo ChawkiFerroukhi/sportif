@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Dossiermedical
@@ -55,6 +57,12 @@ class Dossiermedical
      * })
      */
     private $adherantId;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Mesure::class, mappedBy="dossierMedicalid")
+     */
+    private $mesures;
 
     public function getId(): ?int
     {
@@ -109,5 +117,39 @@ class Dossiermedical
         return $this;
     }
 
+    /**
+     * @return Collection<int, Mesure>
+     */
+    public function getMesures(): Collection
+    {
+        return $this->mesures;
+    }
+
+    public function addMesure(Mesure $mesure): self
+    {
+        if (!$this->mesures->contains($mesure)) {
+            $this->mesures[] = $mesure;
+            $mesures->setDossierMedicalid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMesure(Mesure $mesure): self
+    {
+        if ($this->mesures->removeElement($mesure)) {
+            // set the owning side to null (unless already changed)
+            if ($mesure->getDossierMedicalid() === $this) {
+                $mesure->setDossierMedicalid(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function __ToString(): string {
+        return $this->id;
+    }
 
 }
