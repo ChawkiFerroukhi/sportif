@@ -33,6 +33,8 @@ class NiveauController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $niveau->setCreatedAt(new \DateTime());
+            $niveau->setUpdatedAt(new \DateTime());
             $entityManager->persist($niveau);
             $entityManager->flush();
 

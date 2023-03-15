@@ -12,14 +12,11 @@ class CoachType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdat')
-            ->add('updatedat')
             ->add('nom')
             ->add('prenom')
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
-            ->add('clubid')
         ;
     }
 

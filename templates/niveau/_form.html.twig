@@ -1,4 +1,42 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    {{ form_start(form) }}
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Niveaux                                          
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.nom, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.clubid, 'Club Id', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.clubid) }}
+                    </div>
+                </div>
+                
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        {{ form_label(form.sectionid, 'Section Id', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.sectionid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.sectionid) }}
+                    </div>
+                </div>
+                <button class="fw-500 btn btn-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

@@ -1,47 +1,78 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Coach index{% endblock %}
-
-{% block body %}
-    <h1>Coach index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>NumTel</th>
-                <th>Cin</th>
-                <th>Adresse</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for coach in coaches %}
-            <tr>
-                <td>{{ coach.id }}</td>
-                <td>{{ coach.createdat ? coach.createdat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ coach.updatedat ? coach.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ coach.nom }}</td>
-                <td>{{ coach.prenom }}</td>
-                <td>{{ coach.numTel }}</td>
-                <td>{{ coach.cin }}</td>
-                <td>{{ coach.adresse }}</td>
-                <td>
-                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}">show</a>
-                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_coach_new') }}">Create new</a>
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Coachs                       
+                            </h1>
+                        </div>
+                        <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_coach_new') }}">
+                                <i class="me-1" data-feather="user-plus"></i>
+                                Ajouter Coach                                                                                   
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <table class="table" id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Numero Telephone</th>
+                                    <th>CIN</th>
+                                    <th>Adresse</th>
+                                    
+                                    <th>Actions</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for coach in coaches %}
+                                <tr>
+                                    <td>{{ coach.id }}</td>
+                                    <td>{{ coach.nom }}</td>
+                                    <td>{{ coach.prenom }}</td>
+                                    <td>{{ coach.numTel }}</td>
+                                    <td>{{ coach.cin }}</td>
+                                    <td>{{ coach.adresse }}</td>
+                                    
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_coach_show', {'id': coach.id}) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_coach_edit', {'id': coach.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('coach/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}

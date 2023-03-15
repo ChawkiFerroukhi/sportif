@@ -13,38 +13,34 @@
             </tr>
             <tr>
                 <th>Createdat</th>
-                <td>{{ coach.createdat ? coach.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ club.createdat ? club.createdat|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Updatedat</th>
-                <td>{{ coach.updatedat ? coach.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ club.updatedat ? club.updatedat|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Nom</th>
-                <td>{{ coach.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ coach.prenom }}</td>
-            </tr>
-            <tr>
-                <th>NumTel</th>
-                <td>{{ coach.numTel }}</td>
-            </tr>
-            <tr>
-                <th>Cin</th>
-                <td>{{ coach.cin }}</td>
+                <td>{{ club.nom }}</td>
             </tr>
             <tr>
                 <th>Adresse</th>
-                <td>{{ coach.adresse }}</td>
+                <td>{{ club.adresse }}</td>
+            </tr>
+            <tr>
+                <th>NumTel</th>
+                <td>{{ club.numTel }}</td>
+            </tr>
+            <tr>
+                <th>DateFondation</th>
+                <td>{{ club.dateFondation ? club.dateFondation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_coach_index') }}">back to list</a>
+    <a href="{{ path('app_club_index') }}">back to list</a>
 
-    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}">edit</a>
+    <a href="{{ path('app_club_edit', {'id': club.id}) }}">edit</a>
 
-    {{ include('coach/_delete_form.html.twig') }}
+    {{ include('club/_delete_form.html.twig') }}
 {% endblock %}
