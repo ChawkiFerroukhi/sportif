@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adherant;
+use App\Entity\Section;
 use App\Form\AdherantType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,12 @@ class AdherantController extends AbstractController
         $adherants = $entityManager
             ->getRepository(Adherant::class)
             ->findAll();
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('adherant/index.html.twig', [
             'adherants' => $adherants,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,7 +35,9 @@ class AdherantController extends AbstractController
         $adherant = new Adherant();
         $form = $this->createForm(AdherantType::class, $adherant);
         $form->handleRequest($request);
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($adherant);
             $entityManager->flush();
@@ -42,14 +48,19 @@ class AdherantController extends AbstractController
         return $this->renderForm('adherant/new.html.twig', [
             'adherant' => $adherant,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_adherant_show', methods: ['GET'])]
-    public function show(Adherant $adherant): Response
+    public function show(Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('adherant/show.html.twig', [
             'adherant' => $adherant,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,7 +69,9 @@ class AdherantController extends AbstractController
     {
         $form = $this->createForm(AdherantType::class, $adherant);
         $form->handleRequest($request);
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
@@ -68,6 +81,7 @@ class AdherantController extends AbstractController
         return $this->renderForm('adherant/edit.html.twig', [
             'adherant' => $adherant,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

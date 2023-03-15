@@ -31,8 +31,13 @@ class SectionController extends AbstractController
         $section = new Section();
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
+        $sections = $entityManager
+                ->getRepository(Section::class)
+                ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $section->setCreatedAt(new \DateTime());
+            $section->setUpdatedAt(new \DateTime());
             $entityManager->persist($section);
             $entityManager->flush();
 
@@ -42,14 +47,20 @@ class SectionController extends AbstractController
         return $this->renderForm('section/new.html.twig', [
             'section' => $section,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_section_show', methods: ['GET'])]
-    public function show(Section $section): Response
+    public function show(Section $section, EntityManagerInterface $entityManager): Response
     {
+
+        $sections = $entityManager
+                ->getRepository(Section::class)
+                ->findAll();
         return $this->render('section/show.html.twig', [
             'section' => $section,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +69,9 @@ class SectionController extends AbstractController
     {
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
+        $sections = $entityManager
+                ->getRepository(Section::class)
+                ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +82,7 @@ class SectionController extends AbstractController
         return $this->renderForm('section/edit.html.twig', [
             'section' => $section,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
