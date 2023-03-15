@@ -113,6 +113,10 @@ class Section
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->nom;
+    }
     public function getFCreatedat(): ?string
     {
         $newDate = $this->createdat->format('m/d/Y');
@@ -149,6 +153,5 @@ class Section
 
         return $this;
     }
-
 
 }
