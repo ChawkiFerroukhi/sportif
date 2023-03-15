@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Niveau;
+use App\Entity\Section;
 use App\Form\NiveauType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class NiveauController extends AbstractController
         $niveaux = $entityManager
             ->getRepository(Niveau::class)
             ->findAll();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         return $this->render('niveau/index.html.twig', [
             'niveaux' => $niveaux,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,6 +36,9 @@ class NiveauController extends AbstractController
         $niveau = new Niveau();
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($niveau);
@@ -42,14 +50,20 @@ class NiveauController extends AbstractController
         return $this->renderForm('niveau/new.html.twig', [
             'niveau' => $niveau,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_niveau_show', methods: ['GET'])]
-    public function show(Niveau $niveau): Response
+    public function show(Niveau $niveau,EntityManagerInterface $entityManager): Response
     {
+
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('niveau/show.html.twig', [
             'niveau' => $niveau,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +72,9 @@ class NiveauController extends AbstractController
     {
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +85,7 @@ class NiveauController extends AbstractController
         return $this->renderForm('niveau/edit.html.twig', [
             'niveau' => $niveau,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

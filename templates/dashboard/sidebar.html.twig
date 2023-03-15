@@ -78,6 +78,43 @@
                     </div>
                     Clubs
                 </a>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
+                    <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                    Sections
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+
+                <div class="collapse" id="collapseUtilities" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav">
+                        <u>
+                        <a class="nav-link" href="{{ path('app_section_new')}}">
+                            Ajouter Section
+                        </a>
+                        </u>
+                        {% for section in sections %}
+                        <li>
+                        <a class="nav-link" href="{{ path('app_section_show',{'id' : section.id})}}">
+                            {{ section.nom }}
+                           
+                        </a>
+                        </li>
+                        {% endfor %}
+                    </nav>
+                </div>
+                
+                {# {% endif %}  #}
+                <a class="nav-link" href="{{ path('app_niveau_index')}}">
+                    <div class="nav-link-icon">
+                        <i data-feather="menu"></i>
+                    </div>
+                    Niveaux                                 
+                </a>
+                <a class="nav-link" href="{{ path('app_cours_index')}}">
+                    <div class="nav-link-icon">
+                        <i data-feather="grid"></i>
+                    </div>
+                    Cours                                 
+                </a>
             </div>
         </div>
         <div class="sidenav-footer">

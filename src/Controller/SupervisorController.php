@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Supervisor;
+use App\Entity\Section;
 use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class SupervisorController extends AbstractController
         $supervisors = $entityManager
             ->getRepository(Supervisor::class)
             ->findAll();
+            $sections = $entityManager
+                ->getRepository(Section::class)
+                ->findAll();
 
         return $this->render('supervisor/index.html.twig', [
             'supervisors' => $supervisors,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,6 +36,9 @@ class SupervisorController extends AbstractController
         $supervisor = new Supervisor();
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($supervisor);
@@ -42,14 +50,20 @@ class SupervisorController extends AbstractController
         return $this->renderForm('supervisor/new.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_supervisor_show', methods: ['GET'])]
-    public function show(Supervisor $supervisor): Response
+    public function show(Supervisor $supervisor, EntityManagerInterface $entityManager): Response
     {
+
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('supervisor/show.html.twig', [
             'supervisor' => $supervisor,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +72,9 @@ class SupervisorController extends AbstractController
     {
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +85,7 @@ class SupervisorController extends AbstractController
         return $this->renderForm('supervisor/edit.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

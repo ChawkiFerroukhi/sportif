@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Section
@@ -52,6 +54,12 @@ class Section
      * })
      */
     private $clubid;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Niveau::class, mappedBy="sectionid")
+     */
+    private $niveaux;
 
     public function getId(): ?int
     {
@@ -102,6 +110,42 @@ class Section
     public function setClubid(?Club $clubid): self
     {
         $this->clubid = $clubid;
+
+        return $this;
+    }
+    public function getFCreatedat(): ?string
+    {
+        $newDate = $this->createdat->format('m/d/Y');
+
+        return $newDate;       
+    }
+
+    /**
+     * @return Collection<int, Niveau>
+     */
+    public function getNiveaux(): Collection
+    {
+        return $this->niveaux;
+    }
+
+    public function addNiveau(Niveau $niveau): self
+    {
+        if (!$this->niveaux->contains($niveau)) {
+            $this->niveaux[] = $niveau;
+            $niveaux->setSectionid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNiveau(Niveau $niveau): self
+    {
+        if ($this->niveaux->removeElement($niveau)) {
+            // set the owning side to null (unless already changed)
+            if ($niveau->getSectionid() === $this) {
+                $niveau->setSectionid(null);
+            }
+        }
 
         return $this;
     }
