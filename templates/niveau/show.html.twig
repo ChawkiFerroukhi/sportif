@@ -14,7 +14,7 @@
                                 Fiche Niveau
                             </h1>
                         </div>
-                       <div class="col-12 col-xl-auto mb-3">
+                        <div class="col-12 col-xl-auto mb-3">
                             <a class="btn btn-sm btn-light text-primary" href="{{ path('app_niveau_index') }}">
                                 <i class="me-1" data-feather="arrow-left"></i>
                                 Liste des Niveaux                          
@@ -88,6 +88,10 @@
                                             {% endfor %}
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="col-12">
+                                    <a class="btn btn-outline-warning" href="{{ path('app_niveau_edit',{'id' : niveau.id}) }}" style="float:left">Modifier</a>
+                                    <a class="btn btn-outline-danger" href="{{ path('app_niveau_delete',{'id' : niveau.id}) }}" style="float:right">Supprimer</a>
                                 </div>
                             </div>
                             
