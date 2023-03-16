@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Equipe;
+use App\Entity\Section;
 use App\Form\EquipeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class EquipeController extends AbstractController
         $equipes = $entityManager
             ->getRepository(Equipe::class)
             ->findAll();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         return $this->render('equipe/index.html.twig', [
             'equipes' => $equipes,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,8 +36,13 @@ class EquipeController extends AbstractController
         $equipe = new Equipe();
         $form = $this->createForm(EquipeType::class, $equipe);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $equipe->setCreatedAt(new \DateTime());
+            $equipe->setUpdatedAt(new \DateTime());
             $entityManager->persist($equipe);
             $entityManager->flush();
 
@@ -42,14 +52,20 @@ class EquipeController extends AbstractController
         return $this->renderForm('equipe/new.html.twig', [
             'equipe' => $equipe,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_equipe_show', methods: ['GET'])]
-    public function show(Equipe $equipe): Response
+    public function show(Equipe $equipe,EntityManagerInterface $entityManager): Response
     {
+
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('equipe/show.html.twig', [
             'equipe' => $equipe,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +74,9 @@ class EquipeController extends AbstractController
     {
         $form = $this->createForm(EquipeType::class, $equipe);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +87,7 @@ class EquipeController extends AbstractController
         return $this->renderForm('equipe/edit.html.twig', [
             'equipe' => $equipe,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

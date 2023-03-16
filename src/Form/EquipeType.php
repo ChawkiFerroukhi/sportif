@@ -12,13 +12,31 @@ class EquipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdat')
-            ->add('updatedat')
             ->add('nom')
-            ->add('niveauid')
-            ->add('doctorid')
-            ->add('clubid')
-            ->add('coachid')
+            ->add('niveauid', null, [
+                'label' => 'Niveau',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un niveau',
+                'required' => true,
+            ])
+            ->add('doctorid', null, [
+                'label' => 'Docteur',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un docteur',
+                'required' => true,
+            ])
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => true,
+            ])
+            ->add('coachid', null, [
+                'label' => 'Coach',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un coach',
+                'required' => true,
+            ])
         ;
     }
 

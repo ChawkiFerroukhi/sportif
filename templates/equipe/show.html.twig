@@ -1,34 +1,121 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Equipe{% endblock %}
+{% block title %}Adherant{% endblock %}
 
-{% block body %}
-    <h1>Equipe</h1>
+{% block content %}
+<main>
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Equipe
+                            </h1>
+                        </div>
+                        <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_equipe_index') }}">
+                                <i class="me-1" data-feather="arrow-left"></i>
+                                Liste des Equipes                          
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Equipe</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ equipe.nom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ equipe.createdat| date('m/d/Y') }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Coach</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ equipe.coachid.nom }} {{ equipe.coachid.prenom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Doctor</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ equipe.doctorid.nom }} {{ equipe.doctorid.prenom }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Adhérants</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">
+                                                    Numéro
+                                                </th>
+                                                <th width="45%">
+                                                    Nom
+                                                </th>
+                                                <th width="45%">
+                                                    Date de Naissance
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  adherant in  equipe.adherants %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  adherant.licence }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
+                                                    <td width="45%">
+                                                        {{ adherant.birthdate | date('d/m/Y') }}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-12">
+                                    <a class="btn btn-outline-warning" href="{{ path('app_equipe_edit',{'id' : equipe.id}) }}" style="float:left">Modifier</a>
+                                    <a class="btn btn-outline-danger" href="{{ path('app_equipe_delete',{'id' : equipe.id}) }}" style="float:right">Supprimer</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ equipe.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ equipe.createdat ? equipe.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ equipe.updatedat ? equipe.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ equipe.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_equipe_index') }}">back to list</a>
-
-    <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}">edit</a>
-
-    {{ include('equipe/_delete_form.html.twig') }}
 {% endblock %}

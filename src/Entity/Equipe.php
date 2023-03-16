@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Equipe
@@ -82,6 +84,12 @@ class Equipe
      * })
      */
     private $coachid;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="equipeid")
+     */
+    private $adherants;
 
     public function getId(): ?int
     {
@@ -174,6 +182,36 @@ class Equipe
 
     public function __ToString(): string {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants(): Collection
+    {
+        return $this->adherants;
+    }
+
+    public function addAdherant(Adherant $adherant): self
+    {
+        if (!$this->adherants->contains($adherant)) {
+            $this->adherants[] = $adherant;
+            $adherants->setEquipeid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant(Adherant $adherant): self
+    {
+        if ($this->adherants->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getEquipeid() === $this) {
+                $adherant->setEquipeid(null);
+            }
+        }
+
+        return $this;
     }
 
 }

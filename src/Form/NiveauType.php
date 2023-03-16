@@ -13,8 +13,18 @@ class NiveauType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('clubid')
-            ->add('sectionid')
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => true,
+            ])
+            ->add('sectionid', null, [
+                'label' => 'Section',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une section',
+                'required' => true,
+            ])
         ;
     }
 

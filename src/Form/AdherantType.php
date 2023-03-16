@@ -42,11 +42,36 @@ class AdherantType extends AbstractType
                 ]
             ])
             ->add('dossierMedicalId')
-            ->add('categrieid')
-            ->add('equipeid')
-            ->add('demeCategorieid')
-            ->add('clubid')
-            ->add('supervisorId')
+            ->add('categrieid', null, [
+                'label' => 'Catégorie',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une catégorie',
+                'required' => true,
+            ])
+            ->add('equipeid', null, [
+                'label' => 'Equipe',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une équipe',
+                'required' => false,
+            ])
+            ->add('demeCategorieid', null, [
+                'label' => 'Catégorie',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une catégorie',
+                'required' => false,
+            ])
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => true,
+            ])
+            ->add('supervisorId', null, [
+                'label' => 'Superviseur',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un superviseur',
+                'required' => true,
+            ])
         ;
     }
 
