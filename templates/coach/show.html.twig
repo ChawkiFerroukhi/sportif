@@ -130,9 +130,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_coach_edit',{'id' : coach.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_coach_delete',{'id' : coach.id}) }}" style="float:right">Supprimer</a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_coach_edit',{'id' : coach.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('coach/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
                                 </div>
                             </div>
                             
