@@ -135,6 +135,7 @@ class Equipe
     public function getNiveauid(): ?Niveau
     {
         return $this->niveauid;
+        true;
     }
 
     public function setNiveauid(?Niveau $niveauid): self

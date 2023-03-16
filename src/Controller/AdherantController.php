@@ -39,6 +39,8 @@ class AdherantController extends AbstractController
             ->getRepository(Section::class)
             ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
+            $adherant->setCreatedAt(new \DateTime());
+            $adherant->setUpdatedAt(new \DateTime());
             $entityManager->persist($adherant);
             $entityManager->flush();
 

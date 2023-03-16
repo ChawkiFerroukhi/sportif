@@ -48,6 +48,12 @@
                     Home
                                                                                 
                 </a>
+                <a class="nav-link" href="{{ path('app_club_index')}}">
+                    <div class="nav-link-icon">
+                        <i data-feather="users"></i>
+                    </div>
+                    Clubs
+                </a>
                 <!-- Sidenav Accordion (Pages)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon">
@@ -66,18 +72,20 @@
                         <a class="nav-link" href="{{ path('app_administrateur_index')}}">
                             Administrateurs
                         </a>
-                        {# {% endif %}  #}
                         <a class="nav-link" href="{{ path('app_adherant_index')}}">
                             Adherants                                 
                         </a>
+                        <a class="nav-link" href="{{ path('app_supervisor_index')}}">
+                            Parents                                 
+                        </a>
+                        <a class="nav-link" href="{{ path('app_coach_index')}}">
+                            Coachs                                 
+                        </a>
+                        <a class="nav-link" href="{{ path('app_doctor_index')}}">
+                            Doctors                                
+                        </a>
                     </nav>
                 </div>
-                <a class="nav-link" href="{{ path('app_club_index')}}">
-                    <div class="nav-link-icon">
-                        <i data-feather="users"></i>
-                    </div>
-                    Clubs
-                </a>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
                     <div class="nav-link-icon"><i data-feather="grid"></i></div>
                     Sections
@@ -105,20 +113,6 @@
                         {% endfor %}
                     </nav>
                 </div>
-                
-                {# {% endif %}  #}
-                <a class="nav-link" href="{{ path('app_niveau_index')}}">
-                    <div class="nav-link-icon">
-                        <i data-feather="menu"></i>
-                    </div>
-                    Niveaux                                 
-                </a>
-                <a class="nav-link" href="{{ path('app_cours_index')}}">
-                    <div class="nav-link-icon">
-                        <i data-feather="grid"></i>
-                    </div>
-                    Cours                                 
-                </a>
             </div>
         </div>
         <div class="sidenav-footer">

@@ -17,6 +17,12 @@ class CoachType extends AbstractType
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => true,
+            ])
         ;
     }
 

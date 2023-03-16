@@ -54,13 +54,13 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Coach</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ equipe.coachid.nom }} {{ equipe.coachid.prenom }}</p>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_coach_show',{'id' : equipe.coachid.id})}}">{{ equipe.coachid.nom }} {{ equipe.coachid.prenom }}</a> 
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Doctor</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ equipe.doctorid.nom }} {{ equipe.doctorid.prenom }}</p>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_doctor_show',{'id' : equipe.doctorid.id})}}">{{ equipe.doctorid.nom }} {{ equipe.doctorid.prenom }}</a> 
                                     <hr>  
                                 </div>
                             </div>

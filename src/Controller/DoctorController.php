@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Doctor;
+use App\Entity\Section;
 use App\Form\DoctorType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class DoctorController extends AbstractController
         $doctors = $entityManager
             ->getRepository(Doctor::class)
             ->findAll();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         return $this->render('doctor/index.html.twig', [
             'doctors' => $doctors,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,8 +36,13 @@ class DoctorController extends AbstractController
         $doctor = new Doctor();
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $doctor->setCreatedAt(new \DateTime());
+            $doctor->setUpdatedAt(new \DateTime());
             $entityManager->persist($doctor);
             $entityManager->flush();
 
@@ -42,14 +52,19 @@ class DoctorController extends AbstractController
         return $this->renderForm('doctor/new.html.twig', [
             'doctor' => $doctor,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_doctor_show', methods: ['GET'])]
-    public function show(Doctor $doctor): Response
+    public function show(Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('doctor/show.html.twig', [
             'doctor' => $doctor,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +73,9 @@ class DoctorController extends AbstractController
     {
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +86,7 @@ class DoctorController extends AbstractController
         return $this->renderForm('doctor/edit.html.twig', [
             'doctor' => $doctor,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

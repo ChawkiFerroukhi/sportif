@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Supervisor
@@ -80,6 +82,11 @@ class Supervisor
      * })
      */
     private $clubid;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="supervisorId")
+     */
+    private $adherants;
 
     public function getId(): ?int
     {
@@ -186,5 +193,34 @@ class Supervisor
         return $this->nom." ".$this->prenom;
     }
 
+    /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants(): Collection
+    {
+        return $this->adherants;
+    }
+
+    public function addAdherant(Adherant $adherant): self
+    {
+        if (!$this->adherants->contains($adherant)) {
+            $this->adherants[] = $adherant;
+            $adherants->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant(Adherant $adherant): self
+    {
+        if ($this->adherants->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getNiveauid() === $this) {
+                $adherant->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

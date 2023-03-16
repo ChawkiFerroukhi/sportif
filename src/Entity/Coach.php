@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Coach
@@ -80,6 +82,12 @@ class Coach
      * })
      */
     private $clubid;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Equipe::class, mappedBy="coachid")
+     */
+    private $equipes;
 
     public function getId(): ?int
     {
@@ -178,6 +186,37 @@ class Coach
     public function setClubid(?Club $clubid): self
     {
         $this->clubid = $clubid;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getEquipes(): Collection
+    {
+        return $this->equipes;
+    }
+
+    public function addEquipe(Equipe $equipe): self
+    {
+        if (!$this->equipes->contains($equipe)) {
+            $this->equipes[] = $equipe;
+            $equipes->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipe(Equipe $equipe): self
+    {
+        if ($this->equipes->removeElement($equipe)) {
+            // set the owning side to null (unless already changed)
+            if ($equipe->getNiveauid() === $this) {
+                $equipe->setNiveauid(null);
+            }
+        }
 
         return $this;
     }

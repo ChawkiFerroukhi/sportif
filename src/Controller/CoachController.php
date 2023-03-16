@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Coach;
+use App\Entity\Section;
 use App\Form\CoachType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,13 @@ class CoachController extends AbstractController
         $coaches = $entityManager
             ->getRepository(Coach::class)
             ->findAll();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         return $this->render('coach/index.html.twig', [
             'coaches' => $coaches,
+            'sections' => $sections,
         ]);
     }
 
@@ -31,8 +36,13 @@ class CoachController extends AbstractController
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coach->setCreatedAt(new \DateTime());
+            $coach->setUpdatedAt(new \DateTime());
             $entityManager->persist($coach);
             $entityManager->flush();
 
@@ -42,14 +52,19 @@ class CoachController extends AbstractController
         return $this->renderForm('coach/new.html.twig', [
             'coach' => $coach,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 
     #[Route('/{id}', name: 'app_coach_show', methods: ['GET'])]
-    public function show(Coach $coach): Response
+    public function show(Coach $coach,EntityManagerInterface $entityManager): Response
     {
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
         return $this->render('coach/show.html.twig', [
             'coach' => $coach,
+            'sections' => $sections,
         ]);
     }
 
@@ -58,6 +73,9 @@ class CoachController extends AbstractController
     {
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -68,6 +86,7 @@ class CoachController extends AbstractController
         return $this->renderForm('coach/edit.html.twig', [
             'coach' => $coach,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

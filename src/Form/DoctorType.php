@@ -12,14 +12,17 @@ class DoctorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdat')
-            ->add('updatedat')
             ->add('nom')
             ->add('prenom')
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
-            ->add('clubid')
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => true,
+            ])
         ;
     }
 
