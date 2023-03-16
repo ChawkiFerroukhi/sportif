@@ -71,28 +71,28 @@
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
-                                                <th width="10%">
-                                                    Numéro
+                                                <th width="45%">
+                                                    ID
                                                 </th>
                                                 <th width="45%">
                                                     Nom
                                                 </th>
                                                 <th width="45%">
-                                                    Categorie
+                                                    Date de Création
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  adherant in  club.adherants %}
+                                            {% for  section in  club.sections %}
                                                 <tr>
                                                     <td width="45%">
-                                                        {{  adherant.licence }}
+                                                        {{  section.id }}
                                                     </td>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>
+                                                        <a href="{{ path('app_section_show',{'id' : section.id})}}">{{ section.nom }}</a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ adherant.categrieid }} {% if adherant.demeCategorieid %} / {{ adherant.demeCategorieid }} {% endif %} 
+                                                        {{ section.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}
