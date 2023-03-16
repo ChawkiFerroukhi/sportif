@@ -30,7 +30,7 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Section</div>
+                        <div class="card-header">Fiche Section<a class="btn btn-outline-success" href="{{ path('app_niveau_new') }}" style="float:right">Ajouter Niveau</a></div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
@@ -79,6 +79,8 @@
                                                     <td width="45%">
                                                         {{ niveau.fCreatedat }}
                                                     </td>
+
+                                        
                                                 </tr>
                                             {% else %}
                                                 <tr>
@@ -90,9 +92,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_section_delete',{'id' : section.id}) }}" style="float:right">Supprimer</a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('section/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
