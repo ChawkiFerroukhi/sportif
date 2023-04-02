@@ -30,8 +30,8 @@ class NiveauController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_niveau_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_niveau_new', methods: ['GET', 'POST'])]
+    public function new(Section $section,Request $request, EntityManagerInterface $entityManager): Response
     {
         $niveau = new Niveau();
         $form = $this->createForm(NiveauType::class, $niveau);
@@ -43,10 +43,12 @@ class NiveauController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $niveau->setCreatedAt(new \DateTime());
             $niveau->setUpdatedAt(new \DateTime());
+            $niveau->setSectionid($section);
+            $niveau->setClubid($section->getClubid());
             $entityManager->persist($niveau);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_section_show', ['id' => $section->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('niveau/new.html.twig', [

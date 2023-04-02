@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Adherant;
+use App\Entity\Supervisor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -64,14 +67,47 @@ class AdherantType extends AbstractType
                 'label' => 'Club',
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un club',
-                'required' => true,
+                'required' => false,
             ])
-            ->add('supervisorId', null, [
-                'label' => 'Superviseur',
+            ->add('supervisorId', EntityType::class, [
+                'class' => Supervisor::class,
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir un superviseur',
-                'required' => true,
+                'placeholder' => 'Choisir un parent',
+                'required' => false,
             ])
+
+            
+            ->add('supervisor_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
+            ])
+            
+
         ;
     }
 

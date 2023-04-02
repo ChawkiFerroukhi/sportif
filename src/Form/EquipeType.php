@@ -6,6 +6,7 @@ use App\Entity\Equipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class EquipeType extends AbstractType
 {
@@ -13,29 +14,77 @@ class EquipeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('niveauid', null, [
-                'label' => 'Niveau',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un niveau',
-                'required' => true,
-            ])
             ->add('doctorid', null, [
                 'label' => 'Docteur',
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un docteur',
-                'required' => true,
-            ])
-            ->add('clubid', null, [
-                'label' => 'Club',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un club',
-                'required' => true,
+                'required' => false,
             ])
             ->add('coachid', null, [
                 'label' => 'Coach',
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un coach',
-                'required' => true,
+                'required' => false,
+            ])
+
+            ->add('coach_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+
+            ->add('coach_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('coach_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('coach_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('coach_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
+            ])
+
+            ->add('doctor_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+
+            ->add('doctor_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('doctor_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('doctor_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('doctor_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
             ])
         ;
     }

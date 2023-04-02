@@ -13,12 +13,6 @@ class SectionType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('clubid', null, [
-                'label' => 'Club',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un club',
-                'required' => true,
-            ])
         ;
     }
 

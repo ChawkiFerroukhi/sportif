@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Section;
+use App\Entity\Club;
 use App\Form\SectionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,8 +26,8 @@ class SectionController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_section_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_section_new', methods: ['GET', 'POST'])]
+    public function new(Club $club,Request $request, EntityManagerInterface $entityManager): Response
     {
         $section = new Section();
         $form = $this->createForm(SectionType::class, $section);
@@ -38,10 +39,11 @@ class SectionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $section->setCreatedAt(new \DateTime());
             $section->setUpdatedAt(new \DateTime());
+            $section->setClubid($club);
             $entityManager->persist($section);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_club_show', ['id' => $club->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('section/new.html.twig', [

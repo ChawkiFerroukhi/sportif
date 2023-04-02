@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Adherant;
+use App\Entity\Supervisor;
+use App\Entity\Dossiermedical;
 use App\Entity\Section;
 use App\Form\AdherantType;
+use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,8 +42,31 @@ class AdherantController extends AbstractController
             ->getRepository(Section::class)
             ->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
+
             $adherant->setCreatedAt(new \DateTime());
             $adherant->setUpdatedAt(new \DateTime());
+            $adherant->setClubid($adherant->getEquipeid()->getClubid());
+            $dossier = new Dossiermedical();
+            $dossier->setCreatedAt(new \DateTime());
+            $dossier->setUpdatedAt(new \DateTime());
+            $dossier->setClubid($adherant->getEquipeid()->getClubid());
+            $entityManager->persist($dossier);
+            $adherant->setDossierMedicaId($dossier);
+            if($form->get('supervisorId')->getData()) {
+                $adherant->setSupervisorId($form->get('supervisorId')->getData());
+            } else if ($form->get('supervisor_nom')->getData()) {
+                $supervisor = new Supervisor();
+                $supervisor->setCreatedAt(new \DateTime());
+                $supervisor->setUpdatedAt(new \DateTime());
+                $supervisor->setNom($form->get('supervisor_nom')->getData());
+                $supervisor->setPrenom($form->get('supervisor_prenom')->getData());
+                $supervisor->setNumTel($form->get('supervisor_numTel')->getData());
+                $supervisor->setAdresse($form->get('supervisor_adresse')->getData());
+                $supervisor->setCin($form->get('supervisor_cin')->getData());
+                $supervisor->getClubid($adherant->getClubid());
+                $entityManager->persist($supervisor);
+                $adherant->setSupervisorId($supervisor);
+            } 
             $entityManager->persist($adherant);
             $entityManager->flush();
 
