@@ -34,6 +34,32 @@
 
                 <hr>
                 <h6> Fiche Coach </h6>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.coach_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.coach_Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.coach_Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">     
+                        {{ form_label(form.coach_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                           
+                        {{ form_widget(form.coach_ref, {'attr':{'class':'form-control' }}) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.coach_ref) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_widget(form.coach_password) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.coach_password) }}
+                    </div>
+                </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
@@ -80,6 +106,32 @@
 
                 <hr>
                 <h6> Fiche Doctor </h6>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.doctor_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.doctor_Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.doctor_Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">        
+                        {{ form_label(form.doctor_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.doctor_ref, {'attr':{'class':'form-control' }}) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.doctor_ref) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_widget(form.doctor_password) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.doctor_password) }}
+                    </div>
+                </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">

@@ -16,10 +16,12 @@ class CoursController extends AbstractController
     #[Route('/', name: 'app_cours_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $cours = $entityManager
             ->getRepository(Cours::class)
             ->findAll();
 
+        $this->user = $usr;
         return $this->render('cours/index.html.twig', [
             'cours' => $cours,
         ]);
@@ -28,6 +30,7 @@ class CoursController extends AbstractController
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $cour = new Cours();
         $form = $this->createForm(CoursType::class, $cour);
         $form->handleRequest($request);
@@ -36,9 +39,11 @@ class CoursController extends AbstractController
             $entityManager->persist($cour);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('cours/new.html.twig', [
             'cour' => $cour,
             'form' => $form,
@@ -48,6 +53,8 @@ class CoursController extends AbstractController
     #[Route('/{id}', name: 'app_cours_show', methods: ['GET'])]
     public function show(Cours $cour): Response
     {
+        $usr = $this->getUser();
+        $this->user = $usr;
         return $this->render('cours/show.html.twig', [
             'cour' => $cour,
         ]);
@@ -56,15 +63,18 @@ class CoursController extends AbstractController
     #[Route('/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $form = $this->createForm(CoursType::class, $cour);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('cours/edit.html.twig', [
             'cour' => $cour,
             'form' => $form,
@@ -74,11 +84,13 @@ class CoursController extends AbstractController
     #[Route('/{id}', name: 'app_cours_delete', methods: ['POST'])]
     public function delete(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
             $entityManager->remove($cour);
             $entityManager->flush();
         }
 
+        $this->user = $usr;
         return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
     }
 }

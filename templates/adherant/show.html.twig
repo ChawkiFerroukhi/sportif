@@ -49,11 +49,17 @@
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ adherant.numTel }}</p>
+                                    <hr>  
+                                </div>
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Email</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.Email }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -87,9 +93,7 @@
                                     <hr>
                                 </div>
                             </div>
-
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Licence</h2>
@@ -97,6 +101,16 @@
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Reférence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.ref }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Equipe</h2>
                                     <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipeid.nom }}</p> </a>
@@ -131,6 +145,21 @@
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Maladie</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ adherant.maladie ? adherant.maladie : "Aucune" }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.createdat|date('d/m/Y')}}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.updatedat|date('d/m/Y') }}</p>
                                     <hr>
                                 </div>
                             </div>

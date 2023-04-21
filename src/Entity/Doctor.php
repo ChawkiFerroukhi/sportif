@@ -9,10 +9,10 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Doctor
  *
- * @ORM\Table(name="Doctor", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Doctor", indexes={})
  * @ORM\Entity
  */
-class Doctor
+class Doctor extends User
 {
     /**
      * @var int
@@ -21,7 +21,7 @@ class Doctor
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
@@ -80,7 +80,7 @@ class Doctor
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
-    private $clubid;
+    protected $clubid;
     /**
      *
      * @ORM\OneToMany(targetEntity=Equipe::class, mappedBy="coachid")

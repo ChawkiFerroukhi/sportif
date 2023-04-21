@@ -11,6 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class AdherantType extends AbstractType
 {
@@ -19,6 +22,16 @@ class AdherantType extends AbstractType
         $builder
             ->add('createdat')
             ->add('updatedat')
+            ->add('Email', EmailType::class)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => true,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('ref')
             ->add('nom')
             ->add('prenom')
             ->add('birthdate',DateType::class, [ 
@@ -77,6 +90,25 @@ class AdherantType extends AbstractType
             ])
 
             
+            ->add('supervisor_Email', EmailType::class, [
+                'required' => false,
+                'label' => 'Email',
+                'mapped' => false,
+            ])
+            ->add('supervisor_password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => true,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('supervisor_ref', TextType::class, [
+                'required' => false,
+                'label' => 'Reférence',
+                'mapped' => false,
+            ])
             ->add('supervisor_nom', TextType::class, [
                 'required' => false,
                 'label' => 'Nom',

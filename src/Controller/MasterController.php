@@ -16,10 +16,12 @@ class MasterController extends AbstractController
     #[Route('/', name: 'app_master_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $masters = $entityManager
             ->getRepository(Master::class)
             ->findAll();
 
+        $this->user = $usr;
         return $this->render('master/index.html.twig', [
             'masters' => $masters,
         ]);
@@ -28,6 +30,7 @@ class MasterController extends AbstractController
     #[Route('/new', name: 'app_master_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $master = new Master();
         $form = $this->createForm(MasterType::class, $master);
         $form->handleRequest($request);
@@ -36,9 +39,11 @@ class MasterController extends AbstractController
             $entityManager->persist($master);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_master_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_master_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('master/new.html.twig', [
             'master' => $master,
             'form' => $form,
@@ -48,6 +53,8 @@ class MasterController extends AbstractController
     #[Route('/{id}', name: 'app_master_show', methods: ['GET'])]
     public function show(Master $master): Response
     {
+        $usr = $this->getUser();
+        $this->user = $usr;
         return $this->render('master/show.html.twig', [
             'master' => $master,
         ]);
@@ -56,15 +63,18 @@ class MasterController extends AbstractController
     #[Route('/{id}/edit', name: 'app_master_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Master $master, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $form = $this->createForm(MasterType::class, $master);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_master_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_master_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('master/edit.html.twig', [
             'master' => $master,
             'form' => $form,
@@ -74,11 +84,13 @@ class MasterController extends AbstractController
     #[Route('/{id}', name: 'app_master_delete', methods: ['POST'])]
     public function delete(Request $request, Master $master, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$master->getId(), $request->request->get('_token'))) {
             $entityManager->remove($master);
             $entityManager->flush();
         }
 
+        $this->user = $usr;
         return $this->redirectToRoute('app_master_index', [], Response::HTTP_SEE_OTHER);
     }
 }

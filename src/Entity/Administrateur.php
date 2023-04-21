@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Administrateur
  *
- * @ORM\Table(name="Administrateur", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Administrateur", indexes={})
  * @ORM\Entity
  */
-class Administrateur
+class Administrateur extends User
 {
     /**
      * @var int
@@ -20,7 +20,7 @@ class Administrateur
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
@@ -79,7 +79,7 @@ class Administrateur
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
-    private $clubid;
+    protected $clubid;
 
     public function getId(): ?int
     {

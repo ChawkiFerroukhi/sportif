@@ -50,11 +50,17 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ doctor.numTel }}</p>
                                     <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Email</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ doctor.Email }}</p>
+                                    <hr>
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
@@ -74,7 +80,28 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ doctor.createdat|date('d/m/Y')}}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ doctor.updatedat|date('d/m/Y') }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Reférence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ doctor.ref }}</p>
+                                    <hr>  
+                                </div>
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Club</h2>
                                     <a href="{{path('app_club_show',{'id' : doctor.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ doctor.clubid }}</p></a>

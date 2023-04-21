@@ -16,10 +16,12 @@ class DossiermedicalController extends AbstractController
     #[Route('/', name: 'app_dossiermedical_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $dossiermedicals = $entityManager
             ->getRepository(Dossiermedical::class)
             ->findAll();
 
+        $this->user = $usr;
         return $this->render('dossiermedical/index.html.twig', [
             'dossiermedicals' => $dossiermedicals,
         ]);
@@ -28,6 +30,7 @@ class DossiermedicalController extends AbstractController
     #[Route('/new', name: 'app_dossiermedical_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $dossiermedical = new Dossiermedical();
         $form = $this->createForm(DossiermedicalType::class, $dossiermedical);
         $form->handleRequest($request);
@@ -36,9 +39,11 @@ class DossiermedicalController extends AbstractController
             $entityManager->persist($dossiermedical);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_dossiermedical_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_dossiermedical_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('dossiermedical/new.html.twig', [
             'dossiermedical' => $dossiermedical,
             'form' => $form,
@@ -48,6 +53,8 @@ class DossiermedicalController extends AbstractController
     #[Route('/{id}', name: 'app_dossiermedical_show', methods: ['GET'])]
     public function show(Dossiermedical $dossiermedical): Response
     {
+        $usr = $this->getUser();
+        $this->user = $usr;
         return $this->render('dossiermedical/show.html.twig', [
             'dossiermedical' => $dossiermedical,
         ]);
@@ -56,15 +63,18 @@ class DossiermedicalController extends AbstractController
     #[Route('/{id}/edit', name: 'app_dossiermedical_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $form = $this->createForm(DossiermedicalType::class, $dossiermedical);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_dossiermedical_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_dossiermedical_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('dossiermedical/edit.html.twig', [
             'dossiermedical' => $dossiermedical,
             'form' => $form,
@@ -74,11 +84,13 @@ class DossiermedicalController extends AbstractController
     #[Route('/{id}', name: 'app_dossiermedical_delete', methods: ['POST'])]
     public function delete(Request $request, Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$dossiermedical->getId(), $request->request->get('_token'))) {
             $entityManager->remove($dossiermedical);
             $entityManager->flush();
         }
 
+        $this->user = $usr;
         return $this->redirectToRoute('app_dossiermedical_index', [], Response::HTTP_SEE_OTHER);
     }
 }

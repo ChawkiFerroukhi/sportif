@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Master")
  * @ORM\Entity
  */
-class Master
+class Master extends User
 {
     /**
      * @var int
@@ -20,7 +20,7 @@ class Master
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime

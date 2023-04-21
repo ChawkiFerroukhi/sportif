@@ -16,10 +16,12 @@ class CategorieController extends AbstractController
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $categories = $entityManager
             ->getRepository(Categorie::class)
             ->findAll();
 
+        $this->user = $usr;
         return $this->render('categorie/index.html.twig', [
             'categories' => $categories,
         ]);
@@ -28,6 +30,7 @@ class CategorieController extends AbstractController
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
@@ -36,9 +39,11 @@ class CategorieController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('categorie/new.html.twig', [
             'categorie' => $categorie,
             'form' => $form,
@@ -48,6 +53,8 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response
     {
+        $usr = $this->getUser();
+        $this->user = $usr;
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
@@ -56,15 +63,18 @@ class CategorieController extends AbstractController
     #[Route('/{id}/edit', name: 'app_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('categorie/edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form,
@@ -74,11 +84,13 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
             $entityManager->remove($categorie);
             $entityManager->flush();
         }
 
+        $this->user = $usr;
         return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
     }
 }
