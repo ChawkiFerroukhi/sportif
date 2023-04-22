@@ -46,6 +46,7 @@ class DoctorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $doctor->setCreatedAt(new \DateTime());
             $doctor->setUpdatedAt(new \DateTime());
+            $doctor->setRoles(['ROLE_DOCTOR']);
             $entityManager->persist($doctor);
             $entityManager->flush();
 

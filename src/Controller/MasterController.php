@@ -36,6 +36,7 @@ class MasterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $master->setRoles(['ROLE_MASTER']);
             $entityManager->persist($master);
             $entityManager->flush();
 

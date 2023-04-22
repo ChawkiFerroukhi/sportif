@@ -44,6 +44,7 @@ class SupervisorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $supervisor->setRoles(['ROLE_SUPERVISOR']);
             $entityManager->persist($supervisor);
             $entityManager->flush();
 

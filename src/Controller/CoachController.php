@@ -46,6 +46,7 @@ class CoachController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $coach->setCreatedAt(new \DateTime());
             $coach->setUpdatedAt(new \DateTime());
+            $coach->setRoles(['ROLE_COACH']);
             $entityManager->persist($coach);
             $entityManager->flush();
 

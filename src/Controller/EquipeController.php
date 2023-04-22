@@ -77,6 +77,7 @@ class EquipeController extends AbstractController
                 $coach->setAdresse($form->get('coach_adresse')->getData());
                 $coach->setCin($form->get('coach_cin')->getData());
                 $coach->setClubid($equipe->getClubid());
+                $coach->setRoles(['ROLE_COACH']);
                 $entityManager->persist($coach);
                 $equipe->setCoachId($coach);
             } 
@@ -98,6 +99,7 @@ class EquipeController extends AbstractController
                 $doctor->setAdresse($form->get('doctor_adresse')->getData());
                 $doctor->setCin($form->get('doctor_cin')->getData());
                 $doctor->setClubid($equipe->getClubid());
+                $doctor->setRoles(['ROLE_DOCTOR']);
                 $entityManager->persist($doctor);
                 $equipe->setDoctorId($doctor);
             } 

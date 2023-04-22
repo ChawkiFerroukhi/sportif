@@ -45,6 +45,7 @@ class AdministrateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
+            $administrateur->setRoles(['ROLE_ADMIN']);
             $entityManager->persist($administrateur);
             $entityManager->flush();
 
