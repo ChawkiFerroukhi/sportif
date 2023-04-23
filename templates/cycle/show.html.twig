@@ -2,33 +2,75 @@
 
 {% block title %}Cycle{% endblock %}
 
-{% block body %}
-    <h1>Cycle</h1>
+{% block content %}
+<main>
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Cycle
+                            </h1>
+                        </div>
+                       <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_cycle_index') }}">
+                                <i class="me-1" data-feather="arrow-left"></i>
+                                Liste des Cycles                           
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Cycle</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.nom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Cours</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.coursid.nom }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.clubid.nom }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-12">
+                                    <a class="btn btn-outline-warning" href="{{ path('app_cycle_edit',{'id' : cycle.id}) }}" style="float:left">Modifier</a>
+                                    <a class="btn btn-outline-danger" href="{{ path('app_cycle_delete',{'id' : cycle.id}) }}" style="float:right">Supprimer</a>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cycle.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ cycle.createdat ? cycle.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ cycle.updatedat ? cycle.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ cycle.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_cycle_index') }}">back to list</a>
-
-    <a href="{{ path('app_cycle_edit', {'id': cycle.id}) }}">edit</a>
-
-    {{ include('cycle/_delete_form.html.twig') }}
 {% endblock %}
