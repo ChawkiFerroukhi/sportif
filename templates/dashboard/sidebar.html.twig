@@ -95,14 +95,6 @@
                             Liste des Sections
                         </a>
                         </u>
-                        {% for section in sections %}
-                        <li>
-                        <a class="nav-link" href="{{ path('app_section_show',{'id' : section.id})}}">
-                            {{ section.nom }}
-                           
-                        </a>
-                        </li>
-                        {% endfor %}
                     </nav>
                 </div>
                 

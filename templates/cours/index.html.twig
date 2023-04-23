@@ -1,39 +1,70 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Cours index{% endblock %}
-
-{% block body %}
-    <h1>Cours index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Nom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cour in cours %}
-            <tr>
-                <td>{{ cour.id }}</td>
-                <td>{{ cour.createdat ? cour.createdat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cour.updatedat ? cour.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cour.nom }}</td>
-                <td>
-                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}">show</a>
-                    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_cours_new') }}">Create new</a>
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Cours                        
+                            </h1>
+                        </div>
+                        <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_cours_new') }}">
+                                <i class="me-1" data-feather="user-plus"></i>
+                                Ajouter un cours                                                                                   
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Club Id</th>
+                                    <th>Niveau Id</th>
+                                    <th>actions</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cour in cours %}
+                                <tr>
+                                    <td>{{ cour.nom }}</td>
+                                    <td>{{ cour.clubid.nom }}</td>
+                                    <td>{{ cour.niveauid.nom }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_cours_show', {'id': cour.id}) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_cours_edit', {'id': cour.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('cours/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}
