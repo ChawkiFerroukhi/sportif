@@ -4,14 +4,16 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Supervisor
  *
- * @ORM\Table(name="Supervisor", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Supervisor", indexes={})
  * @ORM\Entity
  */
-class Supervisor
+class Supervisor extends User
 {
     /**
      * @var int
@@ -20,12 +22,12 @@ class Supervisor
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="current_timestamp(3)"})
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdat  ;
 
@@ -79,7 +81,12 @@ class Supervisor
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
-    private $clubid;
+    protected $clubid;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="supervisorId")
+     */
+    private $adherants;
 
     public function getId(): ?int
     {
@@ -186,5 +193,34 @@ class Supervisor
         return $this->nom." ".$this->prenom;
     }
 
+    /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants(): Collection
+    {
+        return $this->adherants;
+    }
+
+    public function addAdherant(Adherant $adherant): self
+    {
+        if (!$this->adherants->contains($adherant)) {
+            $this->adherants[] = $adherant;
+            $adherants->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant(Adherant $adherant): self
+    {
+        if ($this->adherants->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getNiveauid() === $this) {
+                $adherant->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

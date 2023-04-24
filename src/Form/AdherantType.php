@@ -3,11 +3,17 @@
 namespace App\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Adherant;
+use App\Entity\Supervisor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class AdherantType extends AbstractType
 {
@@ -16,6 +22,16 @@ class AdherantType extends AbstractType
         $builder
             ->add('createdat')
             ->add('updatedat')
+            ->add('Email', EmailType::class)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => true,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('ref')
             ->add('nom')
             ->add('prenom')
             ->add('birthdate',DateType::class, [ 
@@ -34,7 +50,7 @@ class AdherantType extends AbstractType
             ])
             ->add('maladie',ChoiceType::class,[
                 'choices' => [
-                    'Aucune' => null,
+                    'Aucune' => 'Aucune',
                     'Maladie 1' => 'Maladie 1',
                     'Maladie 2' => 'Maladie 2',
                     'Maladie 3' => 'Maladie 3',
@@ -42,11 +58,88 @@ class AdherantType extends AbstractType
                 ]
             ])
             ->add('dossierMedicalId')
-            ->add('categrieid')
-            ->add('equipeid')
-            ->add('demeCategorieid')
-            ->add('clubid')
-            ->add('supervisorId')
+            ->add('categrieid', null, [
+                'label' => 'Catégorie',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une catégorie',
+                'required' => true,
+            ])
+            ->add('equipeid', null, [
+                'label' => 'Equipe',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une équipe',
+                'required' => false,
+            ])
+            ->add('demeCategorieid', null, [
+                'label' => 'Catégorie',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une catégorie',
+                'required' => false,
+            ])
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => false,
+            ])
+            ->add('supervisorId', EntityType::class, [
+                'class' => Supervisor::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un parent',
+                'required' => false,
+            ])
+
+            
+            ->add('supervisor_Email', EmailType::class, [
+                'required' => false,
+                'label' => 'Email',
+                'mapped' => false,
+            ])
+            ->add('supervisor_password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => false,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('supervisor_ref', TextType::class, [
+                'required' => false,
+                'label' => 'Reférence',
+                'mapped' => false,
+            ])
+            ->add('supervisor_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
+            ])
+            
+
         ;
     }
 

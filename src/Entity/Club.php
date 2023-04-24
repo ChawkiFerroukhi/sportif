@@ -27,7 +27,7 @@ class Club
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="current_timestamp(3)"})
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdat  ;
 
@@ -71,6 +71,12 @@ class Club
      * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="clubid")
      */
     private $adherants;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="clubid")
+     */
+    private $sections;
 
 
     public function getId(): ?int
@@ -170,7 +176,7 @@ class Club
     {
         if (!$this->adherants->contains($adherant)) {
             $this->adherants[] = $adherant;
-            $adherants->setClubid($this);
+            $adherant->setClubid($this);
         }
 
         return $this;
@@ -182,6 +188,36 @@ class Club
             // set the owning side to null (unless already changed)
             if ($adherant->getClubid() === $this) {
                 $adherant->setClubid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Section>
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
+    }
+
+    public function addSection(Section $section): self
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections[] = $section;
+            $section->setClubid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Section $section): self
+    {
+        if ($this->sections->removeElement($section)) {
+            // set the owning side to null (unless already changed)
+            if ($section->getClubid() === $this) {
+                $section->setClubid(null);
             }
         }
 

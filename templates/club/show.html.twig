@@ -30,7 +30,7 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Club</div>
+                        <div class="card-header">Fiche Club<a class="btn btn-outline-success" href="{{ path('app_section_new',{'id' : club.id}) }}" style="float:right">Ajouter Section</a></div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
@@ -71,28 +71,28 @@
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
-                                                <th width="10%">
-                                                    Numéro
+                                                <th width="45%">
+                                                    ID
                                                 </th>
                                                 <th width="45%">
                                                     Nom
                                                 </th>
                                                 <th width="45%">
-                                                    Categorie
+                                                    Date de Création
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  adherant in  club.adherants %}
+                                            {% for  section in  club.sections %}
                                                 <tr>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{  adherant.id }}</a>
+                                                        {{  section.id }}
                                                     </td>
                                                     <td width="45%">
-                                                        {{ adherant.nom }} {{ adherant.prenom }}
+                                                        <a href="{{ path('app_section_show',{'id' : section.id})}}">{{ section.nom }}</a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ adherant.categrieid }} {% if adherant.demeCategorieid %} / {{ adherant.demeCategorieid }} {% endif %} 
+                                                        {{ section.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}
@@ -105,12 +105,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_club_edit',{'id' : club.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_club_delete',{'id' : club.id}) }}" style="float:right">Supprimer</a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_club_edit',{'id' : club.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('club/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,46 @@
+<div class="row">
+    {{ form_start(form) }}
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche User                                            
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_widget(form.password) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.roles, 'Roles', {'label_attr':{'class':'small mb-1' }}) }}                                  
+                        <ul>
+                        {% for child in form.roles %}
+                            <li> {{ form_label(child) }} {{ form_widget(child) }}
+                        {% endfor %}
+                        </ul>                             
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.roles) }}
+                    </div>
+                </div>
+                <button class="fw-500 btn btn-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

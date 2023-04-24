@@ -13,7 +13,6 @@ class SectionType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('clubid')
         ;
     }
 

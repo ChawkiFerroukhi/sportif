@@ -9,24 +9,21 @@ use App\Entity\Supervisor;
 /**
  * Adherant
  *
- * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="categrieId", columns={"categrieId"}), @ORM\Index(name="clubId", columns={"clubId"}), @ORM\Index(name="Deme_categorieId", columns={"Deme_categorieId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
+ * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="categrieId", columns={"categrieId"}), @ORM\Index(name="Deme_categorieId", columns={"Deme_categorieId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
  * @ORM\Entity
  */
-class Adherant
+class Adherant extends User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $id;
-
+    protected $id;
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="current_timestamp(3)"})
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdat  ;
 
@@ -155,7 +152,7 @@ class Adherant
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
-    private $clubid;
+    protected $clubid;
 
     /**
      * @var \Supervisor

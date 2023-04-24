@@ -1,50 +1,135 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Administrateur{% endblock %}
+{% block title %}Adherant{% endblock %}
 
-{% block body %}
-    <h1>Administrateur</h1>
+{% block content %}
+<main>
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Administrateur
+                            </h1>
+                        </div>
+                       <div class="col-12 col-xl-auto mb-3">
+                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_administrateur_index') }}">
+                                <i class="me-1" data-feather="arrow-left"></i>
+                                Liste des Administrateurs                           
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Administrateur</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.nom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Prenom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.prenom }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.numTel }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Email</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.Email }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">CIN</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.cin }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Adresse</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.adresse }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.createdat|date('d/m/Y')}}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.updatedat|date('d/m/Y') }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Reférence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.ref }}</p>
+                                    <hr>  
+                                </div>
+                                {% if administrateur.clubid is not null %}
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <a href="{{path('app_club_show',{'id' : administrateur.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ administrateur.clubid }}</p></a>
+                                    <hr>  
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_administrateur_edit',{'id' : administrateur.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('administrateur/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ administrateur.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ administrateur.createdat ? administrateur.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ administrateur.updatedat ? administrateur.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ administrateur.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ administrateur.prenom }}</td>
-            </tr>
-            <tr>
-                <th>NumTel</th>
-                <td>{{ administrateur.numTel }}</td>
-            </tr>
-            <tr>
-                <th>Cin</th>
-                <td>{{ administrateur.cin }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ administrateur.adresse }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_administrateur_index') }}">back to list</a>
-
-    <a href="{{ path('app_administrateur_edit', {'id': administrateur.id}) }}">edit</a>
-
-    {{ include('administrateur/_delete_form.html.twig') }}
 {% endblock %}

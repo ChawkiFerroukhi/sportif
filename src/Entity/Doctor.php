@@ -4,14 +4,15 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 /**
  * Doctor
  *
- * @ORM\Table(name="Doctor", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Doctor", indexes={})
  * @ORM\Entity
  */
-class Doctor
+class Doctor extends User
 {
     /**
      * @var int
@@ -20,12 +21,12 @@ class Doctor
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="current_timestamp(3)"})
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdat  ;
 
@@ -79,7 +80,12 @@ class Doctor
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
-    private $clubid;
+    protected $clubid;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Equipe::class, mappedBy="coachid")
+     */
+    private $equipes;
 
     public function getId(): ?int
     {
@@ -182,5 +188,35 @@ class Doctor
         return $this;
     }
 
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getEquipes(): Collection
+    {
+        return $this->equipes;
+    }
+
+    public function addEquipe(Equipe $equipe): self
+    {
+        if (!$this->equipes->contains($equipe)) {
+            $this->equipes[] = $equipe;
+            $equipes->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipe(Equipe $equipe): self
+    {
+        if ($this->equipes->removeElement($equipe)) {
+            // set the owning side to null (unless already changed)
+            if ($equipe->getNiveauid() === $this) {
+                $equipe->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

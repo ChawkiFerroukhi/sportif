@@ -17,38 +17,45 @@ class NiveauController extends AbstractController
     #[Route('/', name: 'app_niveau_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $niveaux = $entityManager
             ->getRepository(Niveau::class)
             ->findAll();
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findAll();
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
+        $this->user = $usr;
         return $this->render('niveau/index.html.twig', [
             'niveaux' => $niveaux,
             'sections' => $sections,
         ]);
     }
 
-    #[Route('/new', name: 'app_niveau_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_niveau_new', methods: ['GET', 'POST'])]
+    public function new(Section $section,Request $request, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $niveau = new Niveau();
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findAll();
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $niveau->setCreatedAt(new \DateTime());
             $niveau->setUpdatedAt(new \DateTime());
+            $niveau->setSectionid($section);
+            $niveau->setClubid($section->getClubid());
             $entityManager->persist($niveau);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_section_show', ['id' => $section->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('niveau/new.html.twig', [
             'niveau' => $niveau,
             'form' => $form,
@@ -59,10 +66,11 @@ class NiveauController extends AbstractController
     #[Route('/{id}', name: 'app_niveau_show', methods: ['GET'])]
     public function show(Niveau $niveau,EntityManagerInterface $entityManager): Response
     {
-
+        $usr = $this->getUser();
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findAll();
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $this->user = $usr;
         return $this->render('niveau/show.html.twig', [
             'niveau' => $niveau,
             'sections' => $sections,
@@ -72,18 +80,21 @@ class NiveauController extends AbstractController
     #[Route('/{id}/edit', name: 'app_niveau_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Niveau $niveau, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findAll();
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
+            $this->user = $usr;
+        return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->user = $usr;
         return $this->renderForm('niveau/edit.html.twig', [
             'niveau' => $niveau,
             'form' => $form,
@@ -94,11 +105,13 @@ class NiveauController extends AbstractController
     #[Route('/{id}', name: 'app_niveau_delete', methods: ['POST'])]
     public function delete(Request $request, Niveau $niveau, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$niveau->getId(), $request->request->get('_token'))) {
             $entityManager->remove($niveau);
             $entityManager->flush();
         }
 
+        $this->user = $usr;
         return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
     }
 }

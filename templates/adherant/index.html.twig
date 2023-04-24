@@ -33,11 +33,10 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Prenom</th>
-                                    <th>Birthdate</th>
-                                    <th>Birthplace</th>
-                                    <th>NiveauScolaire</th>
-                                    <th>Ecole</th>
-                                    <th>NumTel</th>
+                                    <th>D° Naissance</th>
+                                    <th>Equipe</th>
+                                    <th>Num Tel</th>
+                                    <th>Email</th>
                                     <th>Actions</th>
                                 </tr>
                             </tr>
@@ -48,9 +47,8 @@
                                     <td>{{ adherant.nom }}</td>
                                     <td>{{ adherant.prenom }}</td>
                                     <td>{{ adherant.birthdate ? adherant.birthdate|date('m/d/Y') : '' }}</td>
-                                    <td>{{ adherant.birthplace }}</td>
-                                    <td>{{ adherant.niveauScolaire }}</td>
-                                    <td>{{ adherant.ecole }}</td>
+                                    <td>{{ adherant.equipeid.nom }}</td>
+                                    <td>{{ adherant.Email }}</td>
                                     <td>{{ adherant.numTel }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_adherant_show', {'id': adherant.id}) }}">

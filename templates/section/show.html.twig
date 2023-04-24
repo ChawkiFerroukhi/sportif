@@ -30,7 +30,7 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Section</div>
+                        <div class="card-header">Fiche Section<a class="btn btn-outline-success" href="{{ path('app_niveau_new',{'id' : section.id}) }}" style="float:right">Ajouter Niveau</a></div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
@@ -46,6 +46,16 @@
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ section.fCreatedat }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_club_show',{'id' : section.clubid.id})}}">{{ section.clubid.nom }}</a> 
                                     <hr>  
                                 </div>
                             </div>
@@ -79,6 +89,8 @@
                                                     <td width="45%">
                                                         {{ niveau.fCreatedat }}
                                                     </td>
+
+                                        
                                                 </tr>
                                             {% else %}
                                                 <tr>
@@ -90,9 +102,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_section_delete',{'id' : section.id}) }}" style="float:right">Supprimer</a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('section/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
