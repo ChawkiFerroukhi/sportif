@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cycle
+ * Cycle.
  *
  * @ORM\Table(name="Cycle", indexes={@ORM\Index(name="coursId", columns={"coursId"}), @ORM\Index(name="clubId", columns={"clubId"})})
+ *
  * @ORM\Entity
  */
 class Cycle
@@ -17,7 +17,9 @@ class Cycle
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
+     *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -27,7 +29,7 @@ class Cycle
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $createdat  ;
+    private $createdat;
 
     /**
      * @var \DateTime
@@ -47,7 +49,9 @@ class Cycle
      * @var \Cours
      *
      * @ORM\ManyToOne(targetEntity="Cours")
+     *
      * @ORM\JoinColumns({
+     *
      *   @ORM\JoinColumn(name="coursId", referencedColumnName="id")
      * })
      */
@@ -57,7 +61,9 @@ class Cycle
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
+     *
      * @ORM\JoinColumns({
+     *
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
@@ -128,5 +134,9 @@ class Cycle
         return $this;
     }
 
-
+    // add me toString functions
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }

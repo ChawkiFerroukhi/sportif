@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cours
+ * Cours.
  *
  * @ORM\Table(name="Cours", indexes={@ORM\Index(name="niveauId", columns={"niveauId"}), @ORM\Index(name="clubId", columns={"clubId"})})
+ *
  * @ORM\Entity
  */
 class Cours
@@ -17,7 +17,9 @@ class Cours
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
+     *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -27,7 +29,7 @@ class Cours
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $createdat  ;
+    private $createdat;
 
     /**
      * @var \DateTime
@@ -47,7 +49,9 @@ class Cours
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
+     *
      * @ORM\JoinColumns({
+     *
      *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
      * })
      */
@@ -57,7 +61,9 @@ class Cours
      * @var \Niveau
      *
      * @ORM\ManyToOne(targetEntity="Niveau")
+     *
      * @ORM\JoinColumns({
+     *
      *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id")
      * })
      */
@@ -128,5 +134,8 @@ class Cours
         return $this;
     }
 
-
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }
