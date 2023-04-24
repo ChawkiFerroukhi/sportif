@@ -36,6 +36,10 @@ class ClubController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $club = new Club();
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
@@ -76,6 +80,10 @@ class ClubController extends AbstractController
     public function edit(Request $request, Club $club, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !(isset($usr->getRoles()['ROLE_ADMIN']) && $usr->getClubid()->getId() === $club->getId()) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
         $sections = $entityManager

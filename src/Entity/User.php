@@ -110,8 +110,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
+        $roles = array_unique($roles);
+        $rls = [];
+        foreach($roles as $role) {
+            $rls[$role] = true;
+        }
 
-         return array_unique($roles);
+         return $rls;
     }
 
     public function setRoles(array $roles): self
@@ -166,6 +171,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->clubid = $clubid;
 
         return $this;
+    }
+
+    public function getDiscr():string 
+    {
+        return $this->discr;
     }
 
     /*public function __toString()

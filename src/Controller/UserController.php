@@ -27,6 +27,10 @@ class UserController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $users = $entityManager
             ->getRepository(User::class)
             ->findAll();
@@ -44,6 +48,10 @@ class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -87,6 +95,10 @@ class UserController extends AbstractController
     public function show(User $user): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $this->user = $usr;
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -97,10 +109,21 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($this->passwordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            ));
             $entityManager->flush();
 
             $this->user = $usr;
@@ -111,6 +134,7 @@ class UserController extends AbstractController
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+            'sections' => $sections
         ]);
     }
 
@@ -118,6 +142,11 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();

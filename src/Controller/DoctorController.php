@@ -10,14 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/doctor')]
 class DoctorController extends AbstractController
 {
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     #[Route('/', name: 'app_doctor_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_doctor_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $doctors = $entityManager
             ->getRepository(Doctor::class)
             ->findAll();
@@ -36,6 +45,10 @@ class DoctorController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_doctor_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $doctor = new Doctor();
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
@@ -47,6 +60,10 @@ class DoctorController extends AbstractController
             $doctor->setCreatedAt(new \DateTime());
             $doctor->setUpdatedAt(new \DateTime());
             $doctor->setRoles(['ROLE_DOCTOR']);
+            $doctor->setPassword($this->passwordHasher->hashPassword(
+                $doctor,
+                $form->get('password')->getData()
+            ));
             $entityManager->persist($doctor);
             $entityManager->flush();
 
@@ -80,6 +97,10 @@ class DoctorController extends AbstractController
     public function edit(Request $request, Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_doctor_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -87,6 +108,10 @@ class DoctorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $doctor->setPassword($this->passwordHasher->hashPassword(
+                $doctor,
+                $form->get('password')->getData()
+            ));
             $entityManager->flush();
 
             $this->user = $usr;
@@ -105,6 +130,10 @@ class DoctorController extends AbstractController
     public function delete(Request $request, Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_doctor_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$doctor->getId(), $request->request->get('_token'))) {
             $entityManager->remove($doctor);
             $entityManager->flush();

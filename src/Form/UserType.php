@@ -28,12 +28,29 @@ class UserType extends AbstractType
             // add roles choicetype
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Developer' => 'ROLE_DEVELOPER',
-                    'Admin' => 'ROLE_ADMIN',
-                    'Moderator' => 'ROLE_MODERATOR', 
+                    'Ajouter Adherant' => 'app_adherant_new',
+                    'Modifier Adherant' => 'app_adherant_edit',
+                    'Afficher Adherants' => 'app_adherant_index',
+                    'Supprimer Adherant' => 'app_adherant_delete',
+                    
+                    'Ajouter Parent' => 'app_supervisor_new',
+                    'Modifier Parent' => 'app_supervisor_edit',
+                    'Afficher Parents' => 'app_supervisor_index',
+                    'Supprimer Parent' => 'app_supervisor_delete', 
+
+                    'Ajouter Coach' => 'app_coach_new',
+                    'Modifier Coach' => 'app_coach_edit',
+                    'Afficher Coachs' => 'app_coach_index',
+                    'Supprimer Coach' => 'app_coach_delete',
+
+                    'Ajouter Doctor' => 'app_doctor_new',
+                    'Modifier Doctor' => 'app_doctor_edit',
+                    'Afficher Doctors' => 'app_doctor_index',
+                    'Supprimer Doctor' => 'app_doctor_delete',
                 ],
                 'multiple' => true,
                 'expanded' => true,
+                
             ])
         ;
     }

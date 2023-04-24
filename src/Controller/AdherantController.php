@@ -28,6 +28,10 @@ class AdherantController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_adherant_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $adherants = $entityManager
             ->getRepository(Adherant::class)
             ->findAll();
@@ -45,6 +49,10 @@ class AdherantController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_adheerant_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $adherant = new Adherant();
         $form = $this->createForm(AdherantType::class, $adherant);
         $form->handleRequest($request);
@@ -122,12 +130,20 @@ class AdherantController extends AbstractController
     public function edit(Request $request, Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_adheerant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(AdherantType::class, $adherant);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         if ($form->isSubmitted() && $form->isValid()) {
+            $adherant->setPassword($this->passwordHasher->hashPassword(
+                $adherant,
+                $form->get('password')->getData()
+            ));
             $entityManager->flush();
 
             $this->user = $usr;
@@ -146,6 +162,10 @@ class AdherantController extends AbstractController
     public function delete(Request $request, Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_adheerant_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$adherant->getId(), $request->request->get('_token'))) {
             $entityManager->remove($adherant);
             $entityManager->flush();

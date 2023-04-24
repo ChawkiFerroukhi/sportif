@@ -50,7 +50,7 @@ class AdherantType extends AbstractType
             ])
             ->add('maladie',ChoiceType::class,[
                 'choices' => [
-                    'Aucune' => null,
+                    'Aucune' => 'Aucune',
                     'Maladie 1' => 'Maladie 1',
                     'Maladie 2' => 'Maladie 2',
                     'Maladie 3' => 'Maladie 3',

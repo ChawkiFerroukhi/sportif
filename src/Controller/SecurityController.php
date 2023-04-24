@@ -22,8 +22,7 @@ class SecurityController extends AbstractController
     {
 
         if ($this->getUser()) {
-            $route = $_GET["route"] ? $_GET["route"] : "app_club_index"; 
-             return $this->redirectToRoute($route,$_GET);
+             return $this->redirectToRoute("app_club_index",[]);
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();

@@ -10,14 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/coach')]
 class CoachController extends AbstractController
 {
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     #[Route('/', name: 'app_coach_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_coach_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $coaches = $entityManager
             ->getRepository(Coach::class)
             ->findAll();
@@ -36,6 +45,10 @@ class CoachController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_coach_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
@@ -47,6 +60,10 @@ class CoachController extends AbstractController
             $coach->setCreatedAt(new \DateTime());
             $coach->setUpdatedAt(new \DateTime());
             $coach->setRoles(['ROLE_COACH']);
+            $coach->setPassword($this->passwordHasher->hashPassword(
+                $coach,
+                $form->get('password')->getData()
+            ));
             $entityManager->persist($coach);
             $entityManager->flush();
 
@@ -80,6 +97,10 @@ class CoachController extends AbstractController
     public function edit(Request $request, Coach $coach, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_coach_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -87,6 +108,10 @@ class CoachController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coach->setPassword($this->passwordHasher->hashPassword(
+                $coach,
+                $form->get('password')->getData()
+            ));
             $entityManager->flush();
 
             $this->user = $usr;
@@ -105,6 +130,10 @@ class CoachController extends AbstractController
     public function delete(Request $request, Coach $coach, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_coach_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$coach->getId(), $request->request->get('_token'))) {
             $entityManager->remove($coach);
             $entityManager->flush();

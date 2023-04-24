@@ -51,7 +51,7 @@
                         {{ form_widget(form.prenom, {'attr':{'class':'form-control' }}) }}       
                     </div>
                     <div class="invalid-feedback">
-                        {{ form_errors(form.adresse) }}
+                        {{ form_errors(form.prenom) }}
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
@@ -81,7 +81,7 @@
                         {{ form_errors(form.adresse) }}
                     </div>
                 </div>
-
+                {% if app.user.roles['ROLE_MASTER'] is defined%}
                  <div class="row gx-3 mb-3">
                     <div class="col-md-12">
                         {{ form_label(form.clubid, 'Club', {'label_attr':{'class':'small mb-1' }}) }}                                   
@@ -91,7 +91,7 @@
                         {{ form_errors(form.clubid) }}
                     </div>
                 </div>
-                
+                {% endif %}
                 <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>
