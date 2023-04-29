@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block content %}
     <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
             <div class="container-xl px-4">
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
@@ -12,12 +17,6 @@
                                 </div>
                                 Modifier Cycle                         
                             </h1>
-                        </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_cycle_index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Liste des Cycles                          
-                            </a>
                         </div>
                     </div>
                 </div>

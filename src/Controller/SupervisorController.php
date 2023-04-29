@@ -28,6 +28,7 @@ class SupervisorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $supervisors = $entityManager
             ->getRepository(Supervisor::class)
             ->findAll();
@@ -39,6 +40,7 @@ class SupervisorController extends AbstractController
         return $this->render('supervisor/index.html.twig', [
             'supervisors' => $supervisors,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -50,6 +52,7 @@ class SupervisorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $supervisor = new Supervisor();
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
@@ -83,6 +86,7 @@ class SupervisorController extends AbstractController
             'supervisor' => $supervisor,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -93,10 +97,12 @@ class SupervisorController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('supervisor/show.html.twig', [
             'supervisor' => $supervisor,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -108,6 +114,7 @@ class SupervisorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -130,6 +137,7 @@ class SupervisorController extends AbstractController
             'supervisor' => $supervisor,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 

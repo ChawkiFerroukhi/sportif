@@ -27,6 +27,7 @@ class CoachController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $coaches = $entityManager
             ->getRepository(Coach::class)
             ->findAll();
@@ -38,6 +39,7 @@ class CoachController extends AbstractController
         return $this->render('coach/index.html.twig', [
             'coaches' => $coaches,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -49,6 +51,7 @@ class CoachController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
@@ -76,6 +79,7 @@ class CoachController extends AbstractController
             'coach' => $coach,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -86,10 +90,12 @@ class CoachController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('coach/show.html.twig', [
             'coach' => $coach,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -101,6 +107,7 @@ class CoachController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -123,6 +130,7 @@ class CoachController extends AbstractController
             'coach' => $coach,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 

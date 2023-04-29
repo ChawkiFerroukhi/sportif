@@ -4,7 +4,12 @@
 
 {% block content %}
 <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
             <div class="container-xl px-4">
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
@@ -13,12 +18,6 @@
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
                                 Fiche Niveau
                             </h1>
-                        </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_niveau_index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Liste des Niveaux                          
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -30,28 +29,28 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Niveau<a class="btn btn-outline-success" href="{{ path('app_equipe_new',{'id' : niveau.id}) }}" style="float:right">Ajouter Equipe</a></div>
+                        <div class="card-header">Fiche Niveau
+                            <a class="btn btn-outline-success" href="{{ path('app_equipe_new',{'id' : niveau.id}) }}" style="float:right">Ajouter Equipe</a> 
+                            <a class="btn btn-outline-success" href="{{ path('app_cours_new',{'id' : niveau.id}) }}" style="float:right">Ajouter Cours</a>
+                        </div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Nom</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ niveau.nom }}</p>
                                     <hr>  
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ niveau.createdat| date('m/d/Y') }}</p>
                                     <hr>  
                                 </div>
-                            </div>
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Section</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_section_show',{'id' : niveau.sectionid.id})}}">{{ niveau.sectionid.nom }}</a> 
@@ -61,7 +60,16 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Liste des Equipes</h2>
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Description</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ niveau.description|raw }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Cours</h2>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
@@ -77,7 +85,49 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  equipe in  niveau.equipes %}
+                                            {% for  cours in  niveau.courses %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  cours.id }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_cours_show',{'id' : cours.id})}}">{{ cours.nom }}</a></td>
+                                                    <td width="45%">
+                                                        {{ cours.createdat | date('d/m/Y') }}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Equipes</h2>
+
+                                    <table class="mb-0 table">
+                                        <thead>
+                                            <tr>
+                                                <th width="40%">
+                                                    Numéro
+                                                </th>
+                                                <th width="30%">
+                                                    Nom
+                                                </th>
+                                                <th width="30%">
+                                                    Date de Création
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for  equipe in  niveau.equipes %}
                                                 <tr>
                                                     <td width="45%">
                                                         {{  equipe.id }}
@@ -98,6 +148,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <a class="btn btn-outline-warning" href="{{ path('app_niveau_edit',{'id' : niveau.id}) }}" style="float=left">Modifier</a>                            

@@ -34,11 +34,12 @@ class EquipeController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
+        $section = new Section();
         $this->user = $usr;
         return $this->render('equipe/index.html.twig', [
             'equipes' => $equipes,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -115,6 +116,7 @@ class EquipeController extends AbstractController
             'equipe' => $equipe,
             'form' => $form,
             'sections' => $sections,
+            'section' => $niveau->getSectionid(),
         ]);
     }
 
@@ -129,6 +131,7 @@ class EquipeController extends AbstractController
         return $this->render('equipe/show.html.twig', [
             'equipe' => $equipe,
             'sections' => $sections,
+            'section' => $equipe->getNiveauid()->getSectionid(),
         ]);
     }
 
@@ -146,7 +149,7 @@ class EquipeController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_equipe_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_equipe_show', ['id' => $equipe->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
@@ -154,6 +157,7 @@ class EquipeController extends AbstractController
             'equipe' => $equipe,
             'form' => $form,
             'sections' => $sections,
+            'section' => $equipe->getNiveauid()->getSectionid(),
         ]);
     }
 

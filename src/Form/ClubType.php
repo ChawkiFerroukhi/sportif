@@ -7,6 +7,9 @@ use App\Entity\Club;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
+
 
 class ClubType extends AbstractType
 {
@@ -18,7 +21,17 @@ class ClubType extends AbstractType
             ->add('numTel')
             ->add('dateFondation',DateType::class, [ 
                 'widget' => 'single_text',
-                ])
+            ])
+            ->add('logoFile', VichImageType::class, [
+                'required' => false,
+                'image_uri' => false,
+                'delete_label' => false,
+                'allow_delete' => false,
+                'download_label' => false,
+            ])
+            ->add('color',ColorType::class,[
+                'attr' => ['class' => 'colorpicker-default']
+            ])
         ;
     }
 

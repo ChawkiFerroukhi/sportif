@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Cours;
+use App\Entity\Niveau;
+use App\Entity\Section;
 use App\Form\CoursType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,43 +22,61 @@ class CoursController extends AbstractController
         $cours = $entityManager
             ->getRepository(Cours::class)
             ->findAll();
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('cours/index.html.twig', [
             'cours' => $cours,
+            'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
-    #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
+    public function new(Niveau $niveau,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $cour = new Cours();
         $form = $this->createForm(CoursType::class, $cour);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $cour->setCreatedAt(new \DateTime());
+            $cour->setUpdatedAt(new \DateTime());
+            $cour->setNiveauid($niveau);  
+            $cour->setClubid($niveau->getClubid());            
             $entityManager->persist($cour);
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_niveau_show', ['id' => $niveau->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('cours/new.html.twig', [
             'cour' => $cour,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $niveau->getSectionid()
         ]);
     }
 
     #[Route('/{id}', name: 'app_cours_show', methods: ['GET'])]
-    public function show(Cours $cour): Response
+    public function show(Cours $cour, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('cours/show.html.twig', [
             'cour' => $cour,
+            'sections' => $sections,
+            'section' => $cour->getNiveauid()->getSectionid(),
         ]);
     }
 
@@ -64,6 +84,9 @@ class CoursController extends AbstractController
     public function edit(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $form = $this->createForm(CoursType::class, $cour);
         $form->handleRequest($request);
 
@@ -71,13 +94,15 @@ class CoursController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_cours_show', ['id' => $cour->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('cours/edit.html.twig', [
             'cour' => $cour,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $cour->getNiveauid()->getSectionid(),
         ]);
     }
 
@@ -85,12 +110,13 @@ class CoursController extends AbstractController
     public function delete(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        
         if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
             $entityManager->remove($cour);
             $entityManager->flush();
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_niveau_show', ['id' => $cour->getNiveauid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

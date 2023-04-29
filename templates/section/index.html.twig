@@ -1,7 +1,12 @@
 {% extends "base.html.twig" %}
 {% block content %}
     <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
             <div class="container-fluid px-4">
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
@@ -38,7 +43,7 @@
                                 <tr>
                                     <td>{{ section.id }}</td>
                                     <td>{{ section.nom }}</td>
-                                    <td><a href="{{ path('app_club_show',{'id' : section.clubid}) }}">{{ section.clubid.nom }}</a></td>
+                                    <td><a href="{{ path('app_club_show',{'id' : section.clubid.id}) }}">{{ section.clubid.nom }}</a></td>
                                     <td>{{ section.fCreatedAt }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_section_show', {'id': section.id}) }}">

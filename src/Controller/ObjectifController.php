@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Objectif;
+use App\Entity\Cycle;
+use App\Entity\Section;
 use App\Form\ObjectifType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,43 +22,61 @@ class ObjectifController extends AbstractController
         $objectifs = $entityManager
             ->getRepository(Objectif::class)
             ->findAll();
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('objectif/index.html.twig', [
             'objectifs' => $objectifs,
+            'sections' => $sections,
+            'section' => new Section()
         ]);
     }
 
-    #[Route('/new', name: 'app_objectif_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_objectif_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Cycle $cycle,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         $objectif = new Objectif();
         $form = $this->createForm(ObjectifType::class, $objectif);
         $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $objectif->setCreatedAt(new \DateTime());
+            $objectif->setUpdatedAt(new \DateTime());
+            $objectif->setCycleid($cycle);
+            $objectif->setClubid($cycle->getClubid());
             $entityManager->persist($objectif);
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_objectif_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_objectif_show', ['id' => $objectif->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('objectif/new.html.twig', [
             'objectif' => $objectif,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid()
         ]);
     }
 
     #[Route('/{id}', name: 'app_objectif_show', methods: ['GET'])]
-    public function show(Objectif $objectif): Response
+    public function show(Objectif $objectif,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         $this->user = $usr;
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         return $this->render('objectif/show.html.twig', [
             'objectif' => $objectif,
+            'sections' => $sections,
+            'section' => $objectif->getCycleid()->getCoursid()->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -66,18 +86,22 @@ class ObjectifController extends AbstractController
         $usr = $this->getUser();
         $form = $this->createForm(ObjectifType::class, $objectif);
         $form->handleRequest($request);
-
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_objectif_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_objectif_show', ['id' => $objectif->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('objectif/edit.html.twig', [
             'objectif' => $objectif,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $objectif->getCycleid()->getCoursid()->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -91,6 +115,6 @@ class ObjectifController extends AbstractController
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_objectif_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cycle_show', ['id' => $objectif->getCycleid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

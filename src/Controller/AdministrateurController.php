@@ -34,10 +34,12 @@ class AdministrateurController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('administrateur/index.html.twig', [
             'administrateurs' => $administrateurs,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -55,7 +57,7 @@ class AdministrateurController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
+        $section = new Section();
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
@@ -76,6 +78,7 @@ class AdministrateurController extends AbstractController
             'administrateur' => $administrateur,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -86,10 +89,13 @@ class AdministrateurController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('administrateur/show.html.twig', [
             'administrateur' => $administrateur,
             'sections' => $sections,
+            'section' => $section,
+
         ]);
     }
 
@@ -117,12 +123,13 @@ class AdministrateurController extends AbstractController
             $this->user = $usr;
         return $this->redirectToRoute('app_administrateur_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $section = new Section();
         $this->user = $usr;
         return $this->renderForm('administrateur/edit.html.twig', [
             'administrateur' => $administrateur,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 

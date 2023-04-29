@@ -19,16 +19,22 @@ class ClubController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ['id' => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $clubs = $entityManager
             ->getRepository(Club::class)
             ->findAll();
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('club/index.html.twig', [
             'clubs' => $clubs,
             'sections' => $sections,
+            'section' => $section
         ]);
     }
 
@@ -40,6 +46,7 @@ class ClubController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $club = new Club();
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
@@ -59,6 +66,7 @@ class ClubController extends AbstractController
             'club' => $club,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section
         ]);
     }
 
@@ -69,10 +77,12 @@ class ClubController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('club/show.html.twig', [
             'club' => $club,
             'sections' => $sections,
+            'section' => $section
         ]);
     }
 
@@ -84,6 +94,7 @@ class ClubController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -92,13 +103,14 @@ class ClubController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_club_show', ['id' => $club->getId()], Response::HTTP_SEE_OTHER);
         }
         $this->user = $usr;
         return $this->renderForm('club/edit.html.twig', [
             'club' => $club,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section
         ]);
     }
 

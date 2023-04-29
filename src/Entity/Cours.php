@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Cours.
@@ -46,6 +48,13 @@ class Cours
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -68,6 +77,12 @@ class Cours
      * })
      */
     private $niveauid;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Cycle::class, mappedBy="coursid")
+     */
+    private $cycles;
 
     public function getId(): ?int
     {
@@ -134,6 +149,46 @@ class Cours
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Cycle>
+     */
+    public function getCycles(): Collection
+    {
+        return $this->cycles;
+    }
+
+    public function addCycle(Cycle $cycle): self
+    {
+        if (!$this->cycles->contains($cycle)) {
+            $this->cycles[] = $cycle;
+            $cycle->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCycle(Cycle $cycle): self
+    {
+        if ($this->cycles->removeElement($cycle)) {
+            // set the owning side to null (unless already changed)
+            if ($cycle->getNiveauid() === $this) {
+                $cycle->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
     public function __toString()
     {
         return $this->nom;

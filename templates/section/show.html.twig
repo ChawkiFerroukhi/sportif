@@ -4,7 +4,12 @@
 
 {% block content %}
 <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
             <div class="container-xl px-4">
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
@@ -13,12 +18,6 @@
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
                                 Fiche Section
                             </h1>
-                        </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_section_index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Liste des Setions                          
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -36,16 +35,22 @@
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Nom</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ section.nom }}</p>
                                     <hr>  
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ section.fCreatedat }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_club_show',{'id' : section.clubid.id})}}">{{ section.clubid.nom }}</a> 
                                     <hr>  
                                 </div>
                             </div>
@@ -54,9 +59,9 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_club_show',{'id' : section.clubid.id})}}">{{ section.clubid.nom }}</a> 
-                                    <hr>  
+                                    <h2 class="small mb-1" for="inputFirstName">Description</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ section.description|raw }}</p>
+                                    <hr> 
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">

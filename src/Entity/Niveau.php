@@ -71,6 +71,19 @@ class Niveau
      */
     private $equipes;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="niveauid")
+     */
+    private $courses;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -148,7 +161,7 @@ class Niveau
     {
         if (!$this->equipes->contains($equipe)) {
             $this->equipes[] = $equipe;
-            $equipes->setNiveauid($this);
+            $equipe->setNiveauid($this);
         }
 
         return $this;
@@ -165,11 +178,52 @@ class Niveau
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Cours>
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCours(Cours $cours): self
+    {
+        if (!$this->courses->contains($cours)) {
+            $this->courses[] = $cours;
+            $cours->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCours(Cours $cours): self
+    {
+        if ($this->courses->removeElement($cours)) {
+            // set the owning side to null (unless already changed)
+            if ($cours->getNiveauid() === $this) {
+                $cours->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
     public function getFCreatedat(): ?string
     {
         $newDate = $this->createdat->format('m/d/Y');
 
         return $newDate;       
+    }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     public function __toString()

@@ -6,6 +6,9 @@ use App\Entity\Section;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
 
 class SectionType extends AbstractType
 {
@@ -13,6 +16,12 @@ class SectionType extends AbstractType
     {
         $builder
             ->add('nom')
+            ->add('description',CKEditorType::class,[
+                'attr' => [
+                    'placeholder' => 'Description',
+                ],
+                'required' => true
+            ])
         ;
     }
 

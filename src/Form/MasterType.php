@@ -15,8 +15,6 @@ class MasterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdat')
-            ->add('updatedat')
             ->add('Email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

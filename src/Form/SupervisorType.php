@@ -29,9 +29,7 @@ class SupervisorType extends AbstractType
             ->add('prenom')
             ->add('numTel')
             ->add('cin')
-            ->add('adresse')
-            ->add('clubid')
-        ;
+            ->add('adresse');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

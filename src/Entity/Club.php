@@ -6,14 +6,18 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Club
  *
  * @ORM\Table(name="Club")
  * @ORM\Entity
+ * @Vich\Uploadable
  */
-class Club
+class Club implements \Serializable
 {
     /**
      * @var int
@@ -77,6 +81,22 @@ class Club
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="clubid")
      */
     private $sections;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logo;
+
+    /**
+     * @Vich\UploadableField(mapping="club_image", fileNameProperty="logo")
+     * @var File|null
+    */
+    private  $logoFile = null;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $color;
 
 
     public function getId(): ?int
@@ -222,6 +242,55 @@ class Club
         }
 
         return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoFile(?File $logoFile): void
+    {
+        $this->logoFile = $logoFile;
+
+        if ($logoFile instanceof UploadedFile) {
+            $this->updatedat = new \DateTime();
+        }
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function serialize()
+    {
+        $this->logoFile = base64_encode($this->logoFile);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->logoFile = base64_decode($this->logoFile);
+
     }
 
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Cycle.
@@ -58,6 +60,19 @@ class Cycle
     private $coursid;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Objectif::class, mappedBy="cycleid")
+     */
+    private $objectifs;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -68,6 +83,13 @@ class Cycle
      * })
      */
     private $clubid;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="duration", nullable=false)
+     */
+    private int $duration;
 
     public function getId(): ?int
     {
@@ -130,6 +152,60 @@ class Cycle
     public function setClubid(?Club $clubid): self
     {
         $this->clubid = $clubid;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Objectif>
+     */
+    public function getObjectifs(): Collection
+    {
+        return $this->objectifs;
+    }
+
+    public function addObjectif(Objectif $objectif): self
+    {
+        if (!$this->objectifs->contains($objectif)) {
+            $this->objectifs[] = $objectif;
+            $objectif->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjectif(Objectif $objectif): self
+    {
+        if ($this->objectifs->removeElement($objectif)) {
+            // set the owning side to null (unless already changed)
+            if ($objectif->getNiveauid() === $this) {
+                $objectif->setNiveauid(null);
+            }
+        }
 
         return $this;
     }

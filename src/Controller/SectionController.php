@@ -20,8 +20,8 @@ class SectionController extends AbstractController
         $usr = $this->getUser();
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
+            ->findAll();
+        $section = new Section();
         $this->user = $usr;
         return $this->render('section/index.html.twig', [
             'sections' => $sections,
@@ -86,7 +86,7 @@ class SectionController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_section_show', ['id' => $section->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

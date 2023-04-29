@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Administrateur;
+use App\Entity\Club;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,7 +31,11 @@ class AdministrateurType extends AbstractType
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
-        ;
+            ->add('clubid',null,[
+                'label' => 'Club',
+                'placeholder' => 'Choisir un club',
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

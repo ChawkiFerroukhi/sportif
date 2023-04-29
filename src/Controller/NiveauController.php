@@ -24,11 +24,12 @@ class NiveauController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
+        $section = new Section();
         $this->user = $usr;
         return $this->render('niveau/index.html.twig', [
             'niveaux' => $niveaux,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -60,6 +61,7 @@ class NiveauController extends AbstractController
             'niveau' => $niveau,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section
         ]);
     }
 
@@ -74,6 +76,7 @@ class NiveauController extends AbstractController
         return $this->render('niveau/show.html.twig', [
             'niveau' => $niveau,
             'sections' => $sections,
+            'section' => $niveau->getSectionid(),
         ]);
     }
 
@@ -91,7 +94,7 @@ class NiveauController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_niveau_show', ['id' => $niveau->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
@@ -99,6 +102,7 @@ class NiveauController extends AbstractController
             'niveau' => $niveau,
             'form' => $form,
             'sections' => $sections,
+            'section' => $niveau->getSectionid(),
         ]);
     }
 

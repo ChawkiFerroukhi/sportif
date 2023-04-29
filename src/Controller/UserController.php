@@ -48,10 +48,6 @@ class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
-        }
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -62,15 +58,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($user->getRoles()[0] == 'ROLE_DEVELOPER') {
-                $user->setRoles(['ROLE_ADMIN', 'ROLE_DEVELOPER', 'ROLE_MODERATOR']);
-            }   
-            elseif ($user->getRoles()[0] == 'ROLE_ADMIN') {
-                $user->setRoles(['ROLE_ADMIN', 'ROLE_MODERATOR']);
-            }   
-            elseif ($user->getRoles()[0] == 'ROLE_MODERATOR') {
-                $user->setRoles(['ROLE_MODERATOR']);
-            }
+            $user->setRoles(['ROLE_USER']);
 
             $user->setPassword($this->passwordHasher->hashPassword(
                 $user,
@@ -78,9 +66,13 @@ class UserController extends AbstractController
             ));
 
             $userRepository->add($user, true);
+            if(!empty($this->user)) {
 
-            $this->user = $usr;
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                $this->user = $usr;
+                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         $this->user = $usr;
@@ -118,7 +110,6 @@ class UserController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->passwordHasher->hashPassword(
                 $user,

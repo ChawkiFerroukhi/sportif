@@ -38,10 +38,12 @@ class AdherantController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('adherant/index.html.twig', [
             'adherants' => $adherants,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -49,10 +51,11 @@ class AdherantController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adheerant_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()["app_adherant_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $adherant = new Adherant();
         $form = $this->createForm(AdherantType::class, $adherant);
         $form->handleRequest($request);
@@ -109,6 +112,7 @@ class AdherantController extends AbstractController
             'adherant' => $adherant,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -119,10 +123,12 @@ class AdherantController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         $this->user = $usr;
         return $this->render('adherant/show.html.twig', [
             'adherant' => $adherant,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -139,6 +145,7 @@ class AdherantController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
         if ($form->isSubmitted() && $form->isValid()) {
             $adherant->setPassword($this->passwordHasher->hashPassword(
                 $adherant,
@@ -155,6 +162,7 @@ class AdherantController extends AbstractController
             'adherant' => $adherant,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 

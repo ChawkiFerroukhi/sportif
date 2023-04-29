@@ -61,6 +61,13 @@ class Section
      */
     private $niveaux;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,7 +134,7 @@ class Section
     /**
      * @return Collection<int, Niveau>
      */
-    public function getNiveaux(): Collection
+    public function getNiveaux(): ?Collection
     {
         return $this->niveaux;
     }
@@ -150,6 +157,20 @@ class Section
                 $niveau->setSectionid(null);
             }
         }
+
+        return $this;
+    }
+
+
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

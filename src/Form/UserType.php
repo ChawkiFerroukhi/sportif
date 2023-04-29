@@ -28,6 +28,14 @@ class UserType extends AbstractType
             // add roles choicetype
             ->add('roles', ChoiceType::class, [
                 'choices' => [
+
+
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Doctor' => 'ROLE_DOCTOR',
+                    'Coach' => 'ROLE_COACH',
+                    'Parent' => 'ROLE_SUPERVISOR',
+                    'Adherant' => 'ROLE_ADHERANT',
+
                     'Ajouter Adherant' => 'app_adherant_new',
                     'Modifier Adherant' => 'app_adherant_edit',
                     'Afficher Adherants' => 'app_adherant_index',
@@ -52,6 +60,7 @@ class UserType extends AbstractType
                 'expanded' => true,
                 
             ])
+            ->add('ref')
         ;
     }
 

@@ -1,39 +1,70 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Objectif index{% endblock %}
-
-{% block body %}
-    <h1>Objectif index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Nom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for objectif in objectifs %}
-            <tr>
-                <td>{{ objectif.id }}</td>
-                <td>{{ objectif.createdat ? objectif.createdat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ objectif.updatedat ? objectif.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ objectif.nom }}</td>
-                <td>
-                    <a href="{{ path('app_objectif_show', {'id': objectif.id}) }}">show</a>
-                    <a href="{{ path('app_objectif_edit', {'id': objectif.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_objectif_new') }}">Create new</a>
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Objectives                      
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <table class="table" id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nom</th>
+                                            <th>Club</th>
+                                            <th>Niveau</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for objectif in objectifs %}
+                                        <tr>
+                                            <td>{{ objectif.id }}</td>
+                                            <td>{{ objectif.nom }}</td>
+                                            <td>{{ objectif.clubid.nom }}</td>
+                                            <td>{{ objectif.cycleid.nom }}</td>
+                                            <td>
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_objectif_show', {'id': objectif.id}) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_objectif_edit', {'id': objectif.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('objectif/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                           
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                                    </tbody>
+                                </table>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}

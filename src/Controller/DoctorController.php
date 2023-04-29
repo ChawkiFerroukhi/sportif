@@ -33,11 +33,12 @@ class DoctorController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
+        $section = new Section();
         $this->user = $usr;
         return $this->render('doctor/index.html.twig', [
             'doctors' => $doctors,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -49,6 +50,7 @@ class DoctorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $doctor = new Doctor();
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
@@ -76,6 +78,7 @@ class DoctorController extends AbstractController
             'doctor' => $doctor,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -83,6 +86,7 @@ class DoctorController extends AbstractController
     public function show(Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $section = new Section();
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -90,6 +94,7 @@ class DoctorController extends AbstractController
         return $this->render('doctor/show.html.twig', [
             'doctor' => $doctor,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 
@@ -101,6 +106,7 @@ class DoctorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $section = new Section();
         $form = $this->createForm(DoctorType::class, $doctor);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -123,6 +129,7 @@ class DoctorController extends AbstractController
             'doctor' => $doctor,
             'form' => $form,
             'sections' => $sections,
+            'section' => $section,
         ]);
     }
 

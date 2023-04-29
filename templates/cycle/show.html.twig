@@ -4,7 +4,12 @@
 
 {% block content %}
 <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
             <div class="container-xl px-4">
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
@@ -13,12 +18,6 @@
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
                                 Fiche Cycle
                             </h1>
-                        </div>
-                       <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_cycle_index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Liste des Cycles                           
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -30,41 +29,92 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Cycle</div>
+                        <div class="card-header">Fiche Cycle<a class="btn btn-outline-success" href="{{ path('app_objectif_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Objectif</a></div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Nom</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ cycle.nom }}</p>
                                     <hr>  
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Durée (jrs)</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.duration }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Cours</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ cycle.coursid.nom }}</p>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_cours_show',{'id' : cycle.coursid.id})}}">{{ cycle.coursid.nom }}</a> 
                                     <hr>  
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ cycle.clubid.nom }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Description</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.description|raw }}</p>
                                     <hr>  
                                 </div>
                             </div>
+
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_cycle_edit',{'id' : cycle.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_cycle_delete',{'id' : cycle.id}) }}" style="float:right">Supprimer</a>
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Cycles</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">
+                                                    Numéro
+                                                </th>
+                                                <th width="45%">
+                                                    Nom
+                                                </th>
+                                                <th width="45%">
+                                                    Date de Création
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  objectif in  cycle.objectifs %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  objectif.id }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_objectif_show',{'id' : objectif.id})}}">{{ objectif.nom }}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ objectif.createdat|date('d/m/Y') }}
+                                                    </td>
+
+                                        
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>   
+                            </div>
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_cycle_edit',{'id' : cycle.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('cycle/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
