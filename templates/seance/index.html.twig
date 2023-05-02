@@ -41,8 +41,8 @@
                             {% for seance in seances %}
                                 <tr>
                                     <td>{{ seance.date|date('d/m/Y') }}</td>
-                                    <td>{{ seance.equipeid.nom }}</td>
-                                    <td>{{ seance.Cycleid.nom }}</td>
+                                    <td><a href="{{ path('app_equipe_show',{'id' : seance.equipeid.id}) }}" >{{ seance.equipeid.nom }}</a></td>
+                                    <td><a href="{{ path('app_cycle_show',{'id' : seance.cycleid.id}) }}" >{{ seance.cycleid.nom }}</a></td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_seance_show', {'id': seance.id}) }}">
                                             <i class="fa-solid fa-eye"></i>
