@@ -57,12 +57,61 @@
                                     <hr>  
                                 </div>
                             </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_objectif_edit',{'id' : objectif.id}) }}" style="float:left">Modifier</a>
-                                    <a style="float:right">
-                                        {{ include('objectif/_delete_form.html.twig') }}
-                                    </a>
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Notes</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">
+                                                    Date de Création
+                                                </th>
+                                                <th width="45%">
+                                                    Adherant
+                                                </th>
+                                                <th width="45%">
+                                                    Teste
+                                                </th>
+                                                <th width="45%">
+                                                    Note
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  note in  objectif.notes %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  note.createdat|date('d/m/Y') }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_adherant_show',{'id' : note.adherantid.id})}}">{{ note.adherantid.nom }} {{ note.adherantid.prenom }}</a>                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_teste_show',{'id' : note.testeid.id})}}">{{ note.testeid.nom }}</a>                                                    </td>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ note.note }}
+                                                    </td>
+                                                    
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_objectif_edit',{'id' : objectif.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('objectif/_delete_form.html.twig') }}
+                                </a>
+                            </div>
                             
                         </div>
                     </div>

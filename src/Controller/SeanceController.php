@@ -30,7 +30,7 @@ class SeanceController extends AbstractController
         return $this->render('seance/index.html.twig', [
             'seances' => $seances,
             'sections' => $sections,
-            'section' => new Section()
+            'section' => $equipe->getNiveauid()->getSectionid()
         ]);
     }
 

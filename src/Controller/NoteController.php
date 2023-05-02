@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use App\Entity\Teste;
+use App\Entity\Section;
+use App\Entity\Adherant;
 use App\Form\NoteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,50 +16,71 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/note')]
 class NoteController extends AbstractController
 {
-    #[Route('/', name: 'app_note_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/adherant/{id}', name: 'app_note_index', methods: ['GET'])]
+    public function index(Adherant $adherant,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         $notes = $entityManager
             ->getRepository(Note::class)
-            ->findAll();
-
+            ->findBy(['adherantid' => $adherant->getId()]);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('note/index.html.twig', [
             'notes' => $notes,
+            'sections' => $sections,
+            'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid()
         ]);
     }
 
-    #[Route('/new', name: 'app_note_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/new', name: 'app_note_new', methods: ['GET', 'POST'])]
+    public function new(Teste $teste, Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $note = new Note();
-        $form = $this->createForm(NoteType::class, $note);
+        $form = $this->createForm(NoteType::class, $note,[
+            'choices_adh' => $teste->getEquipeid()->getAdherants(),
+            'choices_obj' => $teste->getCycleid()->getObjectifs()
+        ]);        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $note->setCreatedAt(new \DateTime());
+            $note->setUpdatedAt(new \DateTime());
+            $note->setTesteid($teste);
+            $note->setClubid($teste->getClubid());
             $entityManager->persist($note);
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_teste_show', ['id' => $teste->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('note/new.html.twig', [
             'note' => $note,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $teste->getEquipeid()->getNiveauid()->getSectionid()
         ]);
     }
 
     #[Route('/{id}', name: 'app_note_show', methods: ['GET'])]
-    public function show(Note $note): Response
+    public function show(Note $note, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('note/show.html.twig', [
             'note' => $note,
+            'sections' => $sections,
+            'section' => $note->getTesteid()->getEquipeid()->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -64,20 +88,28 @@ class NoteController extends AbstractController
     public function edit(Request $request, Note $note, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        $form = $this->createForm(NoteType::class, $note);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(NoteType::class, $note,[
+                'choices_adh' => $note->getTesteid()->getEquipeid()->getAdherants(),
+                'choices_obj' => $note->getTesteid()->getCycleid()->getObjectifs()
+            ]);        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_note_show', ['id' => $note->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
         return $this->renderForm('note/edit.html.twig', [
             'note' => $note,
             'form' => $form,
+            'sections' => $sections,
+            'section' => $note->getTesteid()->getEquipeid()->getNiveauid()->getSectionid()
         ]);
     }
 

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Objectif
@@ -69,6 +71,12 @@ class Objectif
      * })
      */
     private $clubid;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="objectifid")
+     */
+    private $notes;
 
     public function getId(): ?int
     {
@@ -147,5 +155,35 @@ class Objectif
         return $this;
     }
 
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getNiveauid() === $this) {
+                $note->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

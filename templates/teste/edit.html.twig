@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Teste{% endblock %}
-
-{% block body %}
-    <h1>Edit Teste</h1>
-
-    {{ include('teste/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_teste_index') }}">back to list</a>
-
-    {{ include('teste/_delete_form.html.twig') }}
+{% block content %}
+   <main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user-plus"></i>
+                                </div>
+                                Modifier un Teste                          
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container-xl px-4 mt-4">
+            {{ include('teste/_form.html.twig') }}
+        </div>
+    </main>
 {% endblock %}

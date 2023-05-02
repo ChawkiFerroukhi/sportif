@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Teste
@@ -61,6 +63,16 @@ class Teste
     private $equipeid;
 
     /**
+     * @var \Cycle
+     *
+     * @ORM\ManyToOne(targetEntity="Cycle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cycleId", referencedColumnName="id")
+     * })
+     */
+    private $cycleid;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -69,6 +81,19 @@ class Teste
      * })
      */
     private $clubid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="testeid")
+     */
+    private $notes;
 
     public function getId(): ?int
     {
@@ -147,5 +172,59 @@ class Teste
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCycleid(): ?Cycle
+    {
+        return $this->cycleid;
+    }
+
+    public function setCycleid(?Cycle $cycleid): self
+    {
+        $this->cycleid = $cycleid;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getNiveauid() === $this) {
+                $note->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

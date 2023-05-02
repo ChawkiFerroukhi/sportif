@@ -1,34 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Note{% endblock %}
+{% block title %}Objective{% endblock %}
 
-{% block body %}
-    <h1>Note</h1>
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Note
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Note</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Adherant</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_adherant_show',{'id' : note.adherantid.id})}}">{{ note.adherantid.nom }} {{ note.adherantid.prenom }}</a> 
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Teste</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_teste_show',{'id' : note.testeid.id})}}">{{ note.testeid.nom }}</a> 
+                                    <hr>  
+                                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ note.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ note.createdat ? note.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ note.updatedat ? note.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>{{ note.note }}</td>
-            </tr>
-        </tbody>
-    </table>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Note</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ note.note }}</p> 
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_note_edit',{'id' : note.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('note/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <a href="{{ path('app_note_index') }}">back to list</a>
 
-    <a href="{{ path('app_note_edit', {'id': note.id}) }}">edit</a>
-
-    {{ include('note/_delete_form.html.twig') }}
 {% endblock %}

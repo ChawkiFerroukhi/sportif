@@ -30,7 +30,8 @@
                     <!-- Account details card-->
                     <div class="card mb-4">
                         <div class="card-header">Fiche Cycle
-                        <a class="btn btn-outline-success" href="{{ path('app_seance_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Seance</a>
+                        <a class="btn btn-outline-success" href="{{ path('app_teste_new',{'id' : cycle.id}) }}" style="float:right">Planifier Teste</a>
+                        <a class="btn btn-outline-success" href="{{ path('app_seance_new',{'id' : cycle.id}) }}" style="float:right">Planifier Seance</a>
                         <a class="btn btn-outline-success" href="{{ path('app_objectif_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Objectif</a>
                         </div>
                         <div class="card-body">
@@ -103,7 +104,7 @@
                                                         <a href="{{ path('app_seance_show',{'id' : seance.id})}}">{{ seance.date|date('d/m/Y') }}</a>
                                                     </td>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_equipe_show',{'id' : seance.equipeid})}}">{{ seance.equipeid.nom }}</a>
+                                                        <a href="{{ path('app_equipe_show',{'id' : seance.equipeid.id})}}">{{ seance.equipeid.nom }}</a>
                                                     </td>
 
                                         
