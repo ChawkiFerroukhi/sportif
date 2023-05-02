@@ -73,6 +73,12 @@ class Cycle
     private $objectifs;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="cycleid")
+     */
+    private $seances;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -85,11 +91,19 @@ class Cycle
     private $clubid;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="duration", nullable=false)
+     * @ORM\Column(name="startDate", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private int $duration;
+    private $startdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="endDate", type="datetime", nullable=false)
+     */
+    private $enddate;
+    
 
     public function getId(): ?int
     {
@@ -168,14 +182,26 @@ class Cycle
         return $this;
     }
 
-    public function getDuration(): ?int
+    public function getStartdate(): ?\DateTimeInterface
     {
-        return $this->duration;
+        return $this->startdate;
     }
 
-    public function setDuration(int $duration): self
+    public function setStartdate(\DateTimeInterface $startdate): self
     {
-        $this->duration = $duration;
+        $this->startdate = $startdate;
+
+        return $this;
+    }
+
+    public function getEnddate(): ?\DateTimeInterface
+    {
+        return $this->enddate;
+    }
+
+    public function setEnddate(\DateTimeInterface $enddate): self
+    {
+        $this->enddate = $enddate;
 
         return $this;
     }
@@ -204,6 +230,36 @@ class Cycle
             // set the owning side to null (unless already changed)
             if ($objectif->getNiveauid() === $this) {
                 $objectif->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Seance>
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): self
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): self
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getNiveauid() === $this) {
+                $seance->setNiveauid(null);
             }
         }
 

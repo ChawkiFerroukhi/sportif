@@ -43,6 +43,14 @@ class Seance
      */
     private $date;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     */
+    private $description;
+    
     /**
      * @var \Equipe
      *
@@ -146,6 +154,18 @@ class Seance
     public function setClubid(?Club $clubid): self
     {
         $this->clubid = $clubid;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

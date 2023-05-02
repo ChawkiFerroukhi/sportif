@@ -1,34 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Seance{% endblock %}
+{% block title %}Objective{% endblock %}
 
-{% block body %}
-    <h1>Seance</h1>
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Fiche Seance
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Seance</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ seance.date|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Categorie</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_equipe_show',{'id' : seance.equipeid.id})}}">{{ seance.equipeid.nom }}</a> 
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Cycle</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_cycle_show',{'id' : seance.cycleid.id})}}">{{ seance.cycleid.nom }}</a> 
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Description</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ seance.description|raw}}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                                <div class="col-12">
+                                    <a class="btn btn-outline-warning" href="{{ path('app_seance_edit',{'id' : seance.id}) }}" style="float:left">Modifier</a>
+                                    <a style="float:right">
+                                        {{ include('seance/_delete_form.html.twig') }}
+                                    </a>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ seance.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ seance.createdat ? seance.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ seance.updatedat ? seance.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ seance.date ? seance.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_seance_index') }}">back to list</a>
-
-    <a href="{{ path('app_seance_edit', {'id': seance.id}) }}">edit</a>
-
-    {{ include('seance/_delete_form.html.twig') }}
 {% endblock %}

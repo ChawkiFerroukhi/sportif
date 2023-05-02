@@ -1,39 +1,69 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Seance index{% endblock %}
-
-{% block body %}
-    <h1>Seance index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for seance in seances %}
-            <tr>
-                <td>{{ seance.id }}</td>
-                <td>{{ seance.createdat ? seance.createdat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ seance.updatedat ? seance.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ seance.date ? seance.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_seance_show', {'id': seance.id}) }}">show</a>
-                    <a href="{{ path('app_seance_edit', {'id': seance.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_seance_new') }}">Create new</a>
+{% extends "base.html.twig" %}
+{% block content %}
+    <main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-fluid px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="user"></i>
+                                </div>
+                                Liste des Seances                        
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-fluid px-4">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Categorie</th>
+                                    <th>Cycle</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for seance in seances %}
+                                <tr>
+                                    <td>{{ seance.date|date('d/m/Y') }}</td>
+                                    <td>{{ seance.equipeid.nom }}</td>
+                                    <td>{{ seance.Cycleid.nom }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_seance_show', {'id': seance.id}) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_seance_edit', {'id': seance.id}) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            {{ include('seance/_delete_form.html.twig') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}

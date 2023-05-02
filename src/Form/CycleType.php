@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
 class CycleType extends AbstractType
@@ -23,8 +24,15 @@ class CycleType extends AbstractType
                 ],
                 'required' => true
             ])
-            ->add('duration',NumberType::class, [
-                'scale' => 0,
+            ->add('startdate',DateType::class, [ 
+                'widget' => 'single_text',
+                'format'=> 'dd/MM',
+                'html5' => false
+            ])
+            ->add('enddate',DateType::class, [ 
+                'widget' => 'single_text',
+                'format'=> 'dd/MM',
+                'html5' => false            
             ])
         ;
     }

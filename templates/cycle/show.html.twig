@@ -29,28 +29,39 @@
                 <div class="col-xl-12">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Fiche Cycle<a class="btn btn-outline-success" href="{{ path('app_objectif_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Objectif</a></div>
+                        <div class="card-header">Fiche Cycle
+                        <a class="btn btn-outline-success" href="{{ path('app_seance_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Seance</a>
+                        <a class="btn btn-outline-success" href="{{ path('app_objectif_new',{'id' : cycle.id}) }}" style="float:right">Ajouter Objectif</a>
+                        </div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Nom</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ cycle.nom }}</p>
                                     <hr>  
                                 </div>
-                                <div class="col-md-4">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Durée (jrs)</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ cycle.duration }}</p>
-                                    <hr>  
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Cours</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_cours_show',{'id' : cycle.coursid.id})}}">{{ cycle.coursid.nom }}</a> 
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date Début</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.startdate|date('d/m') }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date Fin</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ cycle.enddate|date('d/m') }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -67,7 +78,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Liste des Cycles</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Seances</h2>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
@@ -75,9 +86,54 @@
                                                     Numéro
                                                 </th>
                                                 <th width="45%">
-                                                    Nom
+                                                    Date
                                                 </th>
                                                 <th width="45%">
+                                                    Categorie
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  seance in  cycle.seances %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  seance.id }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_seance_show',{'id' : seance.id})}}">{{ seance.date|date('d/m/Y') }}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_equipe_show',{'id' : seance.equipeid})}}">{{ seance.equipeid.nom }}</a>
+                                                    </td>
+
+                                        
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Objectives</h2>
+                                    <table id="">
+                                        <thead>
+                                            <tr>
+                                                <th width="40%">
+                                                    Numéro
+                                                </th>
+                                                <th width="40%">
+                                                    Nom
+                                                </th>
+                                                <th width="40%">
                                                     Date de Création
                                                 </th>
                                             </tr>
@@ -85,13 +141,13 @@
                                         <tbody>
                                             {% for  objectif in  cycle.objectifs %}
                                                 <tr>
-                                                    <td width="45%">
+                                                    <td width="40%">
                                                         {{  objectif.id }}
                                                     </td>
-                                                    <td width="45%">
+                                                    <td width="40%">
                                                         <a href="{{ path('app_objectif_show',{'id' : objectif.id})}}">{{ objectif.nom }}</a>
                                                     </td>
-                                                    <td width="45%">
+                                                    <td width="40%">
                                                         {{ objectif.createdat|date('d/m/Y') }}
                                                     </td>
 

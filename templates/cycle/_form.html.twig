@@ -16,12 +16,19 @@
                     </div>
                 </div>
                  <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.duration, 'Durée (jrs)', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.duration, {'attr':{'class':'form-control' }}) }}                               
+                    <div class="col-md-6">
+                        {{ form_label(form.startdate, 'Début', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.startdate, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
-                        {{ form_errors(form.duration) }}
+                        {{ form_errors(form.startdate) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.enddate, 'Fin', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.enddate, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.enddate) }}
                     </div>
                 </div>
                  <div class="row gx-3 mb-3">

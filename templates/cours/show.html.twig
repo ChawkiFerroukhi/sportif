@@ -71,7 +71,10 @@
                                                     Nom
                                                 </th>
                                                 <th width="45%">
-                                                    Durée (jrs)
+                                                    Date Début
+                                                </th>
+                                                <th width="45%">
+                                                    Date Fin
                                                 </th>
                                             </tr>
                                         </thead>
@@ -85,7 +88,10 @@
                                                         <a href="{{ path('app_cycle_show',{'id' : cycle.id})}}">{{ cycle.nom }}</a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ cycle.duration }}
+                                                        {{ cycle.startdate|date('d/m') }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ cycle.enddate|date('d/m') }}
                                                     </td>
 
                                         
