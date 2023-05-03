@@ -43,9 +43,16 @@ class MesureController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $doctors = $entityManager
-        ->getRepository(Doctor::class)
-        ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $doctors = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findAll();
+        } else {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $form = $this->createForm(MesureType::class, $mesure, [
             'doctors' => $doctors,
         ]);
@@ -97,9 +104,16 @@ class MesureController extends AbstractController
     public function edit(Request $request, Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        $doctors = $entityManager
-        ->getRepository(Doctor::class)
-        ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $doctors = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findAll();
+        } else {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $form = $this->createForm(MesureType::class, $mesure, [
             'doctors' => $doctors,
         ]);

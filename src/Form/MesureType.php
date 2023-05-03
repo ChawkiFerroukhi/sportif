@@ -32,7 +32,8 @@ class MesureType extends AbstractType
             ])
             ->add('doctorid',ChoiceType::class,[
                 'choices' => $options['doctors'],
-                'choice_name' => 'nom',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un doctor',
                 'required' => false
             ])
         ;
