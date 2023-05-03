@@ -221,5 +221,10 @@ class Coach extends User
         return $this;
     }
 
+    public function getNomprenom()
+    {
+        return $this->nom.' '.$this->prenom;
+    }
+
 
 }

@@ -64,11 +64,11 @@ class AdherantType extends AbstractType
                 'placeholder' => 'Choisir une catégorie',
                 'required' => true,
             ])
-            ->add('equipeid', null, [
-                'label' => 'Equipe',
+            ->add('equipeid',ChoiceType::class,[
+                'choices' => $options['equipes'],
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir une équipe',
-                'required' => false,
+                'placeholder' => 'Choisir une equipe',
+                'required' => false
             ])
             ->add('demeCategorieid', null, [
                 'label' => 'Catégorie',
@@ -84,7 +84,7 @@ class AdherantType extends AbstractType
             ])
             ->add('supervisorId',ChoiceType::class,[
                 'choices' => $options['supervisors'],
-                'choice_label' => 'nom',
+                'choice_label' => 'nomprenom',
                 'placeholder' => 'Choisir un parent',
                 'required' => false
             ])
@@ -148,6 +148,7 @@ class AdherantType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Adherant::class,
             'supervisors' => [],
+            'equipes' => [],
         ]);
     }
 }

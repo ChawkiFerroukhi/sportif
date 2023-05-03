@@ -391,6 +391,11 @@ class Adherant extends User
 
         return $this;
     }
+    
+    public function getNomprenom()
+    {
+        return $this->nom.' '.$this->prenom;
+    }
 
 
 }

@@ -79,7 +79,7 @@
                         {{ form_errors(form.diagnostic) }}
                     </div>
                 </div>
-                {% if app.user.roles['ROLE_MASTER'] is defined %}
+                {% if app.user.roles['ROLE_DOCTOR'] is not defined %}
 
                  <div class="row gx-3 mb-3">
                     <div class="col-md-12">
