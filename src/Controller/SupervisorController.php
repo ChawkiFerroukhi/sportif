@@ -29,9 +29,16 @@ class SupervisorController extends AbstractController
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
-        $supervisors = $entityManager
-            ->getRepository(Supervisor::class)
-            ->findAll();
+        $supervisors = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $supervisors = $entityManager
+                ->getRepository(Supervisor::class)
+                ->findAll();
+        } else {
+            $supervisors = $entityManager
+                ->getRepository(Supervisor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

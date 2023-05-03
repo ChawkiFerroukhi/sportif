@@ -32,9 +32,17 @@ class AdherantController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $adherants = $entityManager
-            ->getRepository(Adherant::class)
-            ->findAll();
+
+        $adherants = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $adherants = $entityManager
+                ->getRepository(Adherant::class)
+                ->findAll();
+        } else {
+            $adherants = $entityManager
+                ->getRepository(Adherant::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

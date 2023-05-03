@@ -27,9 +27,16 @@ class DoctorController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $doctors = $entityManager
-            ->getRepository(Doctor::class)
-            ->findAll();
+        $doctors = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findAll();
+        } else {
+            $doctors = $entityManager
+                ->getRepository(Doctor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

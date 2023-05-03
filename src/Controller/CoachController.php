@@ -28,9 +28,16 @@ class CoachController extends AbstractController
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
-        $coaches = $entityManager
-            ->getRepository(Coach::class)
-            ->findAll();
+        $coaches = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $coaches = $entityManager
+                ->getRepository(Coach::class)
+                ->findAll();
+        } else {
+            $coaches = $entityManager
+                ->getRepository(Coach::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

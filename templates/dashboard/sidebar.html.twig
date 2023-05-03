@@ -67,22 +67,22 @@
                 <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <a class="nav-link" href="{{ path('app_adherant_index')}}">
-                            Adherants
+                            Liste des Adherants
                         </a>
                         <a class="nav-link" href="{{ path('app_administrateur_index')}}">
-                            Admistrateurs
+                            Liste des Admistrateurs
                         </a>
                         <a class="nav-link" href="{{ path('app_coach_index')}}">
-                            Coachs
+                            Liste des Coachs
                         </a>
                         <a class="nav-link" href="{{ path('app_doctor_index')}}">
-                            Doctors
+                            Liste des Doctors
                         </a>
                         <a class="nav-link" href="{{ path('app_supervisor_index')}}">
-                            Parents
+                            Liste des Parents
                         </a>
                         <a class="nav-link" href="{{ path('app_user_index')}}">
-                            Users
+                            Liste des Users
                         </a>
                     </nav>
                 </div>
@@ -98,19 +98,19 @@
                 <div class="collapse" id="collapseFormation" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <a class="nav-link" href="{{ path('app_section_index')}}">
-                            Sections
+                            Liste des Sections
                         </a>
                         <a class="nav-link" href="{{ path('app_niveau_index')}}">
-                            Niveaux
+                            Liste des Niveaux
                         </a>
                         <a class="nav-link" href="{{ path('app_cours_index')}}">
-                            Cours
+                            Liste des Cours
                         </a>
                         <a class="nav-link" href="{{ path('app_cycle_index')}}">
-                            Cycles
+                            Liste des Cycles
                         </a>
                         <a class="nav-link" href="{{ path('app_equipe_index')}}">
-                            Equipes
+                            Liste des Equipes
                         </a>
                     </nav>
                 </div>
@@ -121,6 +121,36 @@
                     </div>
                     {{app.user.clubid.nom}}
                 </a>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="nav-link-icon">
+                        <i data-feather="menu"></i>
+                    </div>
+                    Utilisateurs                    
+                    <div class="sidenav-collapse-arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                {% if app.user.roles['ROLE_ADMIN'] is defined %}
+                <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <a class="nav-link" href="{{ path('app_adherant_index')}}">
+                            Liste des Adherants
+                        </a>
+                        <a class="nav-link" href="{{ path('app_administrateur_index')}}">
+                            Liste des Administrateurs
+                        </a>
+                        <a class="nav-link" href="{{ path('app_coach_index')}}">
+                            Liste des Coachs
+                        </a>
+                        <a class="nav-link" href="{{ path('app_doctor_index')}}">
+                            Liste des Doctors
+                        </a>
+                        <a class="nav-link" href="{{ path('app_supervisor_index')}}">
+                            Liste des Parents
+                        </a>
+                    </nav>
+                </div>
+                {% endif %}
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon">
                         <i data-feather="menu"></i>

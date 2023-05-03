@@ -18,12 +18,6 @@
                                 Liste des Coachs                       
                             </h1>
                         </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_coach_new') }}">
-                                <i class="me-1" data-feather="user-plus"></i>
-                                Ajouter Coach                                                                                   
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -31,6 +25,12 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
+                <div class="col-12 col-xl-auto mb-3">
+                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_coach_new') }}" style="float:right">
+                        <i class="me-1" data-feather="user-plus"></i>
+                        Ajouter Coach                                                                                   
+                    </a>
+                </div>
                 <div class="card-body table-responsive">
                     <table class="table" id="datatablesSimple">
                         <thead>

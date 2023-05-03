@@ -18,8 +18,9 @@
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
-                    <div class="col-md-12">                                
-                        {{ form_widget(form.ref) }}  
+                    <div class="col-md-12">
+                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
                     </div>                            
                     <div class="invalid-feedback">
                         {{ form_errors(form.ref) }}
