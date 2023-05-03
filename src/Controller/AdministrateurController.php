@@ -24,13 +24,20 @@ class AdministrateurController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_administrateur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()["app_administrateur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])&& !isset($usr->getRoles()['ROLE_ADMIN'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $administrateurs = $entityManager
-            ->getRepository(Administrateur::class)
-            ->findAll();
+        $administrateurs = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $administrateurs = $entityManager
+                ->getRepository(Administrateur::class)
+                ->findAll();
+        } else {
+            $administrateurs = $entityManager
+                ->getRepository(Administrateur::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -47,7 +54,7 @@ class AdministrateurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_administrateur_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()["app_administrateur_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -70,7 +77,7 @@ class AdministrateurController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_administrateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_administrateur_show', ['id' => $administrateur->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

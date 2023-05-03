@@ -54,7 +54,7 @@ class TesteController extends AbstractController
             $entityManager->persist($teste);
             $entityManager->flush();
             $this->user = $usr;
-            return $this->redirectToRoute('app_teste_index', ['id' => $teste->getEquipeid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_teste_show', ['id' => $teste->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

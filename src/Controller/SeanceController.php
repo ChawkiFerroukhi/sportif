@@ -56,7 +56,7 @@ class SeanceController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_cycle_show', ['id' => $cycle->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_seance_show', ['id' => $seance->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

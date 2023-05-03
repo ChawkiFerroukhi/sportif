@@ -57,7 +57,7 @@ class NoteController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_teste_show', ['id' => $teste->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_note_show', ['id' => $note->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

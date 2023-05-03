@@ -53,7 +53,7 @@ class CoursController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_niveau_show', ['id' => $niveau->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cours_show', ['id' => $cour->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

@@ -73,7 +73,7 @@ class MesureController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_dossier_show', ['id' => $dossier->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_mesure_show', ['id' => $mesure->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

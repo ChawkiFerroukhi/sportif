@@ -27,13 +27,20 @@ class UserController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
-        $users = $entityManager
-            ->getRepository(User::class)
-            ->findAll();
+        $users = [];
+        if(isset($usr->getRoles()['ROLE_MASTER'])) {
+            $users = $entityManager
+                ->getRepository(User::class)
+                ->findAll();
+        } else {
+            $users = $entityManager
+                ->getRepository(User::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -69,7 +76,7 @@ class UserController extends AbstractController
             if(!empty($this->user)) {
 
                 $this->user = $usr;
-                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_user_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
             } else {
                 return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
             }

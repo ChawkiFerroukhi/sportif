@@ -57,7 +57,7 @@ class CycleController extends AbstractController
             $entityManager->flush();
 
             $this->user = $usr;
-            return $this->redirectToRoute('app_cours_show', ['id' => $cours->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_cycle_show', ['id' => $cycle->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;

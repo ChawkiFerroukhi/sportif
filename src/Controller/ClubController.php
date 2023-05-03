@@ -59,7 +59,7 @@ class ClubController extends AbstractController
             $entityManager->persist($club);
             $entityManager->flush();
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_club_show', ['id' => $club->getId()], Response::HTTP_SEE_OTHER);
         }
         $this->user = $usr;
         return $this->renderForm('club/new.html.twig', [
