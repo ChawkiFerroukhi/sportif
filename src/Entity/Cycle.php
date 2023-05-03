@@ -54,7 +54,7 @@ class Cycle
      *
      * @ORM\JoinColumns({
      *
-     *   @ORM\JoinColumn(name="coursId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="coursId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $coursid;
@@ -85,7 +85,7 @@ class Cycle
      *
      * @ORM\JoinColumns({
      *
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;

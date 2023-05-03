@@ -109,7 +109,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Dossiermedical")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dossier_medicalId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="dossier_medicalId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $dossierMedicalId;
@@ -119,7 +119,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Categorie")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="categrieId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="categrieId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $categrieid;
@@ -129,7 +129,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Equipe")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="equipeId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="equipeId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $equipeid;
@@ -139,7 +139,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Demecategorie")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Deme_categorieId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="Deme_categorieId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $demeCategorieid;
@@ -149,7 +149,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     protected $clubid;
@@ -159,7 +159,7 @@ class Adherant extends User
      *
      * @ORM\ManyToOne(targetEntity="Supervisor")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="supervisorId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="supervisorId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $supervisorId;

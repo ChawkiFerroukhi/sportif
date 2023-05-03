@@ -48,7 +48,7 @@ class Note
      *
      * @ORM\ManyToOne(targetEntity="Objectif")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="objectifId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="objectifId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $objectifid;
@@ -58,7 +58,7 @@ class Note
      *
      * @ORM\ManyToOne(targetEntity="Teste")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="testeId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="testeId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $testeid;
@@ -68,7 +68,7 @@ class Note
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -78,10 +78,17 @@ class Note
      *
      * @ORM\ManyToOne(targetEntity="Adherant")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="adherantId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="adherantId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $adherantid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observation", type="string", length=555, nullable=false)
+     */
+    private $observation;
 
     public function getId(): ?int
     {
@@ -168,6 +175,18 @@ class Note
     public function setAdherantid(?Adherant $adherantid): self
     {
         $this->adherantid = $adherantid;
+
+        return $this;
+    }
+
+    public function getObservation(): ?string
+    {
+        return $this->observation;
+    }
+
+    public function setObservation(string $observation): self
+    {
+        $this->observation = $observation;
 
         return $this;
     }

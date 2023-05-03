@@ -50,7 +50,7 @@ class Equipe
      *
      * @ORM\ManyToOne(targetEntity="Niveau")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $niveauid;
@@ -60,7 +60,7 @@ class Equipe
      *
      * @ORM\ManyToOne(targetEntity="Doctor")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="doctorId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="doctorId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $doctorid;
@@ -70,7 +70,7 @@ class Equipe
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -80,7 +80,7 @@ class Equipe
      *
      * @ORM\ManyToOne(targetEntity="Coach")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="coachId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="coachId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $coachid;

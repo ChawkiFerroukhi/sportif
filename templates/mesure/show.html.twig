@@ -1,66 +1,126 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mesure{% endblock %}
+{% block title %}Objective{% endblock %}
 
 {% block content %}
-    <h1>Mesure</h1>
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                Mesure Medical
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Mesure Medical</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Adherant</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_adherant_show',{'id' : mesure.dossiermedicalid.adherantid.id})}}">{{ mesure.dossiermedicalid.adherantid.nom }} {{ mesure.dossiermedicalid.adherantid.prenom }}</a> 
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Age</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.age }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.date|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+                                
+                            </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ mesure.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ mesure.createdat ? mesure.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ mesure.updatedat ? mesure.updatedat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ mesure.date ? mesure.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Poids</th>
-                <td>{{ mesure.poids }}</td>
-            </tr>
-            <tr>
-                <th>Taille</th>
-                <td>{{ mesure.taille }}</td>
-            </tr>
-            <tr>
-                <th>Poitrine</th>
-                <td>{{ mesure.poitrine }}</td>
-            </tr>
-            <tr>
-                <th>Cuisse</th>
-                <td>{{ mesure.cuisse }}</td>
-            </tr>
-            <tr>
-                <th>Biceps</th>
-                <td>{{ mesure.biceps }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ mesure.age }}</td>
-            </tr>
-            <tr>
-                <th>Imc</th>
-                <td>{{ mesure.imc }}</td>
-            </tr>
-            <tr>
-                <th>Diagnostic</th>
-                <td>{{ mesure.diagnostic }}</td>
-            </tr>
-        </tbody>
-    </table>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Poids</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.poids }} kg</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Taille</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.taille }} m</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">IMC</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.imc|number_format(2) }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Taille Poitrine</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.poitrine }} cm</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Taille Cuisse</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.cuisse }} cm</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Taille Biceps</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.biceps }} cm</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Diagnostic</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ mesure.diagnostic|raw }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_mesure_edit',{'id' : mesure.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('mesure/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <a href="{{ path('app_mesure_index') }}">back to list</a>
 
-    <a href="{{ path('app_mesure_edit', {'id': mesure.id}) }}">edit</a>
-
-    {{ include('mesure/_delete_form.html.twig') }}
 {% endblock %}

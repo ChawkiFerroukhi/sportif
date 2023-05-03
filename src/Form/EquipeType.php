@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -17,17 +18,17 @@ class EquipeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('doctorid', null, [
-                'label' => 'Docteur',
+            ->add('doctorid',ChoiceType::class,[
+                'choices' => $options['doctors'],
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir un docteur',
-                'required' => false,
+                'placeholder' => 'Choisir un doctor',
+                'required' => false
             ])
-            ->add('coachid', null, [
-                'label' => 'Coach',
+            ->add('coachid',ChoiceType::class,[
+                'choices' => $options['coachs'],
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un coach',
-                'required' => false,
+                'required' => false
             ])
             ->add('coach_Email', EmailType::class, [
                 'required' => false,
@@ -131,6 +132,8 @@ class EquipeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Equipe::class,
+            'coachs' => [],
+            'doctors' => [],
         ]);
     }
 }

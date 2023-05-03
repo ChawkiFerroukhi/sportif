@@ -104,7 +104,7 @@ class Mesure
      *
      * @ORM\ManyToOne(targetEntity="Doctor")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="doctorId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="doctorId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $doctorid;
@@ -114,7 +114,7 @@ class Mesure
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -124,7 +124,7 @@ class Mesure
      *
      * @ORM\ManyToOne(targetEntity="Dossiermedical")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dossier_medicalId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="dossier_medicalId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $dossierMedicalid;

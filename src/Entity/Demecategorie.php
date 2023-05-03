@@ -48,7 +48,7 @@ class Demecategorie
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;

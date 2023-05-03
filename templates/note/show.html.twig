@@ -43,8 +43,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Teste</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_teste_show',{'id' : note.testeid.id})}}">{{ note.testeid.nom }}</a> 
+                                    <h2 class="small mb-1" for="inputFirstName">Objective</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_objectif_show',{'id' : note.objectifid.id})}}">{{ note.objectifid.nom }}</a> 
                                     <hr>  
                                 </div>
 
@@ -55,12 +55,30 @@
                                     <hr>  
                                 </div>
                             </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Teste</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_teste_show',{'id' : note.testeid.id})}}">{{ note.testeid.nom }}</a> 
+                                    <hr>  
+                                </div>
+                            </div>
+
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('d/m/Y') }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Observation</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ note.observation|raw }}</p>
                                     <hr>  
                                 </div>
                             </div>

@@ -61,7 +61,7 @@ class Cours
      *
      * @ORM\JoinColumns({
      *
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -73,7 +73,7 @@ class Cours
      *
      * @ORM\JoinColumns({
      *
-     *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $niveauid;

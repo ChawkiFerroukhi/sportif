@@ -50,7 +50,7 @@ class Niveau
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -60,7 +60,7 @@ class Niveau
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sectionId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="sectionId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $sectionid;

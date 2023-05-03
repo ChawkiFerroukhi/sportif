@@ -56,7 +56,7 @@ class Seance
      *
      * @ORM\ManyToOne(targetEntity="Equipe")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="equipeId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="equipeId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $equipeid;
@@ -66,7 +66,7 @@ class Seance
      *
      * @ORM\ManyToOne(targetEntity="Cycle")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cycleId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="cycleId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $cycleid;
@@ -76,7 +76,7 @@ class Seance
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;

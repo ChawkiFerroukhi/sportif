@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Dossiermedical;
+use App\Entity\Adherant;
+use App\Entity\Section;
 use App\Form\DossiermedicalType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,11 +21,15 @@ class DossiermedicalController extends AbstractController
         $usr = $this->getUser();
         $dossiermedicals = $entityManager
             ->getRepository(Dossiermedical::class)
-            ->findAll();
-
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('dossiermedical/index.html.twig', [
             'dossiermedicals' => $dossiermedicals,
+            'sections' => $sections,
+            'section' => new Section(),
         ]);
     }
 
@@ -51,12 +57,17 @@ class DossiermedicalController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_dossiermedical_show', methods: ['GET'])]
-    public function show(Dossiermedical $dossiermedical): Response
+    public function show(Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('dossiermedical/show.html.twig', [
             'dossiermedical' => $dossiermedical,
+            'sections' => $sections,
+            'section' => $dossiermedical->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid(),
         ]);
     }
 

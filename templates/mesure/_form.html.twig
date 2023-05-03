@@ -1,4 +1,104 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    {{ form_start(form) }}
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Mesure                                            
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.date, 'Date', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.date, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.date) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.age, 'Age', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.age, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.age) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.poids, 'Poids (kg)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.poids, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.poids) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.taille, 'Taille (m)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.taille, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.taille) }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.poitrine, 'Taille Poitrine (cm)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.poitrine, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.poitrine) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.cuisse, 'Taille Cuisse (cm)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.cuisse, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.cuisse) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.biceps, 'Taille Biceps (cm)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.biceps, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.biceps) }}
+                    </div>
+                </div>
+                 <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.diagnostic, 'Diagnostic', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.diagnostic, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.diagnostic) }}
+                    </div>
+                </div>
+                {% if app.user.roles['ROLE_MASTER'] is defined %}
+
+                 <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.doctorid, 'Doctor', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.doctorid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.doctorid) }}
+                    </div>
+                </div>
+                {% else %}
+                <div hidden>
+                    {{ form_widget(form.doctorid, {'attr':{'class':'form-control' }}) }}   
+                </div>                            
+                {% endif %}
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

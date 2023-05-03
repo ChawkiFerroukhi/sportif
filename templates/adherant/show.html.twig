@@ -31,6 +31,7 @@
                     <div class="card mb-4">
                         <div class="card-header">Fiche Adhérant
                         <a class="btn btn-outline-success" href="{{ path('app_note_index',{'id' : adherant.id}) }}" style="float:right">Liste des Notes</a>
+                        <a class="btn btn-outline-success" href="{{ path('app_dossiermedical_show',{'id' : adherant.dossierMedicalId.id}) }}" style="float:right">Dossier Medical</a>
                         </div>
                         <div class="card-body">
                             <!-- Form Row-->
@@ -177,65 +178,6 @@
                                     <h2 class="small mb-1" for="inputFirstName">Parent</h2>
                                     <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisorId.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisorId }}</p> </a>
                                     <hr>
-                                </div>
-                            </div>
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Dossier Medicale</h2>
-                                    <table id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                
-                                                <th width="45%">
-                                                    Date
-                                                </th>
-                                                <th width="45%">
-                                                    Poids
-                                                </th>
-                                                <th width="45%">
-                                                    Taille
-                                                </th>
-                                                <th width="10%">
-                                                    IMC
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for  mesure in  adherant.dossierMedicalId.mesures %}
-                                                <tr>
-                                                    <td width="45%">
-                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{  mesure.fDate }}</a>
-                                                    </td>
-                                                    <td width="45%">
-                                                        {{ mesure.poids }}
-                                                    </td>
-                                                    <td width="45%">
-                                                        {{ mesure.taille }}
-                                                    </td>
-                                                    <td width="45%">
-                                                        {{ mesure.imc }}
-                                                    </td>
-                                                </tr>
-                                            {% else %}
-                                                <tr>
-                                                    <td colspan="17">
-                                                        aucune entrée
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a class="btn btn-outline-warning" href="{{ path('app_adherant_edit',{'id' : adherant.id}) }}" style="float:left">Modifier</a>                            
-                                    </div>
-                                    <div class="col-6">
-                                        <a style="float:right">
-                                            {{ include('adherant/_delete_form.html.twig') }}
-                                        </a>  
-                                    </div>
                                 </div>
                             </div>
                             

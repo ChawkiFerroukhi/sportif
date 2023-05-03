@@ -28,6 +28,10 @@ class EquipeController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $equipes = $entityManager
             ->getRepository(Equipe::class)
             ->findAll();
@@ -48,7 +52,16 @@ class EquipeController extends AbstractController
     {
         $usr = $this->getUser();
         $equipe = new Equipe();
-        $form = $this->createForm(EquipeType::class, $equipe);
+        $doctors = $entityManager
+            ->getRepository(Doctor::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $coaches = $entityManager
+            ->getRepository(Coach::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(EquipeType::class, $equipe,[
+            'doctors' => $doctors,
+            'coachs' => $coaches,
+        ]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -139,7 +152,16 @@ class EquipeController extends AbstractController
     public function edit(Request $request, Equipe $equipe, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        $form = $this->createForm(EquipeType::class, $equipe);
+        $doctors = $entityManager
+            ->getRepository(Doctor::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $coaches = $entityManager
+            ->getRepository(Coach::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(EquipeType::class, $equipe,[
+            'doctors' => $doctors,
+            'coachs' => $coaches,
+        ]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)

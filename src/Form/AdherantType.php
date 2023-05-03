@@ -82,11 +82,11 @@ class AdherantType extends AbstractType
                 'placeholder' => 'Choisir un club',
                 'required' => false,
             ])
-            ->add('supervisorId', EntityType::class, [
-                'class' => Supervisor::class,
+            ->add('supervisorId',ChoiceType::class,[
+                'choices' => $options['supervisors'],
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un parent',
-                'required' => false,
+                'required' => false
             ])
 
             
@@ -147,6 +147,7 @@ class AdherantType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Adherant::class,
+            'supervisors' => [],
         ]);
     }
 }

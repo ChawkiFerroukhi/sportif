@@ -6,6 +6,7 @@ use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class NoteType extends AbstractType
@@ -21,6 +22,12 @@ class NoteType extends AbstractType
             ->add('adherantid', ChoiceType::class, [
                 'choices' => $options['choices_adh'],
                 'choice_label' => 'nom', // optional: specify the property to use as the label
+            ])
+            ->add('observation',CKEditorType::class,[
+                'attr' => [
+                    'placeholder' => 'Observation',
+                ],
+                'required' => true
             ])
         ;
     }

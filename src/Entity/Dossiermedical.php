@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Dossiermedical
  *
- * @ORM\Table(name="DossierMedical", uniqueConstraints={@ORM\UniqueConstraint(name="DossierMedical_adherantId_unique", columns={"adherantId"})}, indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="DossierMedical", uniqueConstraints={@ORM\UniqueConstraint(name="DossierMedical_adherantid_unique", columns={"adherantid"})}, indexes={@ORM\Index(name="clubId", columns={"clubId"})})
  * @ORM\Entity
  */
 class Dossiermedical
@@ -43,7 +43,7 @@ class Dossiermedical
      *
      * @ORM\ManyToOne(targetEntity="Club")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="clubId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
     private $clubid;
@@ -53,10 +53,10 @@ class Dossiermedical
      *
      * @ORM\ManyToOne(targetEntity="Adherant")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="adherantId", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="adherantid", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
-    private $adherantId;
+    private $adherantid;
 
     /**
      *
@@ -107,12 +107,12 @@ class Dossiermedical
 
     public function getAdherantid(): ?Adherant
     {
-        return $this->adherantId;
+        return $this->adherantid;
     }
 
-    public function setAdherantid(?Adherant $adherantId): self
+    public function setAdherantid(?Adherant $adherantid): self
     {
-        $this->adherantId = $adherantId;
+        $this->adherantid = $adherantid;
 
         return $this;
     }

@@ -57,7 +57,10 @@ class AdherantController extends AbstractController
         }
         $section = new Section();
         $adherant = new Adherant();
-        $form = $this->createForm(AdherantType::class, $adherant);
+        $supervisors = $entityManager
+            ->getRepository(Supervisor::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -140,7 +143,10 @@ class AdherantController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $form = $this->createForm(AdherantType::class, $adherant);
+        $supervisors = $entityManager
+        ->getRepository(Supervisor::class)
+        ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors]);        
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
