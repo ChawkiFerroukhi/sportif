@@ -1,0 +1,70 @@
+{% extends 'base_front.html.twig' %}
+{% block title %}
+Blog {{ section.nom }} {{ section.clubid.nom }}
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="logo">
+                            <h2><a href="{{ path('app_blog_front_list',{'id' : section.id}) }}">{{ section.nom }}</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>                    
+        <section class="blog-post-area">
+            <div class="container">
+                <div class="row">
+                    <div class="blog-post-area-style">
+                        <div class="col-12">
+                            <div class="single-post-big">
+                                <div class="big-image" style="
+                                background-color:{{ section.clubid.color }};
+                                width:45%;
+                                ">
+                                    <img src="{{ vich_uploader_asset(section.clubid, 'logoFile') }}" alt="" style="width:24em;height:24em;">
+                                </div>
+                                <div class="big-text">
+                                    <h3><a href="#">{{section.nom}}</a></h3>
+                                    <p>{{ section.description|raw }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="single-post">
+                                <hr>
+                                <h3><a href="#">Publications</a></h3>
+                                <hr>
+                            </div>
+                        </div>
+                        {% for blg in blogs %}
+                        {% if blg.isVisible %}
+                        <div class="col-md-3">
+                            <div class="single-post">
+                                <img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;">
+                                <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
+                                <h4><span>
+                                {% if blg.createdat == blg.updatedat %}
+                                    {{ blg.createdat|date('d M Y') }}
+                                {% else %} 
+                                    {{ blg.updatedat|date('d M Y') }}
+                                {% endif %}
+                                </span></h4>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base_front.html.twig' %}
+{% block title %}
+{{ blog.title }} 
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="logo">
+                            <h2><a href="{{ path('app_blog_front_list',{'id' : blog.sectionid.id}) }}">{{ blog.sectionid.nom }}</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="bg-text-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-text" style="
+                        background-image: url('{{ vich_uploader_asset(blog, 'coverFile') }}');
+                        height:50em;
+                        ">
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="blog-post-area">
+            <div class="container">
+                <div class="row">
+                    <div class="blog-post-area-style">
+                        <div class="col-12">
+                            <div class="single-post-big">
+                                <div class="big-image">
+                                    {% if blog.video is not null %} 
+                                    <iframe style="width:31.5em;height:20em;"
+                                    src="{{ blog.video }}"
+                                    allowfullscreen>
+                                    </iframe> 
+                                    {% endif %}                                    
+                                </div>
+                                <div class="big-text">
+                                <h3><a href="#">{{blog.title}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="post">
+                                <hr>
+                                <h4><span class="date">
+                                <p>{{ blog.content|raw }}</p>
+                                </span></h4>
+                                <hr>
+                                <h4><span class="author">
+                                {% if blog.createdat == blog.updatedat %}
+                                Publié le <span clas="author-name">{{ blog.createdat|date('d M Y') }}</span>
+                                {% else %} 
+                                Modifié le <span clas="author-name">{{ blog.updatedat|date('d M Y') }}</span>
+                                {% endif %}
+                                </span>
+                                </h4>
+                            </div>
+                        </div> 
+                        <div class="col-md-12">
+                            <div class="single-post">
+                                <hr>
+                                <h3><a href="#">Publications Similaires</a></h3>
+                                <hr>
+                            </div>
+                        </div>
+                        {% for blg in blogs %}
+                        {% if blg.isVisible %}
+                        {% if blg.id != blog.id %}
+                        <div class="col-md-3">
+                            <div class="single-post">
+                                <img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;">
+                                <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
+                                <h4><span>
+                                {% if blg.createdat == blg.updatedat %}
+                                    {{ blg.createdat|date('d M Y') }}
+                                {% else %} 
+                                    {{ blg.updatedat|date('d M Y') }}
+                                {% endif %}
+                                </span></h4>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

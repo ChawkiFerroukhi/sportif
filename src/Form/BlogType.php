@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Blog;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+class BlogType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('title')
+            ->add('video',null,[
+                'required' => false,'attr' => array(
+                    'placeholder' => 'URL Youtube..'
+                )
+            ])
+            ->add('content',CKEditorType::class,[
+                'attr' => [
+                    'placeholder' => 'Content',
+                ],
+                'required' => true
+            ])
+            ->add('isVisible',ChoiceType::class,[
+                'choices' => [
+                    "Oui" => true,
+                    "Non" => false
+                ],
+                'required' => true
+            ])
+            ->add('coverFile', VichImageType::class, [
+                'required' => false,
+                'image_uri' => false,
+                'delete_label' => false,
+                'allow_delete' => false,
+                'download_label' => false,
+            ]);
+            
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Blog::class,
+        ]);
+    }
+}
