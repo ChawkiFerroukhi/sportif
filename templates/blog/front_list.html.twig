@@ -27,25 +27,29 @@ Blog {{ section.nom }} {{ section.clubid.nom }}
                     </div>
                 </div>
             </div>
-        </header>                    
+        </header>         
+        <hr>           
         <section class="blog-post-area">
             <div class="container">
                 <div class="row">
                     <div class="blog-post-area-style">
-                        <div class="col-12">
-                            <div class="single-post-big">
-                                <div class="big-image" style="
-                                background-color:{{ section.clubid.color }};
-                                width:45%;
-                                ">
-                                    <img src="{{ vich_uploader_asset(section.clubid, 'logoFile') }}" alt="" style="width:24em;height:24em;">
-                                </div>
-                                <div class="big-text">
-                                    <h3><a href="#">{{section.nom}}</a></h3>
-                                    <p>{{ section.description|raw }}</p>
-                                </div>
-                            </div>
+                        <div class="col-md-12" style="
+                            text-align:center;
+                        ">    
+                            <h3 style="
+                            font-family: Geometria;
+                            font-weight: 700;
+                            font-size: 40px;
+                            color: #061e37;
+                            ">
+                                {{section.nom}}
+                            </h3>
                         </div>
+                        <div class="post">
+                            <h4><span class="date">
+                                <p>{{ section.description|raw }}</p>
+                            </span></h4>  
+                        </div>                      
                         <div class="col-md-12">
                             <div class="single-post">
                                 <hr>
