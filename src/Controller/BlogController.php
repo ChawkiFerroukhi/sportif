@@ -20,7 +20,9 @@ class BlogController extends AbstractController
     {
         $usr = $this->getUser();
         if(!$blog->getIsVisible()) {
-            return $this->redirectToRoute('app_blog_front_list', ['id' => $blog->getSectionid()->getId() ], Response::HTTP_SEE_OTHER);
+            if(!isset($usr) || !($usr->getRoles()['ROLE_ADMIN'] && $usr->getClubid() == $blog->getClubid())) {
+                return $this->redirectToRoute('app_blog_front_list', ['id' => $blog->getSectionid()->getId() ], Response::HTTP_SEE_OTHER);
+            }
         }
        
         $blogs = $entityManager->getRepository(Blog::class)

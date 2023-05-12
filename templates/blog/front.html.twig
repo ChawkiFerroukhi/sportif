@@ -2,7 +2,25 @@
 {% block title %}
 {{ blog.title }} 
 {% endblock %}
-
+{% block style %}
+<style>
+    .edit {
+    border: 2px solid #40c4ff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: white;
+    color: #40c4ff;
+    }
+    .edit:hover {
+    background: #40c4ff;
+    color: white;
+    }
+    .edit:focus {
+    outline: none;
+    }
+</style>
+{% endblock %}
 {% block content %}
 
 
@@ -39,9 +57,11 @@
             <div class="container">
                 <div class="row">
                     <div class="blog-post-area-style">
+                        
                         <div class="col-md-12" style="
                             text-align:center;
                         ">
+                            
                             <h3 style="
                             font-family: Geometria;
                             font-weight: 700;
@@ -49,6 +69,11 @@
                             color: #061e37;
                             ">
                                 {{blog.title}}
+                                {% if app.user.roles['ROLE_ADMIN'] is defined and app.user.clubid == blog.clubid %}
+                                <a  class="btn-outline edit" href="{{ path('app_blog_edit',{'id' : blog.id}) }}" style="float:right">
+                                    Modifier
+                                </a>                        
+                                {% endif %}
                             </h3>
                             <hr>
                         </div>
@@ -76,6 +101,8 @@
                                 {% endif %}
                                 </span>
                                 </h4>
+                                
+                                
                                 
                             </div>
                         </div> 
