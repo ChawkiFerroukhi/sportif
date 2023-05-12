@@ -13,7 +13,16 @@ Blog {{ section.nom }} {{ section.clubid.nom }}
                 <div class="row">
                     <div class="col-md-2">
                         <div class="logo">
-                            <h2><a href="{{ path('app_blog_front_list',{'id' : section.id}) }}">{{ section.nom }}</a></h2>
+                            <img src="{{ vich_uploader_asset(section.clubid, 'logoFile') }}" style="height:6em;">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="menu">
+                            <ul>
+                            {% for stn in sections %}
+                                <li {% if stn.id == section.id %}class="active"{% endif %}><a href="{{ path('app_blog_front_list',{'id' : stn.id})}}">{{ stn.nom }}</a></li>
+                            {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>

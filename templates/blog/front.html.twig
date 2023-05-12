@@ -13,7 +13,16 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="logo">
-                            <h2><a href="{{ path('app_blog_front_list',{'id' : blog.sectionid.id}) }}">{{ blog.sectionid.nom }}</a></h2>
+                            <img src="{{ vich_uploader_asset(blog.clubid, 'logoFile') }}" style="height:6em;">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="menu">
+                            <ul>
+                            {% for stn in sections %}
+                                <li {% if stn.id == blog.sectionid.id %}class="active"{% endif %}><a href="{{ path('app_blog_front_list',{'id' : stn.id})}}">{{ stn.nom }}</a></li>
+                            {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -22,44 +31,43 @@
         <section class="bg-text-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="bg-text" style="
-                        background-image: url('{{ vich_uploader_asset(blog, 'coverFile') }}');
-                        height:50em;
-                        ">
-
-                            
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
+        <hr>
         <section class="blog-post-area">
             <div class="container">
                 <div class="row">
                     <div class="blog-post-area-style">
-                        <div class="col-12">
-                            <div class="single-post-big">
-                                <div class="big-image">
-                                    {% if blog.video is not null %} 
-                                    <iframe style="width:31.5em;height:20em;"
-                                    src="{{ blog.video }}"
-                                    allowfullscreen>
-                                    </iframe> 
-                                    {% endif %}                                    
-                                </div>
-                                <div class="big-text">
-                                <h3><a href="#">{{blog.title}}</a></h3>
-                                </div>
-                            </div>
+                        <div class="col-md-12" style="
+                            text-align:center;
+                        ">
+                            <h3 style="
+                            font-family: Geometria;
+                            font-weight: 700;
+                            font-size: 40px;
+                            color: #061e37;
+                            ">
+                                {{blog.title}}
+                            </h3>
+                            <hr>
+                        </div>
+                        <div class="col-md-12">
+                            <img src="{{ vich_uploader_asset(blog, 'coverFile') }}">
+                            <hr>
                         </div>
                         <div class="col-md-12">
                             <div class="post">
-                                <hr>
                                 <h4><span class="date">
                                 <p>{{ blog.content|raw }}</p>
                                 </span></h4>
                                 <hr>
+                                {% if blog.video is not null %} 
+                                <iframe style="width:75em;height:40em;"
+                                src="{{ blog.video }}"
+                                allowfullscreen>
+                                </iframe> 
+                                {% endif %}  
                                 <h4><span class="author">
                                 {% if blog.createdat == blog.updatedat %}
                                 Publié le <span clas="author-name">{{ blog.createdat|date('d M Y') }}</span>
@@ -68,6 +76,7 @@
                                 {% endif %}
                                 </span>
                                 </h4>
+                                
                             </div>
                         </div> 
                         <div class="col-md-12">

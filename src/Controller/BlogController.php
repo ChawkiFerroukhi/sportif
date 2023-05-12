@@ -22,12 +22,17 @@ class BlogController extends AbstractController
         if(!$blog->getIsVisible()) {
             return $this->redirectToRoute('app_blog_front_list', ['id' => $blog->getSectionid()->getId() ], Response::HTTP_SEE_OTHER);
         }
+       
         $blogs = $entityManager->getRepository(Blog::class)
         ->findBy(["sectionid" => $blog->getSectionid()]);
+        $sections = $entityManager
+        ->getRepository(Section::class)
+        ->findBy(['clubid' => $blog->getSectionid()->getClubid()]);
         $this->user = $usr;
         return $this->render('blog/front.html.twig', [
             'blogs' => $blogs,
             'blog' => $blog,
+            "sections" => $sections,
         ]);
     }
     #[Route('/list/{id}', name: 'app_blog_front_list', methods: ['GET'])]
@@ -36,10 +41,14 @@ class BlogController extends AbstractController
         $usr = $this->getUser();
         $blogs = $entityManager->getRepository(Blog::class)
         ->findBy(["sectionid" => $section->getId()]);
+        $sections = $entityManager
+        ->getRepository(Section::class)
+        ->findBy(['clubid' => $section->getClubid()]);
         $this->user = $usr;
         return $this->render('blog/front_list.html.twig', [
             'blogs' => $blogs,
-            'section' => $section
+            'section' => $section,
+            'sections' => $sections,
         ]);
     }
     #[Route('/section/{id}', name: 'app_blog_index', methods: ['GET'])]
