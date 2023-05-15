@@ -32,6 +32,27 @@
                         <div class="card-header">Fiche Paiement</div>
                         <div class="card-body">
                             <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Total</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ payment.total }} DT</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Mode de Paiement</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ payment.mode }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Status de Paiement</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ payment.status }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
@@ -45,22 +66,6 @@
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Paiement</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ payment.date|date('d/m/Y') }}</p>
-                                    <hr>  
-                                </div>
-                            </div>
-
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-6">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Total</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ payment.total }} DT</p>
-                                    <hr>  
-                                </div>
-                                <div class="col-md-6">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Mode de Paiement</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ payment.mode }}</p>
                                     <hr>  
                                 </div>
                             </div>

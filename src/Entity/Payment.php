@@ -60,6 +60,13 @@ class Payment
     /**
      * @var string
      *
+     * @ORM\Column(name="status", type="string", length=191, nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="designation", type="string", length=191, nullable=false)
      */
     private $designation;
@@ -157,6 +164,18 @@ class Payment
     public function setMode(string $mode): self
     {
         $this->mode = $mode;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

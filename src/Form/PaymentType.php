@@ -31,6 +31,14 @@ class PaymentType extends AbstractType
                     'Cash' => 'Cash',
                 ]
             ])
+            ->add('status',ChoiceType::class,[
+                'choices' => [
+                    'En Cours' => 'En Cours',
+                    'Payé' => 'Payé',
+                    'Annulé' => 'Annulé',
+                    'Réfusé' => 'Réfusé',
+                ]
+            ])
             ->add('ref',null,[
                 'required' => false,
                 'attr' => [
