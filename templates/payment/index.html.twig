@@ -15,14 +15,8 @@
                                 <div class="page-header-icon">
                                     <i data-feather="user"></i>
                                 </div>
-                                Liste des Masters                       
+                                Liste des Paiements                        
                             </h1>
-                        </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_master_new') }}">
-                                <i class="me-1" data-feather="plus"></i>
-                                Ajouter Master                                                                                   
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -31,41 +25,45 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
-                <div class="card-body table-responsive">
-                    <table class="table" id="datatablesSimple">
+            <div class="col-12 col-xl-auto mb-3" >
+                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_payment_new') }}" style="float:right">
+                        <i class="me-1" data-feather="plus"></i>
+                        Ajouter Paiement                                                                                    
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
                         <thead>
                             <tr>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
-                                    <th>CIN</th>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Adherant</th>
+                                    <th>Total</th>
+                                    <th>Mode</th>
                                     <th>Référence</th>
-                                    
                                     <th>Actions</th>
                                 </tr>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for master in masters %}
+                            {% for payment in payments %}
                                 <tr>
-                                    <td>{{ master.id }}</td>
-                                    <td>{{ master.nom }}</td>
-                                    <td>{{ master.prenom }}</td>
-                                    <td>{{ master.numTel }}</td>
-                                    <td>{{ master.cin }}</td>
-                                    <td>{{ master.ref }}</td>
-                                    
+                                    <td>{{ payment.id }}</td>
+                                    <td>{{ payment.date|date('d/m/Y') }}</td>
+                                    <td><a href="{{ path('app_adherant_show',{'id' : payment.adherantid.id}) }}">{{ payment.adherantid.nom }} {{ payment.adherantid.prenom }}</a></td>
+                                    <td>{{ payment.total }} DT</td>
+                                    <td>{{ payment.mode }}</td>
+                                    <td>{{ payment.ref }}</td>
                                     <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_master_show', {'id': master.id}) }}">
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_show', {'id': payment.id}) }}">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_master_edit', {'id': master.id}) }}">
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_edit', {'id': payment.id}) }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
-                                            {{ include('master/_delete_form.html.twig') }}
+                                            {{ include('payment/_delete_form.html.twig') }}
                                         </a>
                                     </td>
                                 </tr>

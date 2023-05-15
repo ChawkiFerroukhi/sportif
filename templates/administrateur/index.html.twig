@@ -37,11 +37,12 @@
                         <thead>
                             <tr>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nom</th>
                                     <th>Prenom</th>
-                                    <th>Email</th>
-                                    <th>Num Tel</th>
+                                    <th>Numero Telephone</th>
                                     <th>CIN</th>
+                                    <th>Référence</th>
                                     <th>Actions</th>
                                 </tr>
                             </tr>
@@ -49,11 +50,12 @@
                         <tbody>
                             {% for administrateur in administrateurs %}
                                 <tr>
+                                    <td>{{ administrateur.id }}</td>
                                     <td>{{ administrateur.nom }}</td>
                                     <td>{{ administrateur.prenom }}</td>
-                                    <td>{{ administrateur.Email }}</td>
                                     <td>{{ administrateur.numTel }}</td>
                                     <td>{{ administrateur.cin }}</td>
+                                    <td>{{ administrateur.ref }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_administrateur_show', {'id': administrateur.id}) }}">
                                             <i class="fa-solid fa-eye"></i>

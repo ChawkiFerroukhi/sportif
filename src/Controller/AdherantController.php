@@ -7,6 +7,7 @@ use App\Entity\Supervisor;
 use App\Entity\Equipe;
 use App\Entity\Dossiermedical;
 use App\Entity\Section;
+use App\Entity\Niveau;
 use App\Form\AdherantType;
 use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +57,40 @@ class AdherantController extends AbstractController
         ]);
     }
 
+    #[Route('/section/{id}', name: 'app_adherant_index_section', methods: ['GET'])]
+    public function indexSection(Section $section,EntityManagerInterface $entityManager): Response
+    {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_adherant_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        $adherants = [];
+        $niveaux = $entityManager
+            ->getRepository(Niveau::class)
+            ->findBy(['sectionid' => $section->getId()]);
+        foreach($niveaux as $niveau) {
+            $equipes = $entityManager
+                ->getRepository(Equipe::class)
+                ->findBy(['niveauid' => $niveau->getId()]);
+            foreach($equipes as $equipe) {
+                $tmp = $entityManager
+                    ->getRepository(Adherant::class)
+                    ->findBy(['equipeid' => $equipe->getId()]);
+                $adherants = array_merge($adherants,$tmp);
+            }
+        }
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $this->user = $usr;
+        return $this->render('adherant/index.html.twig', [
+            'adherants' => $adherants,
+            'sections' => $sections,
+            'section' => $section,
+        ]);
+    }
     #[Route('/new', name: 'app_adherant_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

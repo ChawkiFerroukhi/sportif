@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% block content %}
-    <main>
+   <main>
         {% if app.user.roles['ROLE_MASTER'] is defined %}
         <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
     {% else %}
@@ -15,7 +16,7 @@
                                 <div class="page-header-icon">
                                     <i data-feather="plus"></i>
                                 </div>
-                                Modifier Administrateur                           
+                                Modifier Paiement                           
                             </h1>
                         </div>
                     </div>
@@ -23,7 +24,7 @@
             </div>
         </header>
         <div class="container-xl px-4 mt-4">
-            {{ include('administrateur/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+            {{ include('payment/_form.html.twig') }}
         </div>
     </main>
 {% endblock %}

@@ -36,12 +36,12 @@
                         <thead>
                             <tr>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nom</th>
                                     <th>Prenom</th>
-                                    <th>D° Naissance</th>
-                                    <th>Equipe</th>
-                                    <th>Num Tel</th>
-                                    <th>Email</th>
+                                    <th>Numero Telephone</th>
+                                    <th>Licence</th>
+                                    <th>Référence</th>
                                     <th>Actions</th>
                                 </tr>
                             </tr>
@@ -49,12 +49,12 @@
                         <tbody>
                             {% for adherant in adherants %}
                                 <tr>
+                                    <td>{{ adherant.id }}</td>
                                     <td>{{ adherant.nom }}</td>
                                     <td>{{ adherant.prenom }}</td>
-                                    <td>{{ adherant.birthdate ? adherant.birthdate|date('m/d/Y') : '' }}</td>
-                                    <td>{{ adherant.equipeid.nom }}</td>
-                                    <td>{{ adherant.Email }}</td>
                                     <td>{{ adherant.numTel }}</td>
+                                    <td>{{ adherant.licence }}</td>
+                                    <td>{{ adherant.ref }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_adherant_show', {'id': adherant.id}) }}">
                                             <i class="fa-solid fa-eye"></i>

@@ -41,7 +41,7 @@
                                     <th>Prenom</th>
                                     <th>Numero Telephone</th>
                                     <th>CIN</th>
-                                    <th>Adresse</th>
+                                    <th>Référence</th>
                                     
                                     <th>Actions</th>
                                 </tr>
@@ -55,7 +55,7 @@
                                     <td>{{ supervisor.prenom }}</td>
                                     <td>{{ supervisor.numTel }}</td>
                                     <td>{{ supervisor.cin }}</td>
-                                    <td>{{ supervisor.adresse }}</td>
+                                    <td>{{ supervisor.ref }}</td>
                                     
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_supervisor_show', {'id': supervisor.id}) }}">

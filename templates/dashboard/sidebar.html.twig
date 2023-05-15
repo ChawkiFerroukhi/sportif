@@ -121,6 +121,13 @@
                     </div>
                     {{app.user.clubid.nom}}
                 </a>
+                {% if app.user.roles['ROLE_ADMIN'] is defined %}
+                <a class="nav-link" href="{{ path('app_payment_index') }}">
+                    <div class="nav-link-icon">
+                        <i data-feather="dollar-sign"></i>
+                    </div>
+                    Paiements                                                         
+                </a>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon">
                         <i data-feather="menu"></i>
@@ -130,7 +137,6 @@
                         <i class="fas fa-angle-down"></i>
                     </div>
                 </a>
-                {% if app.user.roles['ROLE_ADMIN'] is defined %}
                 <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                         <a class="nav-link" href="{{ path('app_adherant_index')}}">
@@ -150,7 +156,10 @@
                         </a>
                     </nav>
                 </div>
+                
                 {% endif %}
+                <hr>
+                {% if section.id is not null %}
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="nav-link-icon">
                         <i data-feather="menu"></i>
@@ -186,7 +195,8 @@
                             {% endfor %}
                         {% endfor %}
                     </nav>
-                </div>  
+                </div>
+                {% endif %} 
                 {% endif %}
                 <!-- Sidenav Accordion (Pages)-->
                 

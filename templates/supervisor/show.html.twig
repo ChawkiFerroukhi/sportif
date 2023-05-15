@@ -19,13 +19,6 @@
                                 Fiche Parent
                             </h1>
                         </div>
-                       <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_supervisor_index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Liste des Parents                           
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </header>
@@ -161,9 +154,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    <a class="btn btn-outline-warning" href="{{ path('app_supervisor_edit',{'id' : supervisor.id}) }}" style="float:left">Modifier</a>
-                                    <a class="btn btn-outline-danger" href="{{ path('app_supervisor_delete',{'id' : supervisor.id}) }}" style="float:right">Supprimer</a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_supervisor_edit',{'id' : supervisor.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('supervisor/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
                                 </div>
                             </div>
                             
