@@ -79,8 +79,8 @@
                     </div>
                 </div>
 
-                {% if app.user.roles['ROLE_MASTER'] is defined%}
-                 <div class="row gx-3 mb-3">
+                {% if app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
                     <div class="col-md-12">
                         {{ form_label(form.clubid, 'Club', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}                               
@@ -89,7 +89,11 @@
                         {{ form_errors(form.clubid) }}
                     </div>
                 </div>
-                {% endif %}
+                {% else %} 
+                <div hidden>
+                    {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}   
+                </div>                              
+                {% endif %} 
                 <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>

@@ -26,18 +26,27 @@
         <!-- Main page content-->
         <div class="container-xl px-4 mt-4">
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-4">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Image</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(adherant, 'pictureFile') }}" alt="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
                     <!-- Account details card-->
                     <div class="card mb-4">
                         <div class="card-header">Fiche Adhérant
-                        {% if app.user.roles['ROLE_ADMIN'] is defined %}
+                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                         <a class="btn btn-outline-success" href="{{ path('app_payment_index_adherant',{'id' : adherant.id}) }}" style="float:right">Liste des Paiements</a>
                         {% endif %}
-                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_SUPERVISOR'] is defined or app.user.roles['ROLE_COACH'] is defined%}
+                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and adherant.supervisorid.id == app.user.id) or app.user.roles['ROLE_COACH'] is defined%}
                         <a class="btn btn-outline-success" href="{{ path('app_note_index',{'id' : adherant.id}) }}" style="float:right">Liste des Notes</a>
                         {% endif %}
-                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_SUPERVISOR'] is defined or app.user.roles['ROLE_DOCTOR'] is defined%}
-                        <a class="btn btn-outline-success" href="{{ path('app_dossiermedical_show',{'id' : adherant.dossierMedicalId.id}) }}" style="float:right">Dossier Medical</a>
+                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and adherant.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
+                        <a class="btn btn-outline-success" href="{{ path('app_dossiermedical_show',{'id' : adherant.dossiermedicalid.id}) }}" style="float:right">Dossier Medical</a>
                         {% endif %}
                         </div>
                         <div class="card-body">
@@ -187,7 +196,15 @@
                                     <hr>
                                 </div>
                             </div>
-                            
+                            <hr>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_adherant_edit',{'id' : adherant.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('adherant/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -69,7 +69,7 @@
                             color: #061e37;
                             ">
                                 {{blog.title}}
-                                {% if app.user.roles['ROLE_ADMIN'] is defined and app.user.clubid == blog.clubid %}
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined and app.user.clubid == blog.clubid %}
                                 <a  class="btn-outline edit" href="{{ path('app_blog_edit',{'id' : blog.id}) }}" style="float:right">
                                     Modifier
                                 </a>                        

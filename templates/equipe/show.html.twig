@@ -116,12 +116,14 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                 <div class="col-12">
                                     <a class="btn btn-outline-warning" href="{{ path('app_equipe_edit',{'id' : equipe.id}) }}" style="float:left">Modifier</a>
                                     <a style="float:right">
                                         {{ include('equipe/_delete_form.html.twig') }}
                                     </a>
                                 </div>
+                                {% endif %}
                             </div>
                             
                         </div>

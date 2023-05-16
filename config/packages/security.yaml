@@ -38,6 +38,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/master/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/blog/front/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/blog/list/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdministrateurType extends AbstractType
 {
@@ -31,8 +32,9 @@ class AdministrateurType extends AbstractType
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
-            ->add('clubid',null,[
+            ->add('clubid', null, [
                 'label' => 'Club',
+                'choice_label' => 'nom',
                 'placeholder' => 'Choisir un club',
                 'required' => false,
             ]);

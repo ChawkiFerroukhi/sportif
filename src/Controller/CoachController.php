@@ -69,7 +69,11 @@ class CoachController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $coach->setCreatedAt(new \DateTime());
             $coach->setUpdatedAt(new \DateTime());
-            $coach->setRoles(['ROLE_COACH']);
+            if(!empty($form->get('clubid')->getData())) {
+                $coach->setClubid($form->get('clubid')->getData());
+            } else {
+                $coach->setClubid($usr->getClubid());
+            }
             $coach->setPassword($this->passwordHasher->hashPassword(
                 $coach,
                 $form->get('password')->getData()

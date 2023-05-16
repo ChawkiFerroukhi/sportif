@@ -5,14 +5,18 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Supervisor;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Adherant
  *
  * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="categrieId", columns={"categrieId"}), @ORM\Index(name="Deme_categorieId", columns={"Deme_categorieId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
-class Adherant extends User
+class Adherant extends User implements \Serializable
 {
      /**
      * @ORM\Id
@@ -103,6 +107,18 @@ class Adherant extends User
      * @ORM\Column(name="maladie", type="string", length=191, nullable=false)
      */
     private $maladie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $picture;
+    
+
+    /**
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="picture")
+     * @var File|null
+    */
+    private  $pictureFile = null;
 
     /**
      * @var \Dossiermedical
@@ -395,6 +411,58 @@ class Adherant extends User
     public function getNomprenom()
     {
         return $this->nom.' '.$this->prenom;
+    }
+    /**
+    * @see UserInterface
+    */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_ADHERANT';
+        $roles = array_unique($roles);
+        $rls = [];
+        foreach($roles as $role) {
+            $rls[$role] = true;
+        }
+
+         return $rls;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    public function setPictureFile(?File $pictureFile): void
+    {
+        $this->pictureFile = $pictureFile;
+
+        if ($pictureFile instanceof UploadedFile) {
+            $this->updatedat = new \DateTime();
+        }
+    }
+
+    public function serialize()
+    {
+        $this->pictureFile = base64_encode($this->pictureFile);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->pictureFile = base64_decode($this->pictureFile);
+
     }
 
 

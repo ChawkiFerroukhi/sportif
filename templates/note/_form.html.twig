@@ -27,8 +27,8 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">
-                        {{ form_label(form.note, 'Note', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.note, {'attr':{'class':'form-control' }}) }}                               
+                        {{ form_label(form.note, 'Note (%)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.note, {'attr':{'class':'form-control','min' : 0,'max':100 }}) }}                               
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.note) }}

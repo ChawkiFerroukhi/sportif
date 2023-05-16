@@ -109,6 +109,7 @@
                                 </div>
                                 {% endif %}
                             </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="row">
@@ -122,6 +123,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                             
                         </div>
                     </div>

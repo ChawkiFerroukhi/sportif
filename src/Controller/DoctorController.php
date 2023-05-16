@@ -68,7 +68,11 @@ class DoctorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $doctor->setCreatedAt(new \DateTime());
             $doctor->setUpdatedAt(new \DateTime());
-            $doctor->setRoles(['ROLE_DOCTOR']);
+            if(!empty($form->get('clubid')->getData())) {
+                $doctor->setClubid($form->get('clubid')->getData());
+            } else {
+                $doctor->setClubid($usr->getClubid());
+            }
             $doctor->setPassword($this->passwordHasher->hashPassword(
                 $doctor,
                 $form->get('password')->getData()

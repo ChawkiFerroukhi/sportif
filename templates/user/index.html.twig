@@ -18,12 +18,6 @@
                                 Liste des Users                       
                             </h1>
                         </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ path('app_user_new') }}">
-                                <i class="me-1" data-feather="plus"></i>
-                                Ajouter User                                                                                   
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -31,6 +25,14 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
+            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="col-12 col-xl-auto mb-3">
+                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_user_new') }}" style="float:right">
+                        <i class="me-1" data-feather="plus"></i>
+                        Ajouter User                                                                                   
+                    </a>
+                </div>
+            {% endif %}
                 <div class="card-body table-responsive">
                     <table class="table" id="datatablesSimple">
                         <thead>

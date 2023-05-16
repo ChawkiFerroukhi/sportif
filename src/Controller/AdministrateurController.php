@@ -68,7 +68,11 @@ class AdministrateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
-            $administrateur->setRoles(['ROLE_ADMIN']);
+            if(!empty($form->get('clubid')->getData())) {
+                $administrateur->setClubid($form->get('clubid')->getData());
+            } else {
+                $administrateur->setClubid($usr->getClubid());
+            }
             $administrateur->setPassword($this->passwordHasher->hashPassword(
                 $administrateur,
                 $form->get('password')->getData()

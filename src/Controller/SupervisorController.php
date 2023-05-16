@@ -71,7 +71,6 @@ class SupervisorController extends AbstractController
 
             $supervisor->setCreatedAt(new \DateTime());
             $supervisor->setUpdatedAt(new \DateTime());
-            $supervisor->setRoles(['ROLE_SUPERVISOR']);
             if(!empty($form->get('clubid')->getData())) {
                 $supervisor->setClubid($form->get('clubid')->getData());
             } else {

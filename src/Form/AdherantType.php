@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdherantType extends AbstractType
 {
@@ -32,6 +33,13 @@ class AdherantType extends AbstractType
                 'second_options' => ['label' => 'Repeat Password'],
             ])
             ->add('ref')
+            ->add('pictureFile', VichImageType::class, [
+                'required' => false,
+                'image_uri' => false,
+                'delete_label' => false,
+                'allow_delete' => false,
+                'download_label' => false,
+            ])
             ->add('nom')
             ->add('prenom')
             ->add('birthdate',DateType::class, [ 

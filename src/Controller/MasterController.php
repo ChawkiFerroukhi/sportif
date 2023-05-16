@@ -47,14 +47,11 @@ class MasterController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
-        }
+        
         $section = new Section();
         $sections = $entityManager
             ->getRepository(Section::class)
-            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            ->findAll();
         $master = new Master();
         $form = $this->createForm(MasterType::class, $master);
         $form->handleRequest($request);
@@ -63,7 +60,6 @@ class MasterController extends AbstractController
 
             $master->setCreatedAt(new \DateTime());
             $master->setUpdatedAt(new \DateTime());
-            $master->setRoles(['ROLE_MASTER']);
             $master->setPassword($this->passwordHasher->hashPassword(
                 $master,
                 $form->get('password')->getData()

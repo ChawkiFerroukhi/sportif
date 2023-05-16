@@ -156,6 +156,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                 <div class="row">
                                     <div class="col-6">
                                         <a class="btn btn-outline-warning" href="{{ path('app_coach_edit',{'id' : coach.id}) }}" style="float:left">Modifier</a>                            
@@ -166,6 +167,13 @@
                                         </a>  
                                     </div>
                                 </div>
+                                {% elseif app.user.roles['ROLE_COACH'] is defined and coach.id == app.user.id %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_coach_edit',{'id' : coach.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                             
                         </div>

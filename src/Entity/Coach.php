@@ -226,5 +226,19 @@ class Coach extends User
         return $this->nom.' '.$this->prenom;
     }
 
+    /**
+    * @see UserInterface
+    */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_COACH';
+        $roles = array_unique($roles);
+        $rls = [];
+        foreach($roles as $role) {
+            $rls[$role] = true;
+        }
 
+         return $rls;
+    }
 }

@@ -44,18 +44,20 @@
                                             <td>{{ equipe.clubid.nom }}</td>
                                             <td>{{ equipe.niveauid.nom }}</td>
                                             <td>
-                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_equipe_show', {'id': equipe.id}) }}">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_equipe_edit', {'id': equipe.id}) }}">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
-                                            {{ include('equipe/_delete_form.html.twig') }}
-                                        </a>
-                                    </td>
-                                           
-                                </tr>
+                                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_equipe_show', {'id': equipe.id}) }}">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
+                                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_equipe_edit', {'id': equipe.id}) }}">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                                    {{ include('equipe/_delete_form.html.twig') }}
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                                
+                                        </tr>
                                 {% else %}
                                 <tr>
                                     <td colspan="9">no records found</td>

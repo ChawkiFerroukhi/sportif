@@ -149,6 +149,7 @@
                                     </table>
                                 </div>
                             </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                 <div class="row">
                                     <div class="col-6">
                                         <a class="btn btn-outline-warning" href="{{ path('app_niveau_edit',{'id' : niveau.id}) }}" style="float=left">Modifier</a>                            
@@ -159,6 +160,7 @@
                                         </a>  
                                     </div>
                                 </div>
+                                {% endif %}
                             </div>
                             
                         </div>

@@ -47,6 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     protected ?string $ref;
 
+    
+
     /**
      * @var \Club
      *
@@ -189,6 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->nom.' '.$this->prenom;
     }
+    
+    
+    
 
     /*public function __toString()
     {

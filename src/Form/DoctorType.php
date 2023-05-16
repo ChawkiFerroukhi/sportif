@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class DoctorType extends AbstractType
 {
@@ -34,7 +35,7 @@ class DoctorType extends AbstractType
                 'label' => 'Club',
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un club',
-                'required' => true,
+                'required' => false,
             ])
         ;
     }

@@ -135,13 +135,18 @@ class AdherantController extends AbstractController
             $dossier->setCreatedAt(new \DateTime());
             $dossier->setUpdatedAt(new \DateTime());
             $dossier->setClubid($adherant->getEquipeid()->getClubid());
+            $dossier->setAdherantid($adherant);
             $entityManager->persist($dossier);
             $adherant->setDossierMedicaId($dossier);
-            $adherant->setRoles(['ROLE_ADHERANT']);
             $adherant->setPassword($this->passwordHasher->hashPassword(
                 $adherant,
                 $form->get('password')->getData()
             ));
+            if(!empty($form->get('clubid')->getData())) {
+                $adherant->setClubid($form->get('clubid')->getData());
+            } else {
+                $adherant->setClubid($usr->getClubid());
+            }
             if($form->get('supervisorId')->getData()) {
                 $adherant->setSupervisorId($form->get('supervisorId')->getData());
             } else if ($form->get('supervisor_nom')->getData()) {
@@ -187,7 +192,7 @@ class AdherantController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = new Section();
+        $section = $adherant->getEquipeid()->getNiveauid()->getSectionid();
         $this->user = $usr;
         return $this->render('adherant/show.html.twig', [
             'adherant' => $adherant,
@@ -200,20 +205,35 @@ class AdherantController extends AbstractController
     public function edit(Request $request, Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adheerant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()["app_adherant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
         $supervisors = $entityManager
         ->getRepository(Supervisor::class)
         ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors]);        
+        $equipes = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $equipes = $entityManager
+                ->getRepository(Equipe::class)
+                ->findAll();
+        } else {
+            $equipes = $entityManager
+                ->getRepository(Equipe::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        }
+        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors ,'equipes' => $equipes]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = new Section();
+        $section = $adherant->getEquipeid()->getNiveauid()->getSectionid();
         if ($form->isSubmitted() && $form->isValid()) {
+            if(!empty($form->get('clubid')->getData())) {
+                $adherant->setClubid($form->get('clubid')->getData());
+            } else {
+                $adherant->setClubid($usr->getClubid());
+            }
             $adherant->setPassword($this->passwordHasher->hashPassword(
                 $adherant,
                 $form->get('password')->getData()

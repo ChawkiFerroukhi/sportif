@@ -43,7 +43,7 @@
         <!-- Alerts Dropdown-->
         {% if app.user.roles['ROLE_MASTER'] is not defined %}
             {% for sctn in sections %}
-            <a class="nav-link {% if sctn.id == section.id %}active{% endif %}" href="{{ path('app_section_show',{'id':sctn.id})}}">
+            <a class="nav-link {% if section.id is defined and sctn.id == section.id %}active{% endif %}" href="{{ path('app_section_show',{'id':sctn.id})}}">
                 {{sctn.nom}}
             </a>
             {% endfor %}
@@ -76,16 +76,17 @@
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="img-fluid" src="{{asset('back-office/assets/img/illustrations/profiles/profile-1.png') }}" />
+                <img class="img-fluid" src="{% if app.user.clubid is not null %}{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}{% else %}{{asset('back-office/assets/img/illustrations/profiles/profile-1.png') }}{% endif %}" />
             </a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src="{{asset('back-office/assets/img/illustrations/profiles/profile-1.png') }}" />
+                    <img class="dropdown-user-img" src="{% if app.user.clubid is not null %}{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}{% else %}{{asset('back-office/assets/img/illustrations/profiles/profile-1.png') }}{% endif %}" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">
+                            {{ app.user.nom}} {{ app.user.prenom}}
                         </div>
                         <div class="dropdown-user-details-email">
-                          
+                            {{ app.user.Email}}
                         </div>
                     </div>
                 </h6>
@@ -93,7 +94,7 @@
                 <a class="dropdown-item" href="
                 {% if app.user.roles['ROLE_MASTER'] is defined %}
                 {{ path('app_master_show',{'id' : app.user.id}) }}
-                {% elseif app.user.roles['ROLE_ADMIN'] is defined %}
+                {% elseif app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 {{ path('app_administrateur_show',{'id' : app.user.id}) }}
                 {% elseif app.user.roles['ROLE_ADHERANT'] is defined %}
                 {{ path('app_adherant_show',{'id' : app.user.id}) }}

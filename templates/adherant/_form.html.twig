@@ -1,5 +1,23 @@
+{{ form_start(form) }}
 <div class="row">
-    {{ form_start(form) }}
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                Image          
+            </div>
+            <div class="card-body text-center">
+                <div class="small font-italic text-muted mb-4">
+                    No larger than 5 MB </br>                        
+                    {% if adherant is defined %}
+                        <img src="{{ vich_uploader_asset(adherant, 'pictureFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" />
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body text-center">
+                {{ form_widget(form.pictureFile, {'attr':{'title':'' }}) }}
+            </div>
+        </div>
+    </div>
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header">
@@ -151,12 +169,25 @@
                         {{ form_errors(form.equipeid) }}
                     </div>
                 </div>
+                {% if app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.clubid, 'Club', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.clubid) }}
+                    </div>
+                </div>
+                {% else %} 
+                <div hidden>
+                    {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}   
+                </div>                              
+                {% endif %} 
                 <div hidden >
                         {{ form_widget(form.createdat, {'attr':{'class':'form-control' }}) }}                               
                         {{ form_widget(form.updatedat, {'attr':{'class':'form-control' }}) }}                               
                         {{ form_widget(form.dossierMedicalId, {'attr':{'class':'form-control' }}) }}                                                          
-                        {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}                               
-
                 </div>
                 <hr>
                 <h6> Fiche Parent </h6>
