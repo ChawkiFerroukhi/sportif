@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Adherant
  *
- * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="categrieId", columns={"categrieId"}), @ORM\Index(name="Deme_categorieId", columns={"Deme_categorieId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
+ * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
  * @ORM\Entity
  * @Vich\Uploadable
  */
@@ -131,16 +131,6 @@ class Adherant extends User implements \Serializable
     private $dossierMedicalId;
 
     /**
-     * @var \Categorie
-     *
-     * @ORM\ManyToOne(targetEntity="Categorie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="categrieId", referencedColumnName="id" , onDelete="CASCADE")
-     * })
-     */
-    private $categrieid;
-
-    /**
      * @var \Equipe
      *
      * @ORM\ManyToOne(targetEntity="Equipe")
@@ -149,16 +139,6 @@ class Adherant extends User implements \Serializable
      * })
      */
     private $equipeid;
-
-    /**
-     * @var \Demecategorie
-     *
-     * @ORM\ManyToOne(targetEntity="Demecategorie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Deme_categorieId", referencedColumnName="id" , onDelete="CASCADE")
-     * })
-     */
-    private $demeCategorieid;
 
     /**
      * @var \Club
@@ -348,18 +328,6 @@ class Adherant extends User implements \Serializable
         return $this;
     }
 
-    public function getCategrieid(): ?Categorie
-    {
-        return $this->categrieid;
-    }
-
-    public function setCategrieid(?Categorie $categrieid): self
-    {
-        $this->categrieid = $categrieid;
-
-        return $this;
-    }
-
     public function getEquipeid(): ?Equipe
     {
         return $this->equipeid;
@@ -368,18 +336,6 @@ class Adherant extends User implements \Serializable
     public function setEquipeid(?Equipe $equipeid): self
     {
         $this->equipeid = $equipeid;
-
-        return $this;
-    }
-
-    public function getDemeCategorieid(): ?Demecategorie
-    {
-        return $this->demeCategorieid;
-    }
-
-    public function setDemeCategorieid(?Demecategorie $demeCategorieid): self
-    {
-        $this->demeCategorieid = $demeCategorieid;
 
         return $this;
     }

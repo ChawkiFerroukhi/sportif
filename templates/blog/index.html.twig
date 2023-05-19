@@ -38,17 +38,17 @@
                         <thead>
                             <tr>
                                 <tr>
-                                    <th>Titre</th>
+                                    <th style="width:1rem">Titre</th>
                                     <th>Visibilité</th>
                                     <th>Date de Modification</th>
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
                         <tbody>
                             {% for blog in blogs %}
                                 <tr>
-                                    <td>{{ blog.title }}</td>
+                                    <td style="width:1rem">{{ blog.title }}</td>
                                     <td>{{ blog.isVisible ? 'Visible' : 'Invisible' }}</td>
                                     <td>{{ blog.updatedat|date('d/m/Y') }}</td>
                                     <td>

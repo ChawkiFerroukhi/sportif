@@ -40,12 +40,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
                                     <th>CIN</th>
                                     <th>Référence</th>
                                     
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -53,9 +51,7 @@
                             {% for coach in coaches %}
                                 <tr>
                                     <td>{{ coach.id }}</td>
-                                    <td>{{ coach.nom }}</td>
-                                    <td>{{ coach.prenom }}</td>
-                                    <td>{{ coach.numTel }}</td>
+                                    <td>{{ coach.nom }} {{ coach.prenom }}</td>
                                     <td>{{ coach.cin }}</td>
                                     <td>{{ coach.ref }}</td>
                                     

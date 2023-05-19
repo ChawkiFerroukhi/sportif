@@ -40,12 +40,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
                                     <th>CIN</th>
                                     <th>Référence</th>
                                     
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -53,9 +51,7 @@
                             {% for doctor in doctors %}
                                 <tr>
                                     <td>{{ doctor.id }}</td>
-                                    <td>{{ doctor.nom }}</td>
-                                    <td>{{ doctor.prenom }}</td>
-                                    <td>{{ doctor.numTel }}</td>
+                                    <td>{{ doctor.nom }} {{ doctor.prenom }}</td>
                                     <td>{{ doctor.cin }}</td>
                                     <td>{{ doctor.ref }}</td>
                                     

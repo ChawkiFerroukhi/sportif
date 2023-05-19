@@ -40,12 +40,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
                                     <th>CIN</th>
                                     <th>Référence</th>
                                     
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -53,9 +51,7 @@
                             {% for supervisor in supervisors %}
                                 <tr>
                                     <td>{{ supervisor.id }}</td>
-                                    <td>{{ supervisor.nom }}</td>
-                                    <td>{{ supervisor.prenom }}</td>
-                                    <td>{{ supervisor.numTel }}</td>
+                                    <td>{{ supervisor.nom }} {{ supervisor.prenom }}</td>
                                     <td>{{ supervisor.cin }}</td>
                                     <td>{{ supervisor.ref }}</td>
                                     

@@ -40,11 +40,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
                                     <th>CIN</th>
                                     <th>Référence</th>
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -52,9 +50,7 @@
                             {% for administrateur in administrateurs %}
                                 <tr>
                                     <td>{{ administrateur.id }}</td>
-                                    <td>{{ administrateur.nom }}</td>
-                                    <td>{{ administrateur.prenom }}</td>
-                                    <td>{{ administrateur.numTel }}</td>
+                                    <td>{{ administrateur.nom }} {{ administrateur.prenom }}</td>
                                     <td>{{ administrateur.cin }}</td>
                                     <td>{{ administrateur.ref }}</td>
                                     <td>

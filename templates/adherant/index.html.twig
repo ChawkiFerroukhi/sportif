@@ -40,11 +40,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Numero Telephone</th>
                                     <th>Licence</th>
                                     <th>Référence</th>
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -52,9 +50,7 @@
                             {% for adherant in adherants %}
                                 <tr>
                                     <td>{{ adherant.id }}</td>
-                                    <td>{{ adherant.nom }}</td>
-                                    <td>{{ adherant.prenom }}</td>
-                                    <td>{{ adherant.numTel }}</td>
+                                    <td>{{ adherant.nom }} {{ adherant.prenom }}</td>
                                     <td>{{ adherant.licence }}</td>
                                     <td>{{ adherant.ref }}</td>
                                     <td>

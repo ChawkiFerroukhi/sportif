@@ -66,23 +66,11 @@ class AdherantType extends AbstractType
                 ]
             ])
             ->add('dossierMedicalId')
-            ->add('categrieid', null, [
-                'label' => 'Catégorie',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir une catégorie',
-                'required' => true,
-            ])
             ->add('equipeid',ChoiceType::class,[
                 'choices' => $options['equipes'],
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir une equipe',
                 'required' => false
-            ])
-            ->add('demeCategorieid', null, [
-                'label' => 'Catégorie',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir une catégorie',
-                'required' => false,
             ])
             ->add('clubid', null, [
                 'label' => 'Club',

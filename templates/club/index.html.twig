@@ -37,10 +37,9 @@
                             <tr>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Adresse</th>
                                     <th>Num Tel</th>
                                     <th>Date de Fondation</th>
-                                    <th>Actions</th>
+                                    <th></th>
                                 </tr>
                             </tr>
                         </thead>
@@ -48,7 +47,6 @@
                             {% for club in clubs %}
                                 <tr>
                                     <td>{{ club.nom }}</td>
-                                    <td>{{ club.adresse }}</td>
                                     <td>{{ club.numTel }}</td>
                                     <td>{{ club.dateFondation ? club.dateFondation|date('m/d/Y') : '' }}</td>
                                     <td>

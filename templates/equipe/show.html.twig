@@ -30,12 +30,21 @@
                     <!-- Account details card-->
                     <div class="card mb-4">
                         <div class="card-header">Fiche Equipe
-                        <a class="btn btn-outline-success" href="{{ path('app_seance_index',{'id' : equipe.id}) }}" style="float:right">Liste des Seances</a>
-                        <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="float:right">Liste des Testes</a>
+                        <br>
+                        <br>
                         </div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <a class="btn btn-outline-success" href="{{ path('app_seance_index',{'id' : equipe.id}) }}" style="display:block">Liste des Seances</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="display:block">Liste des Testes</a>
+                                </div>
+                            </div>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">

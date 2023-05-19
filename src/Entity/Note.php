@@ -86,7 +86,7 @@ class Note
     /**
      * @var string
      *
-     * @ORM\Column(name="observation", type="string", length=555, nullable=false)
+     * @ORM\Column(name="observation", type="string", length=5000, nullable=false)
      */
     private $observation;
 

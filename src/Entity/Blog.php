@@ -52,7 +52,7 @@ class Blog implements \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string", length=191, nullable=false)
+     * @ORM\Column(name="content", type="string", length=5000, nullable=false)
      */
     private $content;
 

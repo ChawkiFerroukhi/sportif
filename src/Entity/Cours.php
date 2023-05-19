@@ -50,7 +50,7 @@ class Cours
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=555, nullable=false)
+     * @ORM\Column(name="description", type="string", length=5000, nullable=false)
      */
     private $description;
 
