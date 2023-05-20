@@ -102,9 +102,14 @@ class UserController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'sections' => $sections,
+            'section' => new Section()
         ]);
     }
 
