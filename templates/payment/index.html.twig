@@ -27,9 +27,9 @@
             <div class="card">
             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3" >
-                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_payment_new') }}" style="float:right">
+                    <a class="btn btn-sm btn-light text-primary" href="{{ adherant is defined ? path('app_payment_new_adherant',{'id' : adherant.id}) : path('app_payment_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
-                        Ajouter Paiement                                                                                    
+                        Ajouter Paiement                                                                              
                     </a>
                 </div>
             {% endif %}
@@ -38,7 +38,7 @@
                         <thead>
                             <tr>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Date</th>
                                     <th>Adherant</th>
                                     <th>Total</th>

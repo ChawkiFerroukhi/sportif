@@ -56,32 +56,33 @@
                             
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Adherant</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_adherant_show',{'id' : payment.adherantid.id})}}">{{ payment.adherantid.nom }} {{ payment.adherantid.prenom }}</a> 
                                     <hr>  
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Paiement</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ payment.date|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Référence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ payment.ref }}</p>
                                     <hr>  
                                 </div>
                             </div>
 
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Designation</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ payment.designation }}</p>
-                                    <hr>  
-                                </div>
-                                <div class="col-md-4">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Référence</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ payment.ref }}</p>
                                     <hr>  
                                 </div>
                             </div>

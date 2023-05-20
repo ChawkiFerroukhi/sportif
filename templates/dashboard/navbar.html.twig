@@ -86,7 +86,19 @@
                             {{ app.user.nom}} {{ app.user.prenom}}
                         </div>
                         <div class="dropdown-user-details-email">
-                            {{ app.user.Email}}
+                            {% if app.user.roles['ROLE_MASTER'] is defined %}
+                            Master
+                            {% elseif app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                            Administrateur
+                            {% elseif app.user.roles['ROLE_ADHERANT'] is defined %}
+                            Adherant
+                            {% elseif app.user.roles['ROLE_COACH'] is defined %}
+                            Coach
+                            {% elseif app.user.roles['ROLE_DOCTOR'] is defined %}
+                            Doctor
+                            {% elseif app.user.roles['ROLE_SUPERVISOR'] is defined %}
+                            Parent
+                            {% endif %}
                         </div>
                     </div>
                 </h6>

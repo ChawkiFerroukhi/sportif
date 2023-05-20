@@ -64,7 +64,8 @@ class PaymentController extends AbstractController
         return $this->render('payment/index.html.twig', [
             'payments' => $payments,
             'sections' => $sections,
-            'section' => new Section()
+            'section' => new Section(),
+            'adherant' => $adherant
         ]);
     }
 
@@ -86,6 +87,50 @@ class PaymentController extends AbstractController
             ->findBy(['clubid' => $usr->getClubid()]);
         }
         $payment = new Payment();
+        $form = $this->createForm(PaymentType::class, $payment,[
+            'adherants' => $adherants
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $payment->setCreatedAt(new \DateTime());
+            $payment->setUpdatedAt(new \DateTime());
+            $payment->setClubid($payment->getAdherantid()->getClubid());
+            $entityManager->persist($payment);
+            $entityManager->flush();
+            $this->user = $usr;
+            return $this->redirectToRoute('app_payment_show', ['id' => $payment->getId()], Response::HTTP_SEE_OTHER);
+        }
+        $this->user = $usr;
+        return $this->renderForm('payment/new.html.twig', [
+            'payment' => $payment,
+            'form' => $form,
+            'sections' => $sections,
+            'section' => new Section()
+        ]);
+    }
+
+
+    #[Route('/adherant/{id}/new', name: 'app_payment_new_adherant', methods: ['GET', 'POST'])]
+    public function newAdh(Adherant $adherant,Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $adherants = [];
+        if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $adherants = $entityManager
+                ->getRepository(Adherant::class)
+                ->findAll();
+        } else {
+            $adherants = $entityManager
+            ->getRepository(Adherant::class)
+            ->findBy(['clubid' => $usr->getClubid()]);
+        }
+        $payment = new Payment();
+        $payment->setAdherantid($adherant);
         $form = $this->createForm(PaymentType::class, $payment,[
             'adherants' => $adherants
         ]);
