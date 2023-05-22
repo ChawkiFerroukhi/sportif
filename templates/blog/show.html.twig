@@ -57,6 +57,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Statistiques</h2>
                                     <div
                                         id="chart"
                                         style="aspect-ratio: 2/1"
@@ -77,13 +78,13 @@
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Titre</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ blog.title }}</p>
                                     <hr>  
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Section</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_section_show',{'id' : blog.sectionid.id})}}">{{ blog.sectionid.nom }}</a> 
