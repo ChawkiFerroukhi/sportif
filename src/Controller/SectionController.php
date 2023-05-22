@@ -32,6 +32,25 @@ class SectionController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/home', name: 'app_section_home', methods: ['GET'])]
+    public function home(Section $section, EntityManagerInterface $entityManager): Response
+    {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $section = new Section();
+        $this->user = $usr;
+        return $this->render('section/home.html.twig', [
+            'sections' => $sections,
+            'section' => $section
+        ]);
+    }
+
     #[Route('/{id}/new', name: 'app_section_new', methods: ['GET', 'POST'])]
     public function new(Club $club,Request $request, EntityManagerInterface $entityManager): Response
     {
