@@ -78,12 +78,19 @@
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Titre</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ blog.title }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ blog.createdat|date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ blog.updatedat|date('d/m/Y') }}</p> 
+                                    <hr>
+                                </div>
+
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Section</h2>
@@ -91,20 +98,13 @@
                                     <hr>
                                 </div>
                             </div>
-
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ blog.createdat|date('d/m/Y') }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Titre</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ blog.title }}</p>
                                     <hr>  
-                                </div>
-                                <div class="col-md-6">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ blog.updatedat|date('d/m/Y') }}</p> 
-                                    <hr>
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
