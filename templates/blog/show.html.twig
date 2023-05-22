@@ -94,6 +94,26 @@
                                     <hr>  
                                 </div>
                             </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <div
+                                        id="chart"
+                                        style="aspect-ratio: 2/1"
+                                        data-hostname="test.makrentcar.com/blog/front/{{ blog.id }}"
+                                        data-types="pageviews,visitors"
+                                        data-page-views-selector="#pageviews"
+                                        data-visitors-selector="#visitors"
+                                        data-border-width="1"
+                                        data-text-color="{{ app.user.clubid is defined and app.user.clubid.id is not null ? app.user.clubid.color : "#ff6600" }}"
+                                        data-page-views-color="{{ app.user.clubid is defined and app.user.clubid.id is not null ? app.user.clubid.color : "#ff6600" }}"
+                                        data-visitors-color="{{ app.user.clubid is defined and app.user.clubid.id is not null ? app.user.clubid.color : "#ff6600" }}"
+                                        data-area-opacity="10"
+                                        data-show-logo="true"
+                                        ><p style="margin: 0">Loading chart...</p>
+                                    </div>
+                                </div>
+                            </div>
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
@@ -115,6 +135,10 @@
             </div>
         </div>
     </main>
-
+    <script
+        async
+        data-chart-selectors="#chart"
+        src="https://scripts.simpleanalyticscdn.com/embed.js"
+    ></script>
 
 {% endblock %}
