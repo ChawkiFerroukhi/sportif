@@ -8,6 +8,8 @@ use App\Entity\Supervisor;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Adherant
@@ -159,6 +161,12 @@ class Adherant extends User implements \Serializable
      * })
      */
     private $supervisorId;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="adherantid")
+     */
+    private $notes;
 
     public function getId(): ?int
     {
@@ -382,6 +390,36 @@ class Adherant extends User implements \Serializable
         }
 
          return $rls;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setAdherantid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getAdherantid() === $this) {
+                $note->setAdherantid(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getPicture(): ?string

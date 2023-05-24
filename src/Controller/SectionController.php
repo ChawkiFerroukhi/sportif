@@ -43,7 +43,6 @@ class SectionController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = new Section();
         $this->user = $usr;
         return $this->render('section/home.html.twig', [
             'sections' => $sections,

@@ -55,6 +55,21 @@
 
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Mesures</h2>
+                                    <div id="bar-chart" ></div>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">IMC</h2>
+                                    <div id="area-chart" ></div>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
                                 <div class="col-md-12">
                                     <h2 class="small mb-1" for="inputFirstName">Liste des Notes</h2>
                                     <table id="datatablesSimple">
@@ -120,5 +135,55 @@
         </div>
     </main>
 
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+var data = [
+    {% for mesure in dossiermedical.mesures|sort((a, b) => a.date <=> b.date) %}
+        { y: '{{ mesure.date|date("Y-m-d") }}', a: 0, b: {{ mesure.imc }} },
+    {% endfor %}
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 'b'],
+        labels: [ 'IMC'],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        lineColors:['{{ dossiermedical.adherantid.clubid.color }}']
+    };
+    config.element = 'area-chart';
+    Morris.Area(config);
+
+    data = [
+    {% for mesure in dossiermedical.mesures|sort((a, b) => a.date <=> b.date) %}
+        { y: '{{ mesure.date|date("Y-m-d") }}', a: {{ mesure.taille }}*100, b: {{ mesure.poids }} },
+    {% endfor %}
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 'a','b'],
+        labels: [ 'Tailler (cm)','Poids (kg)'],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        lineColors:['gray','{{ dossiermedical.adherantid.clubid.color }}']
+    };
+
+    config.element = 'bar-chart';
+    Morris.Bar(config);
+</script>
 
 {% endblock %}
