@@ -123,10 +123,12 @@ class MesureController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mesure->setUpdatedAt(new \DateTime());
+            $mesure->setImc($mesure->getPoids() / ($mesure->getTaille() * $mesure->getTaille()));
             $entityManager->flush();
 
             $this->user = $usr;
-        return $this->redirectToRoute('app_mesure_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_mesure_show', ['id' => $mesure->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $this->user = $usr;
