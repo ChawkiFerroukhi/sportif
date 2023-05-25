@@ -44,6 +44,7 @@
                         {{ form_errors(form.ref) }}
                     </div>
                 </div>
+                {% if adherant is not defined or app.user.id == adherant.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  
@@ -52,6 +53,7 @@
                         {{ form_errors(form.password) }}
                     </div>
                 </div>
+                {% endif %}
                 <hr>
                 <h6> Fiche Adherant </h6>
                 <div class="row gx-3 mb-3">

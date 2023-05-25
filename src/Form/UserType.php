@@ -56,12 +56,24 @@ class UserType extends AbstractType
                     'Modifier Doctor' => 'app_doctor_edit',
                     'Afficher Doctors' => 'app_doctor_index',
                     'Supprimer Doctor' => 'app_doctor_delete',
+
+                    'Ajouter Administrateur' => 'app_administrateur_new',
+                    'Modifier Administrateur' => 'app_administrateur_edit',
+                    'Afficher Administrateur' => 'app_administrateur_index',
+                    'Supprimer Administrateur' => 'app_administrateur_delete',
                 ],
                 'multiple' => true,
                 'expanded' => true,
                 
             ])
             ->add('ref')
+            ->add('isActive',ChoiceType::class,[
+                'choices' => [
+                    "Oui" => true,
+                    "Non" => false
+                ],
+                'required' => true
+            ])
         ;
     }
 

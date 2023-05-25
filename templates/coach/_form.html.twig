@@ -25,7 +25,7 @@
                     <div class="invalid-feedback">
                         {{ form_errors(form.ref) }}
                     </div>
-                </div>
+                </div>{% if coach is not defined or app.user.id == coach.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  
@@ -34,6 +34,7 @@
                         {{ form_errors(form.password) }}
                     </div>
                 </div>
+                {% endif %}
                 <hr>
                 <h6> Fiche Coach </h6>
                 <div class="row gx-3 mb-3">

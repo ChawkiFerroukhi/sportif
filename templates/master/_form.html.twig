@@ -25,7 +25,7 @@
                     <div class="invalid-feedback">
                         {{ form_errors(form.ref) }}
                     </div>
-                </div>
+                </div>{% if master is not defined or app.user.id == master.id %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  
@@ -34,6 +34,7 @@
                         {{ form_errors(form.password) }}
                     </div>
                 </div>
+                {% endif %}
                 <hr>
                 <h6> Fiche Master </h6>
                 <div class="row gx-3 mb-3">

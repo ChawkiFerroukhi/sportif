@@ -7,14 +7,22 @@
             </div>
             <div class="card-body">
                 <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.Email) }}
                     </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.isActive, 'Actif ?', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.isActive, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.isActive) }}
+                    </div>
                 </div>
+                {% if user is not defined or app.user.id == user.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  
@@ -23,6 +31,7 @@
                         {{ form_errors(form.password) }}
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">
@@ -38,6 +47,7 @@
                         {{ form_label(form.roles, 'Roles', {'label_attr':{'class':'small mb-1' }}) }}                                  
                         <ul>
                         {% for child in form.roles %}
+                            <hr>
                             <li> {{ form_label(child) }} {{ form_widget(child) }}
                         {% endfor %}
                         </ul>                             

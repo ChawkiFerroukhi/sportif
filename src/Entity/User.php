@@ -47,6 +47,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     protected ?string $ref;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isActive = true;
     
 
     /**
@@ -193,6 +197,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     
     
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {   
+        $this->isActive = $isActive;
+
+        return $this;
+    }
     
 
     /*public function __toString()
