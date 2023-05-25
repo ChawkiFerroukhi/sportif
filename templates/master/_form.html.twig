@@ -25,7 +25,7 @@
                     <div class="invalid-feedback">
                         {{ form_errors(form.ref) }}
                     </div>
-                </div>{% if master is not defined or app.user.id == master.id %}
+                </div>{% if master.id is null or app.user.id == master.id %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  

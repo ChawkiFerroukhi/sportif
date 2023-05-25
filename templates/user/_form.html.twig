@@ -22,7 +22,7 @@
                         {{ form_errors(form.isActive) }}
                     </div>
                 </div>
-                {% if user is not defined or app.user.id == user.id or app.user.roles['ROLE_MASTER'] is defined %}
+                {% if user.id is null or app.user.id == user.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  

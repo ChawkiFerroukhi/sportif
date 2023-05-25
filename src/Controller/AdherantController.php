@@ -164,7 +164,6 @@ class AdherantController extends AbstractController
                 $supervisor->setNumTel($form->get('supervisor_numTel')->getData());
                 $supervisor->setAdresse($form->get('supervisor_adresse')->getData());
                 $supervisor->setCin($form->get('supervisor_cin')->getData());
-                $supervisor->setRoles(['ROLE_SUPERVISOR']);
                 $supervisor->setClubid($adherant->getClubid());
                 $entityManager->persist($supervisor);
                 $adherant->setSupervisorId($supervisor);

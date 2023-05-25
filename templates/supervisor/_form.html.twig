@@ -26,7 +26,7 @@
                         {{ form_errors(form.ref) }}
                     </div>
                 </div>
-                {% if supervisor is not defined or app.user.id == supervisor.id or app.user.roles['ROLE_MASTER'] is defined %}
+                {% if supervisor.id is null or app.user.id == supervisor.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_widget(form.password) }}  
