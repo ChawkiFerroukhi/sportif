@@ -28,7 +28,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('Email', '');
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
@@ -45,8 +44,8 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        $route = isset($_GET["route"]) ? $_GET["route"] : "app_club_index"; 
-        
+        $route = "app_club_index"; 
+
         return new RedirectResponse($this->urlGenerator->generate($route,$_GET));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

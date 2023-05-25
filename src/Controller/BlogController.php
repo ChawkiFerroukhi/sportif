@@ -57,9 +57,15 @@ class BlogController extends AbstractController
     public function index(Section $section,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        $blogs = $entityManager
+        if(isset($usr->getRoles()['ROLE_ADMIN'])) {
+            $blogs = $entityManager
             ->getRepository(Blog::class)
             ->findBy(['sectionid'=> $section->getId()]);
+        } else {
+            $blogs = $entityManager
+            ->getRepository(Blog::class)
+            ->findBy(['sectionid'=> $section->getId(), 'isVisible' => true]);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
