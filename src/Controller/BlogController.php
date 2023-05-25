@@ -138,7 +138,7 @@ class BlogController extends AbstractController
     {
         $usr = $this->getUser();
 
-        if($usr->getClubid() != $blog->getClubid() || !$usr->getRoles()['ROLE_ADMIN']){
+        if($usr->getClubid() != $blog->getClubid() && !$usr->getRoles()['ROLE_ADMIN']){
             return $this->redirectToRoute('app_club_show', ['id' => $usr->getClubid()->getId() ], Response::HTTP_SEE_OTHER);
         }
         $sections = $entityManager
