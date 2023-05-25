@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <!-- Form Row-->
                             
-                            {% if app.user.roles['ROLE_ADMIN'] %}
+                            {% if app.user.roles['ROLE_ADMIN'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
