@@ -46,7 +46,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-4">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or adherant.id == app.user.id%}
                                     <a class="btn btn-outline-success" href="{{ path('app_payment_index_adherant',{'id' : adherant.id}) }}" style="display:block">Liste des Paiements</a>
                                     {% endif %} 
                                 </div>
