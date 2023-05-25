@@ -76,8 +76,6 @@
                                         <thead>
                                             <tr>
                                                 <th width="10%">
-                                                    #
-                                                </th><th width="10%">
                                                     Date de Création
                                                 </th>
                                                 <th width="45%">
@@ -94,9 +92,6 @@
                                         <tbody>
                                             {% for  mesure in  dossiermedical.mesures %}
                                                 <tr>
-                                                     <td width="45%">
-                                                        {{ mesure.id }} m
-                                                    </td>
                                                     <td width="45%">
                                                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and mesure.dossiermedicalid.adherantid.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
                                                         <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{ mesure.date|date('m/d/Y') }}</a>
