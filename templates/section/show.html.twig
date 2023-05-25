@@ -127,19 +127,19 @@
                                         <div id="pie-chart" ></div>
                                     </div>
                                 </div>
-                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>                            
-                                    </div>
-                                    <div class="col-6">
-                                        <a style="float:right">
-                                            {{ include('section/_delete_form.html.twig') }}
-                                        </a>  
-                                    </div>
-                                </div>
-                                {% endif %}
                             </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <a class="btn btn-outline-warning" href="{{ path('app_section_edit',{'id' : section.id}) }}" style="float:left">Modifier</a>                            
+                                </div>
+                                <div class="col-6">
+                                    <a style="float:right">
+                                        {{ include('section/_delete_form.html.twig') }}
+                                    </a>  
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
