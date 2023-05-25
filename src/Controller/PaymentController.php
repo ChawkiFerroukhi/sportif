@@ -34,15 +34,33 @@ class PaymentController extends AbstractController
             ->getRepository(Payment::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         }
-        
+        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+            $tmp = [];
+            foreach($payments as $payment) {
+                if($payment->getDate() >= new \DateTime($_GET['from']) && $payment->getDate() <= new \DateTime($_GET['to'])) {
+                    $tmp[] = $payment;
+                }
+            }
+            $payments = $tmp;
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+
+        $pymnts = [];
+        foreach($payments as $payment) {
+            if(!isset($pymnts[$payment->getDate()->format('Y-m-d')])) {
+                $pymnts[$payment->getDate()->format('Y-m-d')] = [];
+            }
+            $pymnts[$payment->getDate()->format('Y-m-d')][] = $payment;
+        }
         $this->user = $usr;
         return $this->render('payment/index.html.twig', [
             'payments' => $payments,
+            'pymnts' => $pymnts,
             'sections' => $sections,
-            'section' => new Section()
+            'section' => new Section(),
+            'GET' => $_GET
         ]);
     }
     #[Route('/adherant/{id}', name: 'app_payment_index_adherant', methods: ['GET'])]
@@ -57,15 +75,34 @@ class PaymentController extends AbstractController
             ->getRepository(Payment::class)
             ->findBy(['adherantid' => $adherant->getId()]);
         
+        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+            $tmp = [];
+            foreach($payments as $payment) {
+                if($payment->getDate() >= new \DateTime($_GET['from']) && $payment->getDate() <= new \DateTime($_GET['to'])) {
+                    $tmp[] = $payment;
+                }
+            }
+            $payments = $tmp;
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        
+        $pymnts = [];
+        foreach($payments as $payment) {
+            if(!isset($pymnts[$payment->getDate()->format('Y-m-d')])) {
+                $pymnts[$payment->getDate()->format('Y-m-d')] = [];
+            }
+            $pymnts[$payment->getDate()->format('Y-m-d')][] = $payment;
+        }
         $this->user = $usr;
         return $this->render('payment/index.html.twig', [
             'payments' => $payments,
+            'pymnts' => $pymnts,
             'sections' => $sections,
-            'section' => new Section(),
-            'adherant' => $adherant
+            'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid(),
+            'adherant' => $adherant,
+            'GET' => $_GET
         ]);
     }
 

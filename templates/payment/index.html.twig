@@ -24,6 +24,92 @@
         </header>
         <!-- Main page content-->
         <div class="container-fluid px-4">
+            <div class="row">
+                {% set sum = 0 %}
+                {% for payment in payments|filter(v => v.status == 'Payé') %}
+                    {% set sum = sum + payment.total %}
+                {% endfor %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-graph primary font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ sum }} DT</h3>
+                                <span>Payés ({{ payments|filter(v => v.status == 'Payé')|length}})</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% set sum = 0 %}
+                {% for payment in payments|filter(v => v.status == 'En Cours') %}
+                    {% set sum = sum + payment.total %}
+                {% endfor %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-graph warning font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ sum }} DT</h3>
+                                <span>En Cours ({{ payments|filter(v => v.status == 'En Cours')|length}})</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% set sum = 0 %}
+                {% for payment in payments|filter(v => v.status == 'Annulé') %}
+                    {% set sum = sum + payment.total %}
+                {% endfor %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-graph danger font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ sum }} DT</h3>
+                                <span>Annulés ({{ payments|filter(v => v.status == 'Annulé')|length}})</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% set sum = 0 %}
+                {% for payment in payments|filter(v => v.status == 'Réfusé') %}
+                    {% set sum = sum + payment.total %}
+                {% endfor %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-graph danger font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ sum }} DT</h3>
+                                <span>Réfusés ({{ payments|filter(v => v.status == 'Réfusé')|length}})</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3" >
@@ -34,14 +120,41 @@
                 </div>
             {% endif %}
                 <div class="card-body">
+                    <hr>  
+                    <form method="GET">
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-4">
+                            <h2 class="small mb-1" for="inputFirstName">Début</h2>
+                            <input class="form-control" type="date" name="from" required {% if GET['from'] is defined and GET['from'] is not null %} value="{{ GET['from'] |date('Y-m-d') }}" {% endif %}></input>
+                        </div>
+                        <div class="col-md-4">
+                            <h2 class="small mb-1" for="inputFirstName">Fin</h2>
+                            <input class="form-control" type="date" name="to" required {% if GET['to'] is defined and GET['to'] is not null %} value="{{ GET['to'] |date('Y-m-d') }}" {% endif %}></input>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <button class="btn btn-outline-success" type="submit" style="display:block">Filter</button>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-12">
+                            <hr>
+                            <h2 class="small mb-1" for="inputFirstName">Paiements</h2>
+                            <div id="area-chart" ></div>
+                            <hr>  
+                        </div>
+                    </div>
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Adherant</th>
-                                    <th>Total</th>
+                                    <th>Reférence</th>
+                                    <th>Etat</th>
                                     <th></th>
                                 </tr>
                             </tr>
@@ -51,8 +164,8 @@
                                 <tr>
                                     <td>{{ payment.id }}</td>
                                     <td>{{ payment.date|date('d/m/Y') }}</td>
-                                    <td><a href="{{ path('app_adherant_show',{'id' : payment.adherantid.id}) }}">{{ payment.adherantid.nom }} {{ payment.adherantid.prenom }}</a></td>
-                                    <td>{{ payment.total }} DT</td>
+                                    <td>{{ payment.ref }}</td>
+                                    <td>{{ payment.status }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_show', {'id': payment.id}) }}">
                                             <i class="fa-solid fa-eye"></i>
@@ -78,4 +191,40 @@
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+var data = [
+    {% set sum = 0 %}
+    {% set sumA = 0 %}
+    {% for date,pymnt in pymnts|sort((a, b) => a[0].date <=> b[0].date) %}
+        {% for payment in pymnt %}
+            {% if payment.status == "Payé" %}
+                {% set sum = sum + payment.total %}
+            {% else %} 
+                {% set sumA = sumA + payment.total %}
+            {% endif %}
+        {% endfor %}
+        { y: '{{ date|date("Y-m-d") }}', a: {{ sum }}, b: {{ sumA }} },
+    {% endfor %}
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 'a', 'b'],
+        labels: [ 'Payé','Non Payé'],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        lineColors:['{{ app.user.clubid is not null ? app.user.clubid.color : "red" }}','gray']
+    };
+    config.element = 'area-chart';
+    Morris.Area(config);
+</script>
+
 {% endblock %}
