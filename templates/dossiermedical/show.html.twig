@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ dossiermedical.createdat|date('d/m/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ dossiermedical.createdat|date('m/d/Y') }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -95,14 +95,14 @@
                                             {% for  mesure in  dossiermedical.mesures %}
                                                 <tr>
                                                      <td width="45%">
-                                                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and mesure.dossiermedicalid.adherantid.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
-                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{ mesure.id }}</a>
-                                                    {% else %}
-                                                        {{ mesure.id }}
-                                                    {% endif %}
+                                                        {{ mesure.id }} m
                                                     </td>
                                                     <td width="45%">
-                                                        {{ mesure.date|date('d/m/Y') }}
+                                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and mesure.dossiermedicalid.adherantid.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
+                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{ mesure.date|date('m/d/Y') }}</a>
+                                                    {% else %}
+                                                        {{ mesure.date|date('m/d/Y') }}
+                                                    {% endif %}
                                                     </td>
                                                     <td width="45%">
                                                         {{ mesure.poids }} kg
@@ -125,6 +125,14 @@
                                     </table>
                                 </div>
                             </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or app.user.roles['ROLE_DOCTOR'] is defined %}
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_dossiermedical_edit',{'id' : dossiermedical.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('dossiermedical/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

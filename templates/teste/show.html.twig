@@ -47,7 +47,7 @@
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ teste.date|date('d/m/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ teste.date|date('m/d/Y') }}</p>
                                     <hr>  
                                 </div>
                                 <div class="col-md-4">
@@ -92,7 +92,7 @@
                                             {% for  note in  teste.notes %}
                                                 <tr>
                                                     <td width="45%">
-                                                        {{  note.createdat|date('d/m/Y') }}
+                                                        {{  note.createdat|date('m/d/Y') }}
                                                     </td>
                                                     <td width="45%">
                                                         <a href="{{ path('app_adherant_show',{'id' : note.adherantid.id})}}">{{ note.adherantid.nom }} {{ note.adherantid.prenom }}</a>                                                    </td>

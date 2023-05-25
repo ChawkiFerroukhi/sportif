@@ -42,7 +42,7 @@
                             {% for teste in testes %}
                                 <tr>
                                     <td>{{ teste.nom }}</td>
-                                    <td>{{ teste.date|date('d/m/Y') }}</td>
+                                    <td>{{ teste.date|date('m/d/Y') }}</td>
                                     <td><a href="{{ path('app_equipe_show',{'id' : teste.equipeid.id}) }}" >{{ teste.equipeid.nom }}</a></td>
                                     <td><a href="{{ path('app_cycle_show',{'id' : teste.cycleid.id}) }}" >{{ teste.cycleid.nom }}</a></td>
                                     <td>

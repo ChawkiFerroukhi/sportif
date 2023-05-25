@@ -112,7 +112,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
                                                     <td width="45%">
-                                                        {{ adherant.birthdate | date('d/m/Y') }}
+                                                        {{ adherant.birthdate | date('m/d/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}

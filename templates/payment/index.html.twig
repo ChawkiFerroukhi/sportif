@@ -163,7 +163,7 @@
                             {% for payment in payments %}
                                 <tr>
                                     <td>{{ payment.id }}</td>
-                                    <td>{{ payment.date|date('d/m/Y') }}</td>
+                                    <td>{{ payment.date|date('m/d/Y') }}</td>
                                     <td>{{ payment.ref }}</td>
                                     <td>{{ payment.status }}</td>
                                     <td>

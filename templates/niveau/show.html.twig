@@ -102,7 +102,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_cours_show',{'id' : cours.id})}}">{{ cours.nom }}</a></td>
                                                     <td width="45%">
-                                                        {{ cours.createdat | date('d/m/Y') }}
+                                                        {{ cours.createdat | date('m/d/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}
@@ -145,7 +145,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_equipe_show',{'id' : equipe.id})}}">{{ equipe.nom }}</a></td>
                                                     <td width="45%">
-                                                        {{ equipe.createdat | date('d/m/Y') }}
+                                                        {{ equipe.createdat | date('m/d/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}

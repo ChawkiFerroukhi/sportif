@@ -46,7 +46,7 @@
                                     <td width="45%">
                                         <a href="{{ path('app_adherant_show',{'id' : dossiermedical.adherantid.id})}}">{{ dossiermedical.adherantid.nom }} {{ dossiermedical.adherantid.prenom }}</a>                                                    </td>
                                     <td width="45%">
-                                        {{  dossiermedical.createdat|date('d/m/Y') }}
+                                        {{  dossiermedical.createdat|date('m/d/Y') }}
                                     </td>
                                     
                                     <td>
