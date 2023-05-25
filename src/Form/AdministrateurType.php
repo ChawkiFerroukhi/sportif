@@ -24,9 +24,11 @@ class AdministrateurType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'form-control password-field']],
-                'required' => true,
+                'required' => false,
+                'mapped' => false,
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
+                
             ])
             ->add('ref')
             ->add('numTel')

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Administrateur;
+use App\Entity\User;
 use App\Entity\Section;
 use App\Form\AdministrateurType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -125,10 +126,12 @@ class AdministrateurController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $administrateur->setPassword($this->passwordHasher->hashPassword(
-                $administrateur,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $administrateur->setPassword($this->passwordHasher->hashPassword(
+                    $administrateur,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

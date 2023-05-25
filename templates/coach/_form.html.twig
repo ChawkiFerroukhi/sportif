@@ -28,11 +28,15 @@
                 </div>{% if coach.id is null or app.user.id == coach.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
-                        {{ form_widget(form.password) }}  
-                    </div>                            
+                        {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
+                        {{ form_row(form.password.second, {'attr':{'required':'true' }})}}                      </div>                            
                     <div class="invalid-feedback">
                         {{ form_errors(form.password) }}
                     </div>
+                </div>
+                {% else %}
+                <div hidden>
+                    {{ form_widget(form.password) }}
                 </div>
                 {% endif %}
                 <hr>

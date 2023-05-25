@@ -116,10 +116,12 @@ class MasterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $master->setPassword($this->passwordHasher->hashPassword(
-                $master,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $master->setPassword($this->passwordHasher->hashPassword(
+                    $master,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

@@ -125,10 +125,12 @@ class DoctorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $doctor->setPassword($this->passwordHasher->hashPassword(
-                $doctor,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $doctor->setPassword($this->passwordHasher->hashPassword(
+                    $doctor,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

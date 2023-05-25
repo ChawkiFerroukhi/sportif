@@ -233,10 +233,12 @@ class AdherantController extends AbstractController
             } else {
                 $adherant->setClubid($usr->getClubid());
             }
-            $adherant->setPassword($this->passwordHasher->hashPassword(
-                $adherant,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $adherant->setPassword($this->passwordHasher->hashPassword(
+                    $adherant,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

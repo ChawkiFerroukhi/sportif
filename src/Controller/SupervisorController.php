@@ -128,10 +128,12 @@ class SupervisorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $supervisor->setPassword($this->passwordHasher->hashPassword(
-                $supervisor,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $supervisor->setPassword($this->passwordHasher->hashPassword(
+                    $supervisor,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

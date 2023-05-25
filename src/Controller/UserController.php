@@ -127,10 +127,12 @@ class UserController extends AbstractController
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($this->passwordHasher->hashPassword(
-                $user,
-                $form->get('password')->getData()
-            ));
+            if($form->get('password')->getData()!=null) {
+                $user->setPassword($this->passwordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;

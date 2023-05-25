@@ -126,10 +126,13 @@ class CoachController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $coach->setPassword($this->passwordHasher->hashPassword(
-                $coach,
-                $form->get('password')->getData()
-            ));
+            
+            if($form->get('password')->getData()!=null) {
+                $coach->setPassword($this->passwordHasher->hashPassword(
+                    $coach,
+                    $form->get('password')->getData()
+                ));
+            }
             $entityManager->flush();
 
             $this->user = $usr;
