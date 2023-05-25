@@ -115,10 +115,11 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                             <hr>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <h2 class="small mb-1" for="inputFirstName">Liste des Equipes</h2>
 
                                     <table class="mb-0 table">
@@ -157,6 +158,13 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Adherants</h5>
+                                        <div id="pie-chart" ></div>
+                                    </div>
+                                </div>
                             </div>
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                 <div class="row">
@@ -180,4 +188,20 @@
     </main>
 
 
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+Morris.Donut({
+  element: 'pie-chart',
+  data: [
+    {% for equipe in niveau.equipes %}
+        
+                {label: "{{ equipe.nom }}", value: {{ equipe.adherants|length }} },
+    {% endfor %}
+  ]
+});
+</script>
 {% endblock %}
