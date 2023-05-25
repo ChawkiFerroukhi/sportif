@@ -153,6 +153,7 @@ class Master extends User
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_MASTER';
+        $roles[] = 'ROLE_ADMIN';
         $roles = array_unique($roles);
         $rls = [];
         foreach($roles as $role) {
