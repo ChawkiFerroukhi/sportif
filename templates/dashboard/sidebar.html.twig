@@ -41,13 +41,6 @@
                                                 
                 </div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="#">
-                    <div class="nav-link-icon">
-                        <i data-feather="grid"></i>
-                    </div>
-                    Home
-                                                                                
-                </a>
                 {% if app.user.roles['ROLE_MASTER'] is defined %}
                     <a class="nav-link" href="{{ path('app_club_index')}}">
                         <div class="nav-link-icon">
