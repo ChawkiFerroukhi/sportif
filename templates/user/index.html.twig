@@ -24,6 +24,76 @@
         </header>
         <!-- Main page content-->
         <div class="container-fluid px-4">
+        <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-users primary font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ adhs }}</h3>
+                                <span>Adhérants</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-users success font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ prnts }}</h3>
+                                <span>Parents</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-users warning font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ cchs }}</h3>
+                                <span>Coachs</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-users danger font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>{{ docs }}</h3>
+                                <span>Doctors</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3">

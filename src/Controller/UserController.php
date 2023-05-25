@@ -3,6 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Adherant;
+use App\Entity\Administrateur;
+use App\Entity\Master;
+use App\Entity\Coach;
+use App\Entity\Doctor;
+use App\Entity\Supervisor;
 use App\Entity\Section;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,9 +42,33 @@ class UserController extends AbstractController
             $users = $entityManager
                 ->getRepository(User::class)
                 ->findAll();
+            $adhs = $entityManager
+                ->getRepository(Adherant::class)
+                ->findAll();
+            $docs = $entityManager
+                ->getRepository(Doctor::class)
+                ->findAll();
+            $cchs = $entityManager
+                ->getRepository(Coach::class)
+                ->findAll();
+            $prnts = $entityManager
+                ->getRepository(Supervisor::class)
+                ->findAll();
         } else {
             $users = $entityManager
                 ->getRepository(User::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $adhs = $entityManager
+                ->getRepository(Adherant::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $docs = $entityManager
+                ->getRepository(Doctor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $cchs = $entityManager
+                ->getRepository(Coach::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $prnts = $entityManager
+                ->getRepository(Supervisor::class)
                 ->findBy(['clubid' => $this->getUser()->getClubid()]);
         }
         $sections = $entityManager
@@ -47,6 +77,10 @@ class UserController extends AbstractController
         $this->user = $usr;
         return $this->render('user/index.html.twig', [
             'users' => $users,
+            'adhs' => count($adhs),
+            'docs' => count($docs),
+            'cchs' => count($cchs),
+            'prnts' => count($prnts),
             'sections' => $sections,
         ]);
     }
