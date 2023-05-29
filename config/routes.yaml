@@ -4,4 +4,4 @@ login:
 
 index: 
     path: /
-    controller: App\Controller\ClubController::index
+    controller: App\Controller\SecurityController::login
