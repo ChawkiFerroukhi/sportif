@@ -31,8 +31,9 @@
                     <div class="card mb-4">
                         <div class="card-header">Fiche Cours
                         {% if app.user.roles['ROLE_ADMIN'] is defined %}
-                        <a class="btn btn-outline-success" href="{{ path('app_cycle_new',{'id' : cour.id}) }}" style="float:right">Ajouter Cycle</a></div>
+                        <a class="btn btn-outline-success" href="{{ path('app_cycle_new',{'id' : cour.id}) }}" style="float:right">Ajouter Cycle</a>
                         {% endif %}
+                        </div>
                         <div class="card-body">
                             <!-- Form Row-->
                             
