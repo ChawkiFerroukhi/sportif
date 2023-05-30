@@ -35,15 +35,19 @@
                             <hr>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
+                                {% if app.user.roles['ROLE_ADMIN'] is defined %}
                                 <div class="col-md-4">
                                     <a class="btn btn-outline-success" href="{{ path('app_objectif_new',{'id' : cycle.id}) }}" style="display:block">Ajouter Objectif</a>
                                 </div>
+                                {% endif %}
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_COACH'] is defined %}
                                 <div class="col-md-4">
                                     <a class="btn btn-outline-success" href="{{ path('app_teste_new',{'id' : cycle.id}) }}" style="display:block">Planifier Teste</a>
                                 </div>
                                 <div class="col-md-4">
                                     <a class="btn btn-outline-success" href="{{ path('app_seance_new',{'id' : cycle.id}) }}" style="display:block">Planifier Seance</a>
                                 </div>
+                                {% endif %}
                             </div>
                             <hr>
                             <div class="row gx-3 mb-3">
