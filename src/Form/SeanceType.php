@@ -27,7 +27,7 @@ class SeanceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Description',
                 ],
-                'required' => true
+                'required' => false
             ])
         ;
     }

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Route('/equipe')]
+#[Route('/niveau')]
 class EquipeController extends AbstractController
 {
     private $passwordHasher;

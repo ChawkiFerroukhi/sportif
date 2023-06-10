@@ -16,7 +16,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                                Fiche Parent
+                                {{ supervisor.nom }} {{ supervisor.prenom }}
                             </h1>
                         </div>
                 </div>
@@ -130,6 +130,22 @@
                                         </thead>
                                         <tbody>
                                             {% for  adherant in  supervisor.adherants %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  adherant.licence}}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }} </a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id})}}">{{ adherant.equipeid.nom }} </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% for  adherant in  supervisor.adherants2 %}
                                                 <tr>
                                                     <td width="45%">
                                                         {{  adherant.licence}}</a>

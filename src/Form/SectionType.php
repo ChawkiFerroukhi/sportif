@@ -20,7 +20,7 @@ class SectionType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Description',
                 ],
-                'required' => true
+                'required' => false
             ])
         ;
     }

@@ -87,6 +87,11 @@ class Supervisor extends User
      * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="supervisorId")
      */
     private $adherants;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="supervisor2Id")
+     */
+    private $adherants2;
 
     public function getId(): ?int
     {
@@ -214,6 +219,42 @@ class Supervisor extends User
     public function removeAdherant(Adherant $adherant): self
     {
         if ($this->adherants->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getNiveauid() === $this) {
+                $adherant->setNiveauid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants2(): Collection
+    {
+        $adhs = [];
+        foreach($this->adherants2 as $adherant) {
+            if (!$this->adherants->contains($adherant)) {
+                $adhs[] = $adherant;
+            }
+        }
+        return new ArrayCollection($adhs);
+    }
+
+    public function addAdherant2(Adherant $adherant): self
+    {
+        if (!$this->adherants2->contains($adherant)) {
+            $this->adherants2[] = $adherant;
+            $adherants2->setNiveauid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant2(Adherant $adherant): self
+    {
+        if ($this->adherants2->removeElement($adherant)) {
             // set the owning side to null (unless already changed)
             if ($adherant->getNiveauid() === $this) {
                 $adherant->setNiveauid(null);

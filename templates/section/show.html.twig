@@ -15,8 +15,8 @@
                     <div class="row align-items-center justify-content-between pt-3">
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
-                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                                Fiche Section
+                                <div class="page-header-icon"><i data-feather="grid"></i></div>
+                                {{ section.nom }}
                             </h1>
                         </div>
                     </div>
@@ -39,11 +39,11 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     {% if app.user.roles['ROLE_ADMIN'] is defined %}
-                                    <a class="btn btn-outline-success" href="{{ path('app_niveau_new',{'id' : section.id}) }}" style="display:block">Ajouter Niveau</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_niveau_new',{'id' : section.id}) }}" style="display:block">Ajouter Categorie</a>
                                     {% endif %}
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-outline-success" href="{{ path('app_blog_index',{'id' : section.id}) }}" style="display:block">Liste des Blogs</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_blog_index',{'id' : section.id}) }}" style="display:block">Liste des Publications</a>
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">

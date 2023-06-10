@@ -16,7 +16,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                                Fiche Coach
+                                {{ coach.nom }} {{ coach.prenom }}
                             </h1>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Equipes</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Niveaux</h2>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
@@ -122,7 +122,7 @@
                                                     Nom
                                                 </th>
                                                 <th width="45%">
-                                                    Section
+                                                    Categorie
                                                 </th>
                                                 <th width="45%">
                                                     Date de Création

@@ -138,10 +138,6 @@ class AdherantController extends AbstractController
             $dossier->setAdherantid($adherant);
             $entityManager->persist($dossier);
             $adherant->setDossierMedicaId($dossier);
-            $adherant->setPassword($this->passwordHasher->hashPassword(
-                $adherant,
-                $form->get('password')->getData()
-            ));
             if(!empty($form->get('clubid')->getData())) {
                 $adherant->setClubid($form->get('clubid')->getData());
             } else {
@@ -167,6 +163,28 @@ class AdherantController extends AbstractController
                 $supervisor->setClubid($adherant->getClubid());
                 $entityManager->persist($supervisor);
                 $adherant->setSupervisorId($supervisor);
+            } 
+
+            if($form->get('supervisor2Id')->getData()) {
+                $adherant->setSupervisor2Id($form->get('supervisor2Id')->getData());
+            } else if ($form->get('supervisor2_nom')->getData()) {
+                $supervisor = new Supervisor();
+                $supervisor->setCreatedAt(new \DateTime());
+                $supervisor->setUpdatedAt(new \DateTime());
+                $supervisor->setEmail($form->get('supervisor2_Email')->getData());
+                $supervisor->setPassword($this->passwordHasher->hashPassword(
+                    $supervisor,
+                    $form->get('supervisor2_password')->getData()
+                ));
+                $supervisor->setRef($form->get('supervisor2_ref')->getData());
+                $supervisor->setNom($form->get('supervisor2_nom')->getData());
+                $supervisor->setPrenom($form->get('supervisor2_prenom')->getData());
+                $supervisor->setNumTel($form->get('supervisor2_numTel')->getData());
+                $supervisor->setAdresse($form->get('supervisor2_adresse')->getData());
+                $supervisor->setCin($form->get('supervisor2_cin')->getData());
+                $supervisor->setClubid($adherant->getClubid());
+                $entityManager->persist($supervisor);
+                $adherant->setSupervisor2Id($supervisor);
             } 
             $entityManager->persist($adherant);
             $entityManager->flush();
@@ -236,12 +254,6 @@ class AdherantController extends AbstractController
                 $adherant->setClubid($form->get('clubid')->getData());
             } else {
                 $adherant->setClubid($usr->getClubid());
-            }
-            if($form->get('password')->getData()!=null) {
-                $adherant->setPassword($this->passwordHasher->hashPassword(
-                    $adherant,
-                    $form->get('password')->getData()
-                ));
             }
             $entityManager->flush();
 

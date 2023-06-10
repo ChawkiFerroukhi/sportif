@@ -16,7 +16,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                                Fiche Adhérant
+                                {{ adherant.nom }} {{ adherant.prenom }}
                             </h1>
                         </div>
                     </div>
@@ -78,17 +78,10 @@
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ adherant.numTel }}</p>
-                                    <hr>  
-                                </div>
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-6">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Email</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ adherant.Email }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -139,11 +132,18 @@
 
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Equipe</h2>
-                                    <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipeid.nom }}</p> </a>
-                                    <hr>  
+                                    <h2 class="small mb-1" for="inputFirstName">Parent</h2>
+                                    <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisorId.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisorId }}</p> </a>
+                                    <hr>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Deuxiéme Parent</h2>
+                                    <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisor2Id.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisor2Id }}</p> </a>
+                                    <hr>
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
@@ -180,15 +180,15 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
-                                    <a href="{{path('app_club_show',{'id' : adherant.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.clubid }}</p></a>
+                                    <h2 class="small mb-1" for="inputFirstName">Niveau</h2>
+                                    <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipeid.nom }}</p> </a>
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Parent</h2>
-                                    <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisorId.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisorId }}</p> </a>
-                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <a href="{{path('app_club_show',{'id' : adherant.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.clubid }}</p></a>
+                                    <hr>  
                                 </div>
                             </div>
                             <hr>

@@ -22,7 +22,7 @@ class CycleType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Description',
                 ],
-                'required' => true
+                'required' => false
             ])
             ->add('startdate',DateType::class, [ 
                 'widget' => 'single_text',

@@ -44,7 +44,7 @@
                 {% if app.user.roles['ROLE_MASTER'] is defined %}
                     <a class="nav-link" href="{{ path('app_club_index')}}">
                         <div class="nav-link-icon">
-                            <i data-feather="users"></i>
+                            <i data-feather="bookmark"></i>
                         </div>
                         Clubs
                     </a>
@@ -110,7 +110,7 @@
                 {% else %}
                     <a class="nav-link" href="{{ path('app_club_show',{'id':app.user.clubid.id})}}">
                         <div class="nav-link-icon">
-                            <i data-feather="users"></i>
+                            <i data-feather="bookmark"></i>
                         </div>
                         {{app.user.clubid.nom}}
                     </a>
@@ -164,21 +164,21 @@
                         </a>
                         <a class="nav-link" href="{{ path('app_blog_index',{'id':section.id})}}">
                             <div class="nav-link-icon">
-                                <i data-feather="grid"></i>
+                                <i data-feather="file"></i>
                             </div>
                             Publications
                         </a>
                        <a class="nav-link" href="{{ path('app_section_home',{'id':section.id})}}">
                             <div class="nav-link-icon">
-                                <i data-feather="grid"></i>
+                                <i data-feather="trending-up"></i>
                             </div>
                             Statistiques
                         </a>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="nav-link-icon">
-                                <i data-feather="menu"></i>
+                                <i data-feather="grid"></i>
                             </div>
-                            Niveaux                                
+                            Categories                                
                             <div class="sidenav-collapse-arrow">
                                 <i class="fas fa-angle-down"></i>
                             </div>
@@ -193,8 +193,8 @@
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
-                            <div class="nav-link-icon"><i data-feather="grid"></i></div>
-                            Categories
+                            <div class="nav-link-icon"><i data-feather="menu"></i></div>
+                            Niveaux
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseUtilities" data-bs-parent="#accordionSidenav">

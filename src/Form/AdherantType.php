@@ -23,16 +23,6 @@ class AdherantType extends AbstractType
         $builder
             ->add('createdat')
             ->add('updatedat')
-            ->add('Email', EmailType::class)
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'form-control password-field']],
-                'required' => false,
-                'mapped' => false,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-            ])
             ->add('ref')
             ->add('pictureFile', VichImageType::class, [
                 'required' => false,
@@ -85,7 +75,13 @@ class AdherantType extends AbstractType
                 'placeholder' => 'Choisir un parent',
                 'required' => false
             ])
-
+            
+            ->add('supervisor2Id',ChoiceType::class,[
+                'choices' => $options['supervisors'],
+                'choice_label' => 'nomprenom',
+                'placeholder' => 'Choisir un deuxiéme parent',
+                'required' => false
+            ])
             
             ->add('supervisor_Email', EmailType::class, [
                 'required' => false,
@@ -136,6 +132,57 @@ class AdherantType extends AbstractType
                 'mapped' => false,
             ])
             
+
+            ////////:
+
+            ->add('supervisor2_Email', EmailType::class, [
+                'required' => false,
+                'label' => 'Email',
+                'mapped' => false,
+            ])
+            ->add('supervisor2_password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => false,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('supervisor2_ref', TextType::class, [
+                'required' => false,
+                'label' => 'Reférence',
+                'mapped' => false,
+            ])
+            ->add('supervisor2_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor2_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor2_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor2_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('supervisor2_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
+            ])
 
         ;
     }

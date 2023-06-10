@@ -62,7 +62,7 @@ class Cycle
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=5000, nullable=false)
+     * @ORM\Column(name="description", type="string", length=5000, nullable=true)
      */
     private $description;
 

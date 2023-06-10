@@ -43,9 +43,9 @@
         <!-- Alerts Dropdown-->
         {% if app.user.roles['ROLE_MASTER'] is not defined %}
             {% for sctn in sections %}
-            <a class="nav-link {% if section.id is defined and sctn.id == section.id %}active{% endif %}" href="{{ path('app_section_show',{'id':sctn.id})}}">
+            <b><a class="nav-link {% if section.id is defined and sctn.id == section.id %}active{% endif %}" href="{{ path('app_section_show',{'id':sctn.id})}}">
                 {{sctn.nom}}
-            </a>
+            </a></b>
             {% endfor %}
         {% endif %}
         <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">

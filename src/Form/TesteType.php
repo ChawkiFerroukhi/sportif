@@ -27,7 +27,7 @@ class TesteType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Description',
                 ],
-                'required' => true
+                'required' => false
             ])
         ;
     }

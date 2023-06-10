@@ -14,11 +14,11 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Adherant
  *
- * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"})})
+ * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"}),  @ORM\Index(name="supervisor2Id", columns={"supervisor2Id"})})
  * @ORM\Entity
  * @Vich\Uploadable
  */
-class Adherant extends User implements \Serializable
+class Adherant implements \Serializable
 {
      /**
      * @ORM\Id
@@ -85,7 +85,7 @@ class Adherant extends User implements \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="num_tel", type="string", length=191, nullable=false)
+     * @ORM\Column(name="num_tel", type="string", length=191, nullable=true)
      */
     private $numTel;
 
@@ -109,6 +109,11 @@ class Adherant extends User implements \Serializable
      * @ORM\Column(name="maladie", type="string", length=191, nullable=false)
      */
     private $maladie;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected ?string $ref;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -161,6 +166,16 @@ class Adherant extends User implements \Serializable
      * })
      */
     private $supervisorId;
+
+    /**
+     * @var \Supervisor
+     *
+     * @ORM\ManyToOne(targetEntity="Supervisor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="supervisor2Id", referencedColumnName="id" , onDelete="CASCADE")
+     * })
+     */
+    private $supervisor2Id;
 
     /**
      *
@@ -324,6 +339,18 @@ class Adherant extends User implements \Serializable
         return $this;
     }
 
+    public function getRef(): ?string
+    {
+        return $this->ref;
+    }
+
+    public function setRef(string $ref): self
+    {
+        $this->ref = $ref;
+
+        return $this;
+    }
+
     public function getDossierMedicalId(): ?Dossiermedical
     {
         return $this->dossierMedicalId;
@@ -368,6 +395,18 @@ class Adherant extends User implements \Serializable
     public function setSupervisorId(?Supervisor $supervisorId): self
     {
         $this->supervisorId = $supervisorId;
+
+        return $this;
+    }
+
+    public function getSupervisor2Id(): ?Supervisor
+    {
+        return $this->supervisor2Id;
+    }
+
+    public function setSupervisor2Id(?Supervisor $supervisor2Id): self
+    {
+        $this->supervisor2Id = $supervisor2Id;
 
         return $this;
     }
