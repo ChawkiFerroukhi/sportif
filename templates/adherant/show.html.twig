@@ -78,10 +78,17 @@
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
-                                <div class="col-md-12">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ adherant.numTel }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Niveau</h2>
+                                    <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipeid.nom }}</p> </a>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Deuxiéme Niveau</h2>
+                                    <a href="{{ path('app_equipe_show',{'id' : adherant.equipe2id.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipe2id.nom }}</p> </a>
                                     <hr>  
                                 </div>
                             </div>
@@ -176,12 +183,12 @@
                                     <hr>
                                 </div>
                             </div>
+                            
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Niveau</h2>
-                                    <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipeid.nom }}</p> </a>
+                                    <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ adherant.numTel }}</p>
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">

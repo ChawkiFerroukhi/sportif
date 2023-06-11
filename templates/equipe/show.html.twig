@@ -115,6 +115,18 @@
                                                         {{ adherant.birthdate | date('m/d/Y') }}
                                                     </td>
                                                 </tr>
+                                            {% endfor %}
+                                            {% for  adherant in  equipe.adherants2 %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  adherant.licence }}
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
+                                                    <td width="45%">
+                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                    </td>
+                                                </tr>
                                             {% else %}
                                                 <tr>
                                                     <td colspan="17">

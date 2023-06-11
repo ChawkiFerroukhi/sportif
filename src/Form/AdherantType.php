@@ -60,7 +60,13 @@ class AdherantType extends AbstractType
             ->add('equipeid',ChoiceType::class,[
                 'choices' => $options['equipes'],
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir une equipe',
+                'placeholder' => 'Choisir un niveau',
+                'required' => true
+            ])
+            ->add('equipe2id',ChoiceType::class,[
+                'choices' => $options['equipes'],
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un 2éme niveau',
                 'required' => false
             ])
             ->add('clubid', null, [

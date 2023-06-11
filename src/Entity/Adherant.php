@@ -148,6 +148,16 @@ class Adherant implements \Serializable
     private $equipeid;
 
     /**
+     * @var \Equipe
+     *
+     * @ORM\ManyToOne(targetEntity="Equipe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="equipe2Id", referencedColumnName="id" , onDelete="CASCADE")
+     * })
+     */
+    private $equipe2id;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -371,6 +381,18 @@ class Adherant implements \Serializable
     public function setEquipeid(?Equipe $equipeid): self
     {
         $this->equipeid = $equipeid;
+
+        return $this;
+    }
+
+    public function getEquipe2id(): ?Equipe
+    {
+        return $this->equipe2id;
+    }
+
+    public function setEquipe2id(?Equipe $equipeid): self
+    {
+        $this->equipe2id = $equipeid;
 
         return $this;
     }

@@ -9,7 +9,7 @@
                 <div class="small font-italic text-muted mb-4">
                     No larger than 5 MB </br>                        
                     {% if blog is defined %}
-                        <img src="{{ vich_uploader_asset(blog, 'coverFile') }}" alt="COVER" class="img-thumbnail" width="600px" height="50%" />
+                        <img src="{{ vich_uploader_asset(blog, 'coverFile') }}" alt="COVER" class="img-thumbnail" width="600px" height="50%" id="image" />
                     {% endif %}
                 </div>
             </div>
@@ -75,3 +75,17 @@
         </div>
     </div>
 </div>
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#blog_coverFile_file").change(function () {
+    filePreview(this);
+});
+</script>

@@ -90,6 +90,12 @@ class Equipe
      * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="equipeid")
      */
     private $adherants;
+    
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="equipe2id")
+     */
+    private $adherants2;
 
     public function getId(): ?int
     {
@@ -209,6 +215,41 @@ class Equipe
             // set the owning side to null (unless already changed)
             if ($adherant->getEquipeid() === $this) {
                 $adherant->setEquipeid(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Adherant>
+     */
+    public function getAdherants2(): Collection
+    {
+        $adhs = [];
+        foreach($this->adherants2 as $adherant) {
+            if (!$this->adherants->contains($adherant)) {
+                $adhs[] = $adherant;
+            }
+        }
+        return new ArrayCollection($adhs);
+    }
+
+    public function addAdherant2(Adherant $adherant): self
+    {
+        if (!$this->adherants2->contains($adherant)) {
+            $this->adherants2[] = $adherant;
+            $adherants2->setEquipe2id($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherant2(Adherant $adherant): self
+    {
+        if ($this->adherants2->removeElement($adherant)) {
+            // set the owning side to null (unless already changed)
+            if ($adherant->getEquipe2id() === $this) {
+                $adherant->setEquipe2id(null);
             }
         }
 

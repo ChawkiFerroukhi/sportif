@@ -9,12 +9,12 @@
                 <div class="small font-italic text-muted mb-4">
                     No larger than 5 MB </br>                        
                     {% if club is defined %}
-                        <img src="{{ vich_uploader_asset(club, 'logoFile') }}" alt="LOGO" class="img-thumbnail" width="200px" height="50%" />
+                        <img src="{{ vich_uploader_asset(club, 'logoFile') }}" alt="LOGO" class="img-thumbnail" width="200px" height="50%" id="image" />
                     {% endif %}
                 </div>
             </div>
             <div class="card-body text-center">
-                {{ form_widget(form.logoFile, {'attr':{'title':'' }}) }}
+                {{ form_widget(form.logoFile, {'attr':{'title':'','id':'file' }}) }}
             </div>
             <hr>
             <div class="card-body text-center">
@@ -83,3 +83,17 @@
         </div>
     </div>
 </div>
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#club_logoFile_file").change(function () {
+    filePreview(this);
+});
+</script>
