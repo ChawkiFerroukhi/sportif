@@ -1,0 +1,59 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                Document          
+            </div>
+            <div class="card-body text-center">
+                <div class="small font-italic text-muted mb-4">
+                    No larger than 5 MB </br>                        
+                    {% if dossier is defined %}
+                        <img src="{{ vich_uploader_asset(dossier, 'documentFile') }}" alt="DOCUMENT" class="img-thumbnail" width="200px" height="50%" id="image" />
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body text-center">
+                {{ form_widget(form.documentFile, {'attr':{'title':'','id':'file' }}) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Dossier                                            
+            </div>
+            <div class="card-body">
+            
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.nom, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#dossier_documentFile_file").change(function () {
+    filePreview(this);
+});
+</script>
