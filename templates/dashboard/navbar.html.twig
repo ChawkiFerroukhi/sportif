@@ -45,8 +45,8 @@
             {% for sctn in sections %}
             <b>
             <a class="nav-link {% if section.id is defined and sctn.id == section.id %}
-            active" style="background-color: {{ app.user.clubid.color }}; color:white;border-bottom: 3px solid {{ app.user.clubid.color }};margin:0.5em;
-            {% else %} " style="border-radius:3px; margin:0.5em;
+            active" style="border-bottom: 3px solid {{ app.user.clubid.color }};margin:0.5em;
+            {% else %} " style="background-color: {{ app.user.clubid.color }}; color:white; border-radius:3px; margin:0.5em;
             {% endif %}"  
             href="{{ path('app_section_show',{'id':sctn.id})}}">
                 {{sctn.nom}}
