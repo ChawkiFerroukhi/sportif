@@ -86,10 +86,12 @@
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">
+                                    {% if adherant.equipe2id is not null %}
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Deuxiéme Niveau</h2>
                                     <a href="{{ path('app_equipe_show',{'id' : adherant.equipe2id.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.equipe2id.nom }}</p> </a>
                                     <hr>  
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
@@ -148,8 +150,10 @@
 
                                 <div class="col-md-6">
                                     <hr>
+                                    {% if adherant.supervisor2Id is not null %}
                                     <h2 class="small mb-1" for="inputFirstName">Deuxiéme Parent</h2>
                                     <a href="{{ path('app_supervisor_show',{'id' : adherant.supervisor2Id.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ adherant.supervisor2Id }}</p> </a>
+                                    {% endif %}
                                     <hr>
                                 </div>
                             </div>
