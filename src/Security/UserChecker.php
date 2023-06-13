@@ -10,6 +10,21 @@ class UserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user)
     {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.igm-s.tech/application/api/'.$_ENV['APP_SECRET']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $response = curl_exec($ch);
+        var_dump($response);
+        // If using JSON...
+        $data = json_decode($response);
+        var_dump($data);
+        if(!$data->active) {
+            throw new CustomUserMessageAuthenticationException(
+                'Application locked. Please contact the administrator.'
+            );
+        }
         if (!$user instanceof User) {
             return;
         }
