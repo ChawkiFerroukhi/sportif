@@ -22,7 +22,7 @@ class UserChecker implements UserCheckerInterface
         var_dump($data);
         if(!$data->active) {
             throw new CustomUserMessageAuthenticationException(
-                'Application locked. Please contact the administrator.'
+                'Application verrouillée. Veuillez contactez le manager.'
             );
         }
         if (!$user instanceof User) {
@@ -31,7 +31,7 @@ class UserChecker implements UserCheckerInterface
 
         if (!$user->getIsActive()) {
             throw new CustomUserMessageAuthenticationException(
-                'Inactive account cannot log in'
+                'Compte inactif'
             );
         }
     }
