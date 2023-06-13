@@ -1,0 +1,35 @@
+<div class="row gx-4">
+    <div class="col-lg-8">
+    {{ form_start(form) }}
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Newsletter                                                            
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.subject, ' Sujet', {'label_attr':{'class':'small mb-1' }}) }}                                                          
+                        {{ form_widget(form.subject, {'attr':{'class':'form-control' }}) }}                                                 
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.subject) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+
+                    <div class="col-md-12">
+                        {{ form_label(form.body, ' Contenu', {'label_attr':{'class':'small mb-1' }}) }}                                                          
+                        {{ form_widget(form.body, {'attr':{'class':'form-control' }}) }}                                                 
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.body) }}
+                    </div>
+                </div>
+                <button class="fw-500 btn btn-primary" onclick="return confirm('Confirmer ?');">
+                        {{ button_label|default('Envoyer') }}
+                </button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
