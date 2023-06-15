@@ -1,0 +1,65 @@
+<div class="row">
+    {{ form_start(form) }}
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Decaissement                                            
+            </div>
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.date, 'Date', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.date, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.date) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.total, 'Total', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.total, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.total) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        {{ form_label(form.mode, "Mode de Decaissement", {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.mode, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.mode) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.status, "Status de Decaissement", {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.status, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.status) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-8">
+                        {{ form_label(form.designation, 'Désignation', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.designation, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.designation) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.ref, 'Référence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.ref) }}
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

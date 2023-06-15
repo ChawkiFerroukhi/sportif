@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_encaissement_delete', {'id': encaissement.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ encaissement.id) }}">
+    <button class="btn"><i class="fa-solid fa-trash"></i></button>
+</form>

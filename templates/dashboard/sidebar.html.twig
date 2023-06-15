@@ -98,12 +98,25 @@
                             </div>
                             Newsletter                                                         
                         </a>
-                        <a class="nav-link" href="{{ path('app_payment_index') }}">
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTriso" aria-expanded="false" aria-controls="collapsePages">
                             <div class="nav-link-icon">
                                 <i data-feather="dollar-sign"></i>
                             </div>
-                            Paiements                                                         
+                            Trisorie                    
+                            <div class="sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
                         </a>
+                        <div class="collapse" id="collapseTriso" data-bs-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                                <a class="nav-link" href="{{ path('app_encaissement_index')}}">
+                                    Encaissements
+                                </a>
+                                <a class="nav-link" href="{{ path('app_decaissement_index')}}">
+                                    Decaissements
+                                </a>
+                            </nav>
+                        </div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
                             <div class="nav-link-icon">
                                 <i data-feather="users"></i>
