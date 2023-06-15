@@ -119,7 +119,7 @@ class EncaissementController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = $encaissement->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid();
+        $section = new Section();
         $adherants = [];
         $form = $this->createForm(EncaissementType::class, $encaissement,[]);
         $form->handleRequest($request);

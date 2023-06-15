@@ -119,7 +119,7 @@ class DecaissementController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = $decaissement->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid();
+        $section = new Section();
         $adherants = [];
         $form = $this->createForm(DecaissementType::class, $decaissement,[]);
         $form->handleRequest($request);
