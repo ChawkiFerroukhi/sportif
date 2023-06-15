@@ -134,7 +134,10 @@
                         </div>
                         <div class="col-md-4">
                             <br>
-                            <button class="btn btn-outline-success" type="submit" style="display:block">Filter</button>
+                            <button class="btn btn-outline-success" type="submit" style="float:left">Filter</button>
+                            {% if adherant is not defined %}
+                            <a href="{{ path('app_encaissement_index') }}" class="btn btn-outline-warning"  style="float:left;margin-left:15px;">Encaissements</a>
+                            {% endif %}
                         </div>
                     </div>
                     </form>

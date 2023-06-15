@@ -113,10 +113,6 @@
             <div class="card">
             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3" >
-                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_payment_new') }}" style="float:right">
-                        <i class="me-1" data-feather="plus"></i>
-                        Ajouter Paiement                                                                              
-                    </a>
                     <a class="btn btn-sm btn-light text-primary" href="{{ path('app_encaissement_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
                         Ajouter Encaissement                                                                              
@@ -138,7 +134,8 @@
                         </div>
                         <div class="col-md-4">
                             <br>
-                            <button class="btn btn-outline-success" type="submit" style="display:block">Filter</button>
+                            <button class="btn btn-outline-success" type="submit" style="float:left">Filter</button>
+                            <a href="{{ path('app_payment_index') }}" class="btn btn-outline-warning" style="float:left;margin-left:15px;" >Paiements</a>
                         </div>
                     </div>
                     </form>
