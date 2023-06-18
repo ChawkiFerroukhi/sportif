@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ dossiermedical.createdat|date('m/d/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ dossiermedical.createdat|date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -94,9 +94,9 @@
                                                 <tr>
                                                     <td width="45%">
                                                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and mesure.dossiermedicalid.adherantid.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
-                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{ mesure.date|date('m/d/Y') }}</a>
+                                                        <a href="{{ path('app_mesure_show',{'id' : mesure.id})}}">{{ mesure.date|date('d/m/Y') }}</a>
                                                     {% else %}
-                                                        {{ mesure.date|date('m/d/Y') }}
+                                                        {{ mesure.date|date('d/m/Y') }}
                                                     {% endif %}
                                                     </td>
                                                     <td width="45%">

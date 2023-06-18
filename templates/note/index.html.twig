@@ -42,7 +42,7 @@
                             {% for note in notes %}
                                 <tr>
                                     <td width="45%">
-                                        {{  note.createdat|date('m/d/Y') }}
+                                        {{  note.createdat|date('d/m/Y') }}
                                     </td>
                                     <td width="45%">
                                         <a href="{{ path('app_adherant_show',{'id' : note.adherantid.id})}}">{{ note.adherantid.nom }} {{ note.adherantid.prenom }}</a>                                                    </td>

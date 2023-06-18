@@ -114,7 +114,7 @@
                                                         {{  seance.id }}
                                                     </td>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_seance_show',{'id' : seance.id})}}">{{ seance.date|date('m/d/Y') }}</a>
+                                                        <a href="{{ path('app_seance_show',{'id' : seance.id})}}">{{ seance.date|date('d/m/Y') }}</a>
                                                     </td>
                                                     <td width="45%">
                                                         <a href="{{ path('app_equipe_show',{'id' : seance.equipeid.id})}}">{{ seance.equipeid.nom }}</a>
@@ -162,7 +162,7 @@
                                                         <a href="{{ path('app_objectif_show',{'id' : objectif.id})}}">{{ objectif.nom }}</a>
                                                     </td>
                                                     <td width="40%">
-                                                        {{ objectif.createdat|date('m/d/Y') }}
+                                                        {{ objectif.createdat|date('d/m/Y') }}
                                                     </td>
 
                                         

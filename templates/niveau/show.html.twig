@@ -56,7 +56,7 @@
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ niveau.createdat| date('m/d/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ niveau.createdat| date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
                                 <div class="col-md-4">
@@ -102,7 +102,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_cours_show',{'id' : cours.id})}}">{{ cours.nom }}</a></td>
                                                     <td width="45%">
-                                                        {{ cours.createdat | date('m/d/Y') }}
+                                                        {{ cours.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}
@@ -145,7 +145,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_equipe_show',{'id' : equipe.id})}}">{{ equipe.nom }}</a></td>
                                                     <td width="45%">
-                                                        {{ equipe.createdat | date('m/d/Y') }}
+                                                        {{ equipe.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}

@@ -81,13 +81,13 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ supervisor.createdat|date('m/d/Y')}}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ supervisor.createdat|date('d/m/Y')}}</p>
                                     <hr>  
                                 </div>
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ supervisor.updatedat|date('m/d/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ supervisor.updatedat|date('d/m/Y') }}</p>
                                     <hr>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                                         <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }} </a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                        {{ adherant.birthdate | date('d/m/Y') }}
                                                     </td>
                                                     <td width="45%">
                                                         <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id})}}">{{ adherant.equipeid.nom }} </a>
@@ -154,7 +154,7 @@
                                                         <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }} </a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                        {{ adherant.birthdate | date('d/m/Y') }}
                                                     </td>
                                                     <td width="45%">
                                                         <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id})}}">{{ adherant.equipeid.nom }} </a>

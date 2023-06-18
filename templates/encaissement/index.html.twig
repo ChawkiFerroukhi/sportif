@@ -164,7 +164,7 @@
                             {% for encaissement in encaissements %}
                                 <tr>
                                     <td>{{ encaissement.id }}</td>
-                                    <td>{{ encaissement.date|date('m/d/Y') }}</td>
+                                    <td>{{ encaissement.date|date('d/m/Y') }}</td>
                                     <td>{{ encaissement.ref }}</td>
                                     <td>{{ encaissement.status }}</td>
                                     <td>

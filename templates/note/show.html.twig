@@ -16,7 +16,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="file-plus"></i></div>
-                                {{ note.createdat|date('m/d/Y') }}
+                                {{ note.createdat|date('d/m/Y') }}
                             </h1>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('m/d/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
 

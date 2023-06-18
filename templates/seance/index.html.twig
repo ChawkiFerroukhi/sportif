@@ -40,7 +40,7 @@
                         <tbody>
                             {% for seance in seances %}
                                 <tr>
-                                    <td>{{ seance.date|date('m/d/Y') }}</td>
+                                    <td>{{ seance.date|date('d/m/Y') }}</td>
                                     <td><a href="{{ path('app_equipe_show',{'id' : seance.equipeid.id}) }}" >{{ seance.equipeid.nom }}</a></td>
                                     <td><a href="{{ path('app_cycle_show',{'id' : seance.cycleid.id}) }}" >{{ seance.cycleid.nom }}</a></td>
                                     <td>

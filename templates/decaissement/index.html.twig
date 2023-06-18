@@ -163,7 +163,7 @@
                             {% for decaissement in decaissements %}
                                 <tr>
                                     <td>{{ decaissement.id }}</td>
-                                    <td>{{ decaissement.date|date('m/d/Y') }}</td>
+                                    <td>{{ decaissement.date|date('d/m/Y') }}</td>
                                     <td>{{ decaissement.ref }}</td>
                                     <td>{{ decaissement.status }}</td>
                                     <td>

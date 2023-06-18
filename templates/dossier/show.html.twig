@@ -105,7 +105,7 @@
                                                         <a href="{{ path('app_section_show',{'id' : section.id})}}">{{ section.nom }}</a>
                                                     </td>
                                                     <td width="45%">
-                                                        {{ section.createdat | date('m/d/Y') }}
+                                                        {{ section.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}

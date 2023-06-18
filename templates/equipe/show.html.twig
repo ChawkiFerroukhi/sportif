@@ -56,7 +56,7 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date de Creation</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ equipe.createdat| date('m/d/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ equipe.createdat| date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
                                                     <td width="45%">
-                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                        {{ adherant.birthdate | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -124,7 +124,7 @@
                                                     <td width="45%">
                                                         <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
                                                     <td width="45%">
-                                                        {{ adherant.birthdate | date('m/d/Y') }}
+                                                        {{ adherant.birthdate | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}
