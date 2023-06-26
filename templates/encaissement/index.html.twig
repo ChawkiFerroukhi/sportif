@@ -98,7 +98,7 @@
                             <div class="card-body">
                             <div class="media d-flex">
                                 <div class="align-self-center">
-                                <i class="icon-graph danger font-large-2 float-left"></i>
+                                <i class="icon-graph gray font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{ sum }} DT</h3>
@@ -213,34 +213,37 @@
 
 <script>
 var data = [
-    {% set sum = 0 %}
-    {% set sumC = 0 %}
     {% set sumA = 0 %}
+    {% set sumB = 0 %}
+    {% set sumC = 0 %}
+    {% set sumD = 0 %}
     {% for date,pymnt in pymnts|sort((a, b) => a[0].date <=> b[0].date) %}
         {% for encaissement in pymnt %}
             {% if encaissement.status == "Payé" %}
-                {% set sum = sum + encaissement.total %}
-            {% elseif encaissement.status == "En Cours" %} 
-                {% set sumC = sumC + encaissement.total %}
-            {% else %}
                 {% set sumA = sumA + encaissement.total %}
+            {% elseif encaissement.status == "En Cours" %} 
+                {% set sumB = sumB + encaissement.total %}
+            {% elseif encaissement.status == "Annulé" %} 
+                {% set sumC = sumC + encaissement.total %}
+            {% elseif encaissement.status == "Réfusé" %} 
+                {% set sumD = sumD + encaissement.total %}
             {% endif %}
         {% endfor %}
-        { y: '{{ date|date("Y-m-d") }}', a: {{ sum }}, b: {{ sumC }}, c: {{ sumA }} },
+        { y: '{{ date|date("Y-m-d") }}', a: {{ sumA }}, b: {{ sumB }}, c: {{ sumC }}, d: {{ sumD }} },
     {% endfor %}
     ],
     config = {
         data: data,
         xkey: 'y',
-        ykeys: [ 'a', 'b', 'c'],
-        labels: [ 'Payé','En Cours', 'Refusé'],
+        ykeys: [ 'a', 'b', 'c', 'd'],
+        labels: [ 'Payé','En Cours', 'Annulé', 'Refusé'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,
         resize: true,
         pointFillColors:['#ffffff'],
         pointStrokeColors: ['black'],
-        lineColors:['green','gray','red']
+        lineColors:['green','orange','red','gray']
     };
     config.element = 'area-chart';
     Morris.Line(config);
