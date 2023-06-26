@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 {% set sum = 0 %}
-                {% for decaissement in decaissements|filter(v => v.status == 'Annulé') %}
+                {% for decaissement in decaissements|filter(v => v.status == 'Réfusé') %}
                     {% set sum = sum + decaissement.total %}
                 {% endfor %}
                 <div class="col-xl-3 col-sm-6 col-12">
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{ sum }} DT</h3>
-                                <span>Annulés ({{ decaissements|filter(v => v.status == 'Annulé')|length}})</span>
+                                <span>Réfusés ({{ decaissements|filter(v => v.status == 'Réfusé')|length}})</span>
                                 </div>
                             </div>
                             </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 {% set sum = 0 %}
-                {% for decaissement in decaissements|filter(v => v.status == 'Réfusé') %}
+                {% for decaissement in decaissements|filter(v => v.status == 'Annulé') %}
                     {% set sum = sum + decaissement.total %}
                 {% endfor %}
                 <div class="col-xl-3 col-sm-6 col-12">
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{ sum }} DT</h3>
-                                <span>Réfusés ({{ decaissements|filter(v => v.status == 'Réfusé')|length}})</span>
+                                <span>Annulés ({{ decaissements|filter(v => v.status == 'Annulé')|length}})</span>
                                 </div>
                             </div>
                             </div>
@@ -207,9 +207,9 @@ var data = [
                 {% set sumA = sumA + decaissement.total %}
             {% elseif decaissement.status == "En Cours" %} 
                 {% set sumB = sumB + decaissement.total %}
-            {% elseif decaissement.status == "Annulé" %} 
-                {% set sumC = sumC + decaissement.total %}
             {% elseif decaissement.status == "Réfusé" %} 
+                {% set sumC = sumC + decaissement.total %}
+            {% elseif decaissement.status == "Annulé" %} 
                 {% set sumD = sumD + decaissement.total %}
             {% endif %}
         {% endfor %}
@@ -220,7 +220,7 @@ var data = [
         data: data,
         xkey: 'y',
         ykeys: [ 'a', 'b', 'c', 'd'],
-        labels: [ 'Payé','En Cours', 'Annulé', 'Refusé'],
+        labels: [ 'Payé','En Cours', 'Réfusé', 'Annulé'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,

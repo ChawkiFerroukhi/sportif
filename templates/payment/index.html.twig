@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 {% set sum = 0 %}
-                {% for payment in payments|filter(v => v.status == 'Annulé') %}
+                {% for payment in payments|filter(v => v.status == 'Réfusé') %}
                     {% set sum = sum + payment.total %}
                 {% endfor %}
                 <div class="col-xl-3 col-sm-6 col-12">
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{ sum }} DT</h3>
-                                <span>Annulés ({{ payments|filter(v => v.status == 'Annulé')|length}})</span>
+                                <span>Réfusés ({{ payments|filter(v => v.status == 'Réfusé')|length}})</span>
                                 </div>
                             </div>
                             </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 {% set sum = 0 %}
-                {% for payment in payments|filter(v => v.status == 'Réfusé') %}
+                {% for payment in payments|filter(v => v.status == 'Annulé') %}
                     {% set sum = sum + payment.total %}
                 {% endfor %}
                 <div class="col-xl-3 col-sm-6 col-12">
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{ sum }} DT</h3>
-                                <span>Réfusés ({{ payments|filter(v => v.status == 'Réfusé')|length}})</span>
+                                <span>Annulés ({{ payments|filter(v => v.status == 'Annulé')|length}})</span>
                                 </div>
                             </div>
                             </div>
@@ -210,9 +210,9 @@ var data = [
                 {% set sumA = sumA + payment.total %}
             {% elseif payment.status == "En Cours" %} 
                 {% set sumB = sumB + payment.total %}
-            {% elseif payment.status == "Annulé" %} 
-                {% set sumC = sumC + payment.total %}
             {% elseif payment.status == "Réfusé" %} 
+                {% set sumC = sumC + payment.total %}
+            {% elseif payment.status == "Annulé" %} 
                 {% set sumD = sumD + payment.total %}
             {% endif %}
         {% endfor %}
@@ -223,7 +223,7 @@ var data = [
         data: data,
         xkey: 'y',
         ykeys: [ 'a', 'b', 'c', 'd'],
-        labels: [ 'Payé','En Cours', 'Annulé', 'Refusé'],
+        labels: [ 'Payé','En Cours', 'Réfusé', 'Annulé'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,
