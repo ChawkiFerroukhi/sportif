@@ -176,7 +176,7 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Maladie</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ adherant.maladie ? adherant.maladie : "Aucune" }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{% if adherant.maladie is not null %}<a href="{{ path('app_maladie_show',{'id' : adherant.maladie.id}) }}">{{ adherant.maladie.nom }}</a>{% else %} Aucune {% endif %}</p>
                                     <hr>
                                 </div>
                             </div>

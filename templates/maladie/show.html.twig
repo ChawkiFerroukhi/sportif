@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Maladie{% endblock %}
+
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
+        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+    {% endif %}
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="heart"></i></div>
+                                {{ maladie.nom }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Maladie</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ maladie.nom }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Description</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ maladie.description|raw}}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Adherants</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">
+                                                    Nom
+                                                </th>
+                                                <th width="45%">
+                                                    Date de Naissance
+                                                </th>
+                                                <th width="45%">
+                                                    Niveau
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  adherant in  maladie.adherants %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{  adherant.nom }} {{  adherant.prenom }}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ adherant.birthdate|date('d/m/Y') }}                                                   
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_equipe_show',{'id' : adherant.equipeid.id})}}">{{ adherant.equipeid.nom }}</a>                                                    </td>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_maladie_edit',{'id' : maladie.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('maladie/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}

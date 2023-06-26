@@ -104,9 +104,12 @@ class Adherant implements \Serializable
     private $sexe;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="maladie", type="string", length=191, nullable=false)
+     * @var \Maladie
+     * 
+     * @ORM\ManyToOne(targetEntity="Maladie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="maladie", referencedColumnName="id" )
+     * })
      */
     private $maladie;
 
@@ -337,12 +340,12 @@ class Adherant implements \Serializable
         return $this;
     }
 
-    public function getMaladie(): ?string
+    public function getMaladie(): ?Maladie
     {
         return $this->maladie;
     }
 
-    public function setMaladie(string $maladie): self
+    public function setMaladie(?Maladie $maladie): self
     {
         $this->maladie = $maladie;
 

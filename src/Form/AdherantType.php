@@ -48,13 +48,10 @@ class AdherantType extends AbstractType
                 ]
             ])
             ->add('maladie',ChoiceType::class,[
-                'choices' => [
-                    'Aucune' => 'Aucune',
-                    'Maladie 1' => 'Maladie 1',
-                    'Maladie 2' => 'Maladie 2',
-                    'Maladie 3' => 'Maladie 3',
-                    
-                ]
+                'choices' => $options['maladies'],
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une maladie',
+                'required' => false
             ])
             ->add('dossierMedicalId')
             ->add('equipeid',ChoiceType::class,[
@@ -199,6 +196,7 @@ class AdherantType extends AbstractType
             'data_class' => Adherant::class,
             'supervisors' => [],
             'equipes' => [],
+            'maladies' => [],
         ]);
     }
 }

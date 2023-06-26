@@ -8,6 +8,7 @@ use App\Entity\Equipe;
 use App\Entity\Dossiermedical;
 use App\Entity\Section;
 use App\Entity\Niveau;
+use App\Entity\Maladie;
 use App\Form\AdherantType;
 use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -102,26 +103,30 @@ class AdherantController extends AbstractController
         $section = new Section();
         $adherant = new Adherant();
         $supervisors = [];
-        if(isset($usr->getRoles()["ROLE_MASTER"])) {
-            $supervisors = $entityManager
-                ->getRepository(Supervisor::class)
-                ->findAll();
-        } else {
-            $supervisors = $entityManager
-                ->getRepository(Supervisor::class)
-                ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        }
         $equipes = [];
+        $maladies = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
+            $supervisors = $entityManager
+                ->getRepository(Supervisor::class)
+                ->findAll();
             $equipes = $entityManager
                 ->getRepository(Equipe::class)
                 ->findAll();
+            $maladies = $entityManager
+                ->getRepository(Maladie::class)
+                ->findAll();
         } else {
+            $supervisors = $entityManager
+                ->getRepository(Supervisor::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
             $equipes = $entityManager
                 ->getRepository(Equipe::class)
                 ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $maladies = $entityManager
+                ->getRepository(Maladie::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
         }
-        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors ,'equipes' => $equipes]);
+        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors ,'equipes' => $equipes, 'maladies' => $maladies]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -234,16 +239,23 @@ class AdherantController extends AbstractController
         ->getRepository(Supervisor::class)
         ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $equipes = [];
+        $maladies = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
             $equipes = $entityManager
                 ->getRepository(Equipe::class)
+                ->findAll();
+            $maladies = $entityManager
+                ->getRepository(Maladie::class)
                 ->findAll();
         } else {
             $equipes = $entityManager
                 ->getRepository(Equipe::class)
                 ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            $maladies = $entityManager
+                ->getRepository(Maladie::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
         }
-        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors ,'equipes' => $equipes]);
+        $form = $this->createForm(AdherantType::class, $adherant, ['supervisors' => $supervisors ,'equipes' => $equipes, 'maladies' => $maladies]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)

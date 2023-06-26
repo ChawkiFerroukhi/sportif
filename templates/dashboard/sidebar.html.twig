@@ -90,7 +90,15 @@
                         </div>
                         {{app.user.clubid.nom}}
                     </a>
-                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_DOCTOR'] is defined %}
+                    <a class="nav-link" href="{{ path('app_maladie_index') }}">
+                        <div class="nav-link-icon">
+                            <i data-feather="heart"></i>
+                        </div>
+                        Maladies
+                    </a>
+                    {% endif %}
+                    {% if app.user.roles['ROLE_ADMIN'] is defined %}
                         
                         <a class="nav-link" href="{{ path('app_newsletter_index') }}">
                             <div class="nav-link-icon">
