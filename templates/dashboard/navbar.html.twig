@@ -23,12 +23,12 @@
 
         <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="me-2" data-feather="grid" ></i>
-                <span > Sections </span>                      
+                <i class="me-2" data-feather="grid" style="color: {{ app.user.clubid.color }}"></i>
+                <span style="color: {{ app.user.clubid.color }}"> Sections </span>                      
             </a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"  aria-labelledby="navbarDropdownAlerts">
                 <h6 class="dropdown-header dropdown-notifications-header" style="background-color: white;">
-                    <i class="me-2" data-feather="grid" style="background-color:{{ app.user.clubid.color }}"></i>
+                    <i class="me-2" data-feather="grid" style="color:{{ app.user.clubid.color }}"></i>
                     <span style="color: {{ app.user.clubid.color }}">Sections </span>   
                 </h6>
                 <!-- Example Alert 1-->
