@@ -214,33 +214,36 @@
 <script>
 var data = [
     {% set sum = 0 %}
+    {% set sumC = 0 %}
     {% set sumA = 0 %}
     {% for date,pymnt in pymnts|sort((a, b) => a[0].date <=> b[0].date) %}
         {% for encaissement in pymnt %}
             {% if encaissement.status == "Payé" %}
                 {% set sum = sum + encaissement.total %}
-            {% else %} 
+            {% elseif encaissement.status == "En Cours" %} 
+                {% set sumC = sumC + encaissement.total %}
+            {% else %}
                 {% set sumA = sumA + encaissement.total %}
             {% endif %}
         {% endfor %}
-        { y: '{{ date|date("Y-m-d") }}', a: {{ sum }}, b: {{ sumA }} },
+        { y: '{{ date|date("Y-m-d") }}', a: {{ sum }}, b: {{ sumC }}, c: {{ sumA }} },
     {% endfor %}
     ],
     config = {
         data: data,
         xkey: 'y',
-        ykeys: [ 'a', 'b'],
-        labels: [ 'Payé','Non Payé'],
+        ykeys: [ 'a', 'b', 'c'],
+        labels: [ 'Payé','En Cours', 'Refusé'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,
         resize: true,
         pointFillColors:['#ffffff'],
         pointStrokeColors: ['black'],
-        lineColors:['{{ app.user.clubid is not null ? app.user.clubid.color : "red" }}','gray']
+        lineColors:['green','gray','red']
     };
     config.element = 'area-chart';
-    Morris.Area(config);
+    Morris.Line(config);
 </script>
 
 {% endblock %}
