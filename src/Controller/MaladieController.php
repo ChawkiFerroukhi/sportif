@@ -43,8 +43,8 @@ class MaladieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/new', name: 'app_maladie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Club $club,EntityManagerInterface $entityManager): Response
+    #[Route('/new', name: 'app_maladie_new', methods: ['GET', 'POST'])]
+    public function new(Request $request,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         $maladie = new Maladie();
@@ -57,7 +57,11 @@ class MaladieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $maladie->setCreatedAt(new \DateTime());
             $maladie->setUpdatedAt(new \DateTime());
-            $maladie->setClubid($club);
+            if(!empty($form->get('clubid')->getData())) {
+                $maladie->setClubid($form->get('clubid')->getData());
+            } else {
+                $maladie->setClubid($usr->getClubid());
+            }
             $entityManager->persist($maladie);
             $entityManager->flush();
 

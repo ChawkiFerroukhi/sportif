@@ -22,7 +22,13 @@ class MaladieType extends AbstractType
                     'placeholder' => 'Description',
                 ],
                 'required' => false
-            ])        
+            ])    
+            ->add('clubid', null, [
+                'label' => 'Club',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un club',
+                'required' => false,
+            ])    
             ;
     }
 
