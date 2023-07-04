@@ -6,7 +6,7 @@ use App\Entity\Payment;
 use App\Entity\Section;
 use App\Entity\Niveau;
 use App\Entity\Equipe;
-use App\Entity\Adherant;
+use App\Entity\User;
 use App\Form\PaymentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,17 +63,17 @@ class PaymentController extends AbstractController
             'GET' => $_GET
         ]);
     }
-    #[Route('/adherant/{id}', name: 'app_payment_index_adherant', methods: ['GET'])]
-    public function indexAdherant(Adherant $adherant, EntityManagerInterface $entityManager): Response
+    #[Route('/user/{id}', name: 'app_payment_index_user', methods: ['GET'])]
+    public function indexUser(User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId()) {
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $user->getSupervisorid()->getId() && $usr->getId() != $user->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
         $payments = $entityManager
             ->getRepository(Payment::class)
-            ->findBy(['adherantid' => $adherant->getId()]);
+            ->findBy(['userid' => $user->getId()]);
         
         if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
             $tmp = [];
@@ -100,8 +100,8 @@ class PaymentController extends AbstractController
             'payments' => $payments,
             'pymnts' => $pymnts,
             'sections' => $sections,
-            'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid(),
-            'adherant' => $adherant,
+            'section' => new Section(),
+            'user' => $user,
             'GET' => $_GET
         ]);
     }
@@ -113,19 +113,19 @@ class PaymentController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $adherants = [];
+        $users = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
-            $adherants = $entityManager
-                ->getRepository(Adherant::class)
+            $users = $entityManager
+                ->getRepository(User::class)
                 ->findAll();
         } else {
-            $adherants = $entityManager
-            ->getRepository(Adherant::class)
+            $users = $entityManager
+            ->getRepository(User::class)
             ->findBy(['clubid' => $usr->getClubid()]);
         }
         $payment = new Payment();
         $form = $this->createForm(PaymentType::class, $payment,[
-            'adherants' => $adherants
+            'users' => $users
         ]);
         $form->handleRequest($request);
 
@@ -133,7 +133,7 @@ class PaymentController extends AbstractController
 
             $payment->setCreatedAt(new \DateTime());
             $payment->setUpdatedAt(new \DateTime());
-            $payment->setClubid($payment->getAdherantid()->getClubid());
+            $payment->setClubid($payment->getUserid()->getClubid());
             $entityManager->persist($payment);
             $entityManager->flush();
             $this->user = $usr;
@@ -149,27 +149,27 @@ class PaymentController extends AbstractController
     }
 
 
-    #[Route('/adherant/{id}/new', name: 'app_payment_new_adherant', methods: ['GET', 'POST'])]
-    public function newAdh(Adherant $adherant,Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/user/{id}/new', name: 'app_payment_new_user', methods: ['GET', 'POST'])]
+    public function newAdh(User $user,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $adherants = [];
+        $users = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
-            $adherants = $entityManager
-                ->getRepository(Adherant::class)
+            $users = $entityManager
+                ->getRepository(User::class)
                 ->findAll();
         } else {
-            $adherants = $entityManager
-            ->getRepository(Adherant::class)
+            $users = $entityManager
+            ->getRepository(User::class)
             ->findBy(['clubid' => $usr->getClubid()]);
         }
         $payment = new Payment();
-        $payment->setAdherantid($adherant);
+        $payment->setUserid($user);
         $form = $this->createForm(PaymentType::class, $payment,[
-            'adherants' => $adherants
+            'users' => $users
         ]);
         $form->handleRequest($request);
 
@@ -177,7 +177,7 @@ class PaymentController extends AbstractController
 
             $payment->setCreatedAt(new \DateTime());
             $payment->setUpdatedAt(new \DateTime());
-            $payment->setClubid($payment->getAdherantid()->getClubid());
+            $payment->setClubid($payment->getUserid()->getClubid());
             $entityManager->persist($payment);
             $entityManager->flush();
             $this->user = $usr;
@@ -199,7 +199,7 @@ class PaymentController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = $payment->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid();
+        $section = new Section();
         $this->user = $usr;
         return $this->render('payment/show.html.twig', [
             'payment' => $payment,
@@ -215,19 +215,19 @@ class PaymentController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = $payment->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid();
-        $adherants = [];
+        $section = $payment->getUserid()->getEquipeid()->getNiveauid()->getSectionid();
+        $users = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
-            $adherants = $entityManager
-                ->getRepository(Adherant::class)
+            $users = $entityManager
+                ->getRepository(User::class)
                 ->findAll();
         } else {
-            $adherants = $entityManager
-            ->getRepository(Adherant::class)
+            $users = $entityManager
+            ->getRepository(User::class)
             ->findBy(['clubid' => $usr->getClubid()]);
         }
         $form = $this->createForm(PaymentType::class, $payment,[
-            'adherants' => $adherants
+            'users' => $users
         ]);
         $form->handleRequest($request);
 

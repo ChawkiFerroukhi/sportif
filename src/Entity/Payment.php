@@ -30,28 +30,28 @@ class Payment extends Encaissement
     protected $type = 'paiement';
 
     /**
-     * @var \Adherant
+     * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="Adherant")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="adherantid", referencedColumnName="id" , onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="userid", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
-    private $adherantid;
+    private $userid;
 
     public function getId(): ?int
     {
         return $this->id;
     }
     
-    public function getAdherantid(): ?Adherant
+    public function getUserid(): ?User
     {
-        return $this->adherantid;
+        return $this->userid;
     }
 
-    public function setAdherantid(?Adherant $adherantid): self
+    public function setUserid(?User $userid): self
     {
-        $this->adherantid = $adherantid;
+        $this->userid = $userid;
 
         return $this;
     }

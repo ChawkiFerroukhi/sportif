@@ -5,10 +5,14 @@
         {% if app.user.roles['ROLE_MASTER'] is defined %}
         <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
     {% else %}
-        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
-        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
     {% endif %}
-            <div class="container-xl px-4">
+                    <div class="col-lg-12" >
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
                         <div class="col-auto mb-3">

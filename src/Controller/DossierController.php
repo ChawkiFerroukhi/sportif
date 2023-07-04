@@ -20,7 +20,7 @@ class DossierController extends AbstractController
     public function index(Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if( $usr->getId() == $adherant->getId() && $usr->getId() != $adherant->getSupervisorId() && $usr->getId() != $adherant->getSupervisor2Id() && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
         }

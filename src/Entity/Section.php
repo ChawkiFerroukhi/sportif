@@ -6,14 +6,18 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Section
  *
  * @ORM\Table(name="Section", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
-class Section
+class Section implements \Serializable
 {
     /**
      * @var int
@@ -67,6 +71,17 @@ class Section
      * @ORM\Column(name="description", type="string", length=5000, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logo;
+
+    /**
+     * @Vich\UploadableField(mapping="section_image", fileNameProperty="logo")
+     * @var File|null
+    */
+    private  $logoFile = null;
 
     public function getId(): ?int
     {
@@ -173,6 +188,43 @@ class Section
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoFile(?File $logoFile): void
+    {
+        $this->logoFile = $logoFile;
+
+        if ($logoFile instanceof UploadedFile) {
+            $this->updatedat = new \DateTime();
+        }
+    }
+
+    public function serialize()
+    {
+        $this->logoFile = base64_encode($this->logoFile);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->logoFile = base64_decode($this->logoFile);
+
     }
 
 }

@@ -42,7 +42,7 @@
                     href="{{ path('app_section_show',{'id':sctn.id})}}">
                         <div class="dropdown-notifications-item-content">
                             <div class="dropdown-notifications-item-content-details">
-                                <i class="me-2" data-feather="clipboard"></i>
+                                <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="20px" hight="20px"/></i>
                                 {{sctn.nom}}
                             </div>
                         </div>

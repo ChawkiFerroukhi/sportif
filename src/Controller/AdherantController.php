@@ -62,11 +62,6 @@ class AdherantController extends AbstractController
     public function indexSection(Section $section,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adherant_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
-        }
-
         $adherants = [];
         $niveaux = $entityManager
             ->getRepository(Niveau::class)
@@ -141,12 +136,25 @@ class AdherantController extends AbstractController
             $dossier->setUpdatedAt(new \DateTime());
             $dossier->setClubid($adherant->getEquipeid()->getClubid());
             $dossier->setAdherantid($adherant);
+            
             $entityManager->persist($dossier);
             $adherant->setDossierMedicaId($dossier);
+            $adherant->setPassword($this->passwordHasher->hashPassword(
+                $adherant,
+                $form->get('password')->getData()
+            ));
             if(!empty($form->get('clubid')->getData())) {
                 $adherant->setClubid($form->get('clubid')->getData());
             } else {
                 $adherant->setClubid($usr->getClubid());
+            }
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($adherant->getClubid());
+                $image->setAdherantid($adherant);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
             }
             if($form->get('supervisorId')->getData()) {
                 $adherant->setSupervisorId($form->get('supervisorId')->getData());
@@ -211,7 +219,7 @@ class AdherantController extends AbstractController
     public function show(Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adherant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId()) {
+        if(!isset($usr->getRoles()["app_adherant_show"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && $usr->getId() != $adherant->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -231,7 +239,7 @@ class AdherantController extends AbstractController
     public function edit(Request $request, Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adherant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId()) {
+        if(!isset($usr->getRoles()["app_adherant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && $usr->getId() != $adherant->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -266,6 +274,20 @@ class AdherantController extends AbstractController
                 $adherant->setClubid($form->get('clubid')->getData());
             } else {
                 $adherant->setClubid($usr->getClubid());
+            }
+            if($form->get('password')->getData() != null) {
+                $adherant->setPassword($this->passwordHasher->hashPassword(
+                    $adherant,
+                    $form->get('password')->getData()
+                ));
+            }
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($adherant->getClubid());
+                $image->setAdherantid($adherant);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
             }
             $entityManager->flush();
 

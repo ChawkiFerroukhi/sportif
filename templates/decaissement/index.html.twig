@@ -4,10 +4,14 @@
         {% if app.user.roles['ROLE_MASTER'] is defined %}
         <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
     {% else %}
-        <header class="page-header page-header-dark bg-gradient pb-10" style="background-color: {{ app.user.clubid.color }};">
-        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
     {% endif %}
-            <div class="container-fluid px-4">
+                    <div class="col-lg-12" >
                 <div class="page-header-content">
                     <div class="row align-items-center justify-content-between pt-3">
                         <div class="col-auto mb-3">
@@ -134,7 +138,8 @@
                         </div>
                         <div class="col-md-4">
                             <br>
-                            <button class="btn btn-outline-success" type="submit" style="display:block">Filter</button>
+                            <button class="btn btn-outline-success" type="submit" style="float:left">Filter</button>
+                            <a href="{{ path('app_income_index') }}" class="btn btn-outline-warning" style="float:left;margin-left:15px;" >Revenus</a>
                         </div>
                     </div>
                     </form>
@@ -167,17 +172,31 @@
                                     <td>{{ decaissement.ref }}</td>
                                     <td>{{ decaissement.status }}</td>
                                     <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_decaissement_show', {'id': decaissement.id}) }}">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_decaissement_edit', {'id': decaissement.id}) }}">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
-                                            {{ include('decaissement/_delete_form.html.twig') }}
-                                        </a>
-                                        {% endif %}                                         
+                                        {% if decaissement.type == 'income' %}
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_income_show', {'id': decaissement.id}) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_income_edit', {'id': decaissement.id}) }}">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                                {{ include('decaissement/_delete_form.html.twig') }}
+                                            </a>
+                                            {% endif %}
+                                        {% else  %}
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_decaissement_show', {'id': decaissement.id}) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_decaissement_edit', {'id': decaissement.id}) }}">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                                {{ include('decaissement/_delete_form.html.twig') }}
+                                            </a>
+                                            {% endif %} 
+                                        {% endif %}                                       
                                     </td>
                                 </tr>
                                 {% else %}

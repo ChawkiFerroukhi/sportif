@@ -97,6 +97,10 @@ class DoctorController extends AbstractController
     public function show(Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && $usr->getId() != $doctor->getId() && !isset($usr->getRoles()["app_doctor_show"])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $section = new Section();
         $sections = $entityManager
             ->getRepository(Section::class)

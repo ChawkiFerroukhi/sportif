@@ -97,6 +97,12 @@ class Club implements \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $color;
+    
+    /**
+     * @ORM\Column(type="string", length=255 , nullable=false)
+     */
+    private $color2;
+
 
 
     public function getId(): ?int
@@ -278,6 +284,18 @@ class Club implements \Serializable
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getColor2(): ?string
+    {
+        return $this->color2;
+    }
+
+    public function setColor2(?string $color2): self
+    {
+        $this->color2 = $color2;
 
         return $this;
     }

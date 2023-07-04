@@ -10,9 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="Decaissement", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"income" = "Income", "decaissement" = "Decaissement"})
  */
 class Decaissement
 {
+
+    protected $discr = 'decaissement';
 
     /**
      * @var int
@@ -78,6 +83,13 @@ class Decaissement
      * @ORM\Column(name="ref", type="string", length=191, nullable=false)
      */
     protected $ref;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=191, nullable=false)
+     */
+    protected $type = 'decaissement';
 
     /**
      * @var \Club
@@ -207,6 +219,11 @@ class Decaissement
         $this->clubid = $clubid;
 
         return $this;
+    }
+
+    public function getType():string 
+    {
+        return $this->type;
     }
 
     public function __ToString(): string {

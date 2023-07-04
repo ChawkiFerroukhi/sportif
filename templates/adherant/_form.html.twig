@@ -9,12 +9,12 @@
                 <div class="small font-italic text-muted mb-4">
                     No larger than 5 MB </br>                        
                     {% if adherant is defined %}
-                        <img src="{{ vich_uploader_asset(adherant, 'pictureFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
+                        <img src="{{ vich_uploader_asset(adherant.picture, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
                     {% endif %}
                 </div>
             </div>
             <div class="card-body text-center">
-                {{ form_widget(form.pictureFile, {'attr':{'title':'', 'width':'10' }}) }}
+                {{ form_widget(form.image, {'attr':{'title':'', 'width':'10' }}) }}
             </div>
         </div>
     </div>
@@ -24,8 +24,41 @@
                 Fiche Adherant                                            
             </div>
             <div class="card-body">
-                <hr>
                 <h6> Fiche Adherant </h6>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.ref) }}
+                    </div>
+                </div>
+                {% if adherant.id is null or app.user.id == adherant.id or app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
+                        {{ form_row(form.password.second, {'attr':{'required':'true' }})}}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+                {% else %}
+                <div hidden>
+                    {{ form_widget(form.password) }}
+                </div>
+                {% endif %}
+                
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
@@ -40,15 +73,6 @@
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.prenom) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">        
-                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.ref) }}
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
@@ -332,7 +356,7 @@ function filePreview(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-$("#adherant_pictureFile_file").change(function () {
+$("#adherant_image_imageFile_file").change(function () {
     filePreview(this);
 });
 </script>

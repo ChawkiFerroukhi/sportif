@@ -15,10 +15,10 @@ use Doctrine\Common\Collections\Collection;
  * Adherant
  *
  * @ORM\Table(name="Adherant", indexes={@ORM\Index(name="equipeId", columns={"equipeId"}), @ORM\Index(name="supervisorId", columns={"supervisorId"}),  @ORM\Index(name="supervisor2Id", columns={"supervisor2Id"})})
- * @ORM\Entity
  * @Vich\Uploadable
+ * @ORM\Entity
  */
-class Adherant implements \Serializable
+class Adherant extends User
 {
      /**
      * @ORM\Id
@@ -119,18 +119,6 @@ class Adherant implements \Serializable
     protected ?string $ref;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $picture;
-    
-
-    /**
-     * @Vich\UploadableField(mapping="user_image", fileNameProperty="picture")
-     * @var File|null
-    */
-    private  $pictureFile = null;
-
-    /**
      * @var \Dossiermedical
      *
      * @ORM\ManyToOne(targetEntity="Dossiermedical")
@@ -195,6 +183,12 @@ class Adherant implements \Serializable
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="adherantid")
      */
     private $notes;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="adherantid")
+     */
+    private $pictures;
 
     public function getId(): ?int
     {
@@ -486,41 +480,42 @@ class Adherant implements \Serializable
         return $this;
     }
 
-    public function getPicture(): ?string
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
     {
-        return $this->picture;
+        return $this->pictures;
     }
 
-    public function setPicture(?string $picture): self
+    public function getPicture(): ?Picture
     {
-        $this->picture = $picture;
+        if($this->pictures == null) {
+            return new Picture();
+        }
+        return $this->pictures->last();
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setAdherantid($this);
+        }
 
         return $this;
     }
 
-    public function getPictureFile(): ?File
+    public function removePicture(Picture $picture): self
     {
-        return $this->pictureFile;
-    }
-
-    public function setPictureFile(?File $pictureFile): void
-    {
-        $this->pictureFile = $pictureFile;
-
-        if ($pictureFile instanceof UploadedFile) {
-            $this->updatedat = new \DateTime();
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getAdherantid() === $this) {
+                $picture->setAdherantid(null);
+            }
         }
-    }
 
-    public function serialize()
-    {
-        $this->pictureFile = base64_encode($this->pictureFile);
-    }
-
-    public function unserialize($serialized)
-    {
-        $this->pictureFile = base64_decode($this->pictureFile);
-
+        return $this;
     }
 
 

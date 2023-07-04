@@ -32,6 +32,10 @@ class ClubType extends AbstractType
             ->add('color',ColorType::class,[
                 'attr' => ['class' => 'colorpicker-default']
             ])
+
+            ->add('color2',ColorType::class,[
+                'attr' => ['class' => 'colorpicker-default']
+            ])
         ;
     }
 

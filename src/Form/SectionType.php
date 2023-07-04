@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 class SectionType extends AbstractType
@@ -21,6 +22,13 @@ class SectionType extends AbstractType
                     'placeholder' => 'Description',
                 ],
                 'required' => false
+            ])
+            ->add('logoFile', VichImageType::class, [
+                'required' => false,
+                'image_uri' => false,
+                'delete_label' => false,
+                'allow_delete' => false,
+                'download_label' => false,
             ])
         ;
     }

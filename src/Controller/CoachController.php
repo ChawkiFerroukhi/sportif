@@ -98,6 +98,11 @@ class CoachController extends AbstractController
     public function show(Coach $coach,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && $usr->getId() != $coach->getId() && !isset($usr->getRoles()["app_coach_show"])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
+
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

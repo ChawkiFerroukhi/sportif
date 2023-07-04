@@ -92,7 +92,7 @@
                 {% else %}
                     <a class="nav-link" href="{{ path('app_club_show',{'id':app.user.clubid.id})}}">
                         <div class="nav-link-icon">
-                            <i data-feather="bookmark"></i>
+                            <i><img src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" width="20px" hight="20px"/></i>
                         </div>
                         {{app.user.clubid.nom}}
                     </a>
@@ -166,24 +166,12 @@
                     {% endif %}
                     <hr>
                     {% if section.id is defined and section.id is not null %}
-                        <a class="nav-link" href="{{ path('app_adherant_index_section',{'id' : section.id}) }}">
+                        <a class="nav-link" href="{{ path('app_section_show',{'id' : section.id}) }}">
                             <div class="nav-link-icon">
-                                <i data-feather="users"></i>
+                                <i><img src="{{ vich_uploader_asset(section, 'logoFile') }}" width="20px" hight="20px"/></i>
                             </div>
-                            Adhérants                                                         
+                            {{ section.nom}}                                                         
                         </a>
-                        <a class="nav-link" href="{{ path('app_blog_index',{'id':section.id})}}">
-                            <div class="nav-link-icon">
-                                <i data-feather="file"></i>
-                            </div>
-                            Publications
-                        </a>
-                       <!-- <a class="nav-link" href="{{ path('app_section_home',{'id':section.id})}}">
-                            <div class="nav-link-icon">
-                                <i data-feather="trending-up"></i>
-                            </div>
-                            Statistiques
-                        </a> -->
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="nav-link-icon">
                                 <i data-feather="grid"></i>
@@ -218,6 +206,24 @@
                                 {% endfor %}
                             </nav>
                         </div>
+                        <a class="nav-link" href="{{ path('app_adherant_index_section',{'id' : section.id}) }}">
+                            <div class="nav-link-icon">
+                                <i data-feather="users"></i>
+                            </div>
+                            Adhérants                                                         
+                        </a>
+                        <a class="nav-link" href="{{ path('app_blog_index',{'id':section.id})}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="file"></i>
+                            </div>
+                            Publications
+                        </a>
+                       <!-- <a class="nav-link" href="{{ path('app_section_home',{'id':section.id})}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="trending-up"></i>
+                            </div>
+                            Statistiques
+                        </a> -->
                     {% endif %} 
                 {% endif %}
                 <!-- Sidenav Accordion (Pages)-->

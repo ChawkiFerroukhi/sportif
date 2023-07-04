@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objective{% endblock %}
+
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
+    {% endif %}
+                    <div class="col-lg-12" >
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="dollar-sign"></i></div>
+                                Fiche Revenu
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Revenu</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Total</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.total }} DT</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Mode de Revenu</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.mode }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Status de Revenu</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.status }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Utilisateur</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_user_show',{'id' : income.userid.id})}}">{{ income.userid.email }}</a> 
+                                    <hr>  
+                                </div>
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Revenu</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.date|date('d/m/Y') }}</p>
+                                    <hr>  
+                                </div>
+
+                                <div class="col-md-4">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Référence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.ref }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Designation</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ income.designation }}</p>
+                                    <hr>  
+                                </div>
+                            </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                            <div class="col-12">
+                                <a class="btn btn-outline-warning" href="{{ path('app_income_edit',{'id' : income.id}) }}" style="float:left">Modifier</a>
+                                <a style="float:right">
+                                    {{ include('income/_delete_form.html.twig') }}
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}

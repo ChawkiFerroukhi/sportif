@@ -23,14 +23,21 @@ class AdherantType extends AbstractType
         $builder
             ->add('createdat')
             ->add('updatedat')
-            ->add('ref')
-            ->add('pictureFile', VichImageType::class, [
+            ->add('Email', EmailType::class)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
                 'required' => false,
-                'image_uri' => false,
-                'delete_label' => false,
-                'allow_delete' => false,
-                'download_label' => false,
+                'mapped' => false,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+                
             ])
+            ->add('ref')
+            ->add('image', PictureType::class,[
+                'mapped' => false
+            ] )
             ->add('nom')
             ->add('prenom')
             ->add('birthdate',DateType::class, [ 

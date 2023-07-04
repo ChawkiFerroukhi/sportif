@@ -51,10 +51,10 @@ class PaymentType extends AbstractType
                     'placeholder' => 'Désignation'
                 ]
             ])
-            ->add('adherantid',ChoiceType::class,[
-                'choices' => $options['adherants'],
-                'choice_label' => 'nomprenom',
-                'placeholder' => 'Choisir un adherant',
+            ->add('userid',ChoiceType::class,[
+                'choices' => $options['users'],
+                'choice_label' => 'Email',
+                'placeholder' => 'Choisir un utilisateur',
                 'required' => true,
             ])
         ;
@@ -64,7 +64,7 @@ class PaymentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Payment::class,
-            'adherants' => []
+            'users' => []
         ]);
     }
 }
