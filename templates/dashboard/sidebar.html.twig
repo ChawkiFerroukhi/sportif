@@ -96,6 +96,58 @@
                         </div>
                         {{app.user.clubid.nom}}
                     </a>
+                    {% if app.user.roles['ROLE_ADMIN'] is defined %}  
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="nav-link-icon">
+                            <i data-feather="users"></i>
+                        </div>
+                        Membres                    
+                        <div class="sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>                      
+                    <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            <a class="nav-link" href="{{ path('app_administrateur_index')}}">
+                                Administrateurs
+                            </a>
+                            <a class="nav-link" href="{{ path('app_coach_index')}}">
+                                Coachs
+                            </a>
+                            <a class="nav-link" href="{{ path('app_doctor_index')}}">
+                                Doctors
+                            </a>
+                            <a class="nav-link" href="{{ path('app_adherant_index')}}">
+                                Adherants
+                            </a>
+                            <a class="nav-link" href="{{ path('app_supervisor_index')}}">
+                                Parents
+                            </a>
+                            <a class="nav-link" href="{{ path('app_user_index')}}">
+                                Utilisateurs
+                            </a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTriso" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="nav-link-icon">
+                            <i data-feather="dollar-sign"></i>
+                        </div>
+                        Trésorie                    
+                        <div class="sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapseTriso" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            <a class="nav-link" href="{{ path('app_encaissement_index')}}">
+                                Encaissements
+                            </a>
+                            <a class="nav-link" href="{{ path('app_decaissement_index')}}">
+                                Decaissements
+                            </a>
+                        </nav>
+                    </div>
+                    {% endif %}
                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_DOCTOR'] is defined %}
                     <a class="nav-link" href="{{ path('app_maladie_index') }}">
                         <div class="nav-link-icon">
@@ -103,66 +155,6 @@
                         </div>
                         Maladies
                     </a>
-                    {% endif %}
-                    {% if app.user.roles['ROLE_ADMIN'] is defined %}
-                        
-                        <a class="nav-link" href="{{ path('app_newsletter_index') }}">
-                            <div class="nav-link-icon">
-                                <i data-feather="mail"></i>
-                            </div>
-                            Newsletter                                                         
-                        </a>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTriso" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="nav-link-icon">
-                                <i data-feather="dollar-sign"></i>
-                            </div>
-                            Trésorie                    
-                            <div class="sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </div>
-                        </a>
-                        <div class="collapse" id="collapseTriso" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                                <a class="nav-link" href="{{ path('app_encaissement_index')}}">
-                                    Encaissements
-                                </a>
-                                <a class="nav-link" href="{{ path('app_decaissement_index')}}">
-                                    Decaissements
-                                </a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="nav-link-icon">
-                                <i data-feather="users"></i>
-                            </div>
-                            Utilisateurs                    
-                            <div class="sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </div>
-                        </a>
-                        <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                                <a class="nav-link" href="{{ path('app_administrateur_index')}}">
-                                    Administrateurs
-                                </a>
-                                <a class="nav-link" href="{{ path('app_coach_index')}}">
-                                    Coachs
-                                </a>
-                                <a class="nav-link" href="{{ path('app_doctor_index')}}">
-                                    Doctors
-                                </a>
-                                <a class="nav-link" href="{{ path('app_adherant_index')}}">
-                                    Adherants
-                                </a>
-                                <a class="nav-link" href="{{ path('app_supervisor_index')}}">
-                                    Parents
-                                </a>
-                                <a class="nav-link" href="{{ path('app_user_index')}}">
-                                    Utilisateurs
-                                </a>
-                            </nav>
-                        </div>
-                    
                     {% endif %}
                     <hr>
                     {% if section.id is defined and section.id is not null %}
@@ -218,12 +210,12 @@
                             </div>
                             Publications
                         </a>
-                       <!-- <a class="nav-link" href="{{ path('app_section_home',{'id':section.id})}}">
+                        <a class="nav-link" href="{{ path('app_newsletter_index',{'id' : section.id}) }}">
                             <div class="nav-link-icon">
-                                <i data-feather="trending-up"></i>
+                                <i data-feather="mail"></i>
                             </div>
-                            Statistiques
-                        </a> -->
+                            Newsletter                                                         
+                        </a>
                     {% endif %} 
                 {% endif %}
                 <!-- Sidenav Accordion (Pages)-->

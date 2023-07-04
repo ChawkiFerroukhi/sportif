@@ -8,6 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Section;
 use App\Entity\User;
 use App\Entity\Administrateur;
+use App\Entity\Coach;
+use App\Entity\Supervisor;
+use App\Entity\Adherant;
+use App\Entity\Niveau;
+use App\Entity\Equipe;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Newsletter;
 use App\Form\NewsletterType;
@@ -27,8 +32,8 @@ class HomeController extends AbstractController
         
         return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/newsletter', name: 'app_newsletter_index', methods: ['POST','GET'])]
-    public function newsletter(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    #[Route('/newsletter/{id}', name: 'app_newsletter_index', methods: ['POST','GET'])]
+    public function newsletter(Section $section,Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $newsletter = new Newsletter();
         $sections = $entityManager
@@ -39,18 +44,38 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $emails = [];
-            $users = $entityManager
-                ->getRepository(User::class)
-                ->findBy(['clubid' => $this->getUser()->getClubid()]);
-
-            
-            foreach ($users as $user) {
-                $emails[] = $user->getEmail();
+            $users = [];
+            $niveaux = $entityManager
+                ->getRepository(Niveau::class)
+                ->findBy(['sectionid' => $section->getId()]);
+            foreach ($niveaux as $niveau) {
+                $equipes = $entityManager
+                    ->getRepository(Equipe::class)
+                    ->findBy(['niveauid' => $niveau->getId()]);
+                foreach($equipes as $equipe) {
+                    foreach($equipe->getAdherants() as $adherant) {
+                        $users[] = $adherant->getEmail();
+                        $users[] = $adherant->getSupervisorId()->getEmail();
+                        if($adherant->getSupervisor2Id() != null) {
+                            $users[] = $adherant->getSupervisor2Id()->getEmail();
+                        }
+                    }
+                    $users[] = $equipe->getCoachid()->getEmail();
+                    $users[] = $equipe->getDoctorid()->getEmail();
+                }
             }
+            
+            $admins = $entityManager
+                ->getRepository(Administrateur::class)
+                ->findBy(['clubid' => $this->getUser()->getClubid()]);
+            foreach ($admins as $admin) {
+                $users[] = $admin->getEmail();
+            }
+            $users = array_unique($users);
             
             $email = (new TemplatedEmail())
             ->from(new Address('w311940@gmail.com', 'IGMS'))
-            ->to(...$emails)
+            ->to(...$users)
             ->subject($newsletter->getSubject())
             ->html($newsletter->getBody());
             
@@ -59,14 +84,14 @@ class HomeController extends AbstractController
             } catch (TransportExceptionInterface $e) {
                 
             }
-            return $this->redirectToRoute('app_newsletter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_newsletter_index', ['id'=>$section->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('dashboard/newsletter.html.twig', [
             'newsletter' => $newsletter,
             'form' => $form,
             'sections' => $sections,
-            'section' => new Section(),
+            'section' => $section,
         ]);
     }
     #[Route('/newsletter/master', name: 'app_newsletter_master', methods: ['POST','GET'])]
