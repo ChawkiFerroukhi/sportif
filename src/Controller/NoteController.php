@@ -20,6 +20,10 @@ class NoteController extends AbstractController
     public function index(Adherant $adherant,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $notes = $entityManager
             ->getRepository(Note::class)
             ->findBy(['adherantid' => $adherant->getId()]);
@@ -38,6 +42,11 @@ class NoteController extends AbstractController
     public function new(Teste $teste, Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -73,6 +82,11 @@ class NoteController extends AbstractController
     public function show(Note $note, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $adherant = $note->getAdherantid();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -88,6 +102,10 @@ class NoteController extends AbstractController
     public function edit(Request $request, Note $note, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -117,6 +135,10 @@ class NoteController extends AbstractController
     public function delete(Request $request, Note $note, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$note->getId(), $request->request->get('_token'))) {
             $entityManager->remove($note);
             $entityManager->flush();

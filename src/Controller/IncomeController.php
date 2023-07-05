@@ -67,7 +67,12 @@ class IncomeController extends AbstractController
     public function indexUser(User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $user->getSupervisorid()->getId() && $usr->getId() != $user->getId()) {
+        if (isset($user->getRoles()['ROLE_ADHERANT'])) {
+            if($usr->getId() != $user->getSupervisorid()->getId() && $usr->getId() != $user->getSupervisor2id()->getId() ) {
+                $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            }
+        } else if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $user->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }

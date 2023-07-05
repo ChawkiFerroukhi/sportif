@@ -60,6 +60,11 @@ class DossiermedicalController extends AbstractController
     public function show(Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $adherant = $dossiermedical->getAdherantid();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

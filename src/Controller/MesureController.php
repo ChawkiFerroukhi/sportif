@@ -39,6 +39,10 @@ class MesureController extends AbstractController
     public function new(Dossiermedical $dossier,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $mesure = new Mesure();
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -89,6 +93,12 @@ class MesureController extends AbstractController
     public function show(Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        $adherant = $mesure->getDossiermedicalid()->getAdherantid();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -104,6 +114,11 @@ class MesureController extends AbstractController
     public function edit(Request $request, Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $doctors = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
             $doctors = $entityManager
@@ -143,6 +158,10 @@ class MesureController extends AbstractController
     public function delete(Request $request, Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$mesure->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mesure);
             $entityManager->flush();

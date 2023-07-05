@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Collection;
  */
 class Supervisor extends User
 {
+    protected $discr = 'supervisor';
+
     /**
      * @var int
      *
