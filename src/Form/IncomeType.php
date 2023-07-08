@@ -29,6 +29,7 @@ class IncomeType extends AbstractType
                     'Virement' => 'Virement',
                     'En Ligne' => 'En Ligne',
                     'Cash' => 'Cash',
+                    'Mondat' => 'Mondat',
                 ]
             ])
             ->add('status',ChoiceType::class,[

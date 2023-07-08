@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or master.id == app.user.id %}
-                                    <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : master.id}) }}" style="display:block">Revenus</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : master.id}) }}" style="display:block">Salaires</a>
                                     {% endif %} 
                                 </div>
                             </div>

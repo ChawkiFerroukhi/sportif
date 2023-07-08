@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
-                                    <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : adherant.id}) }}" style="display:block">Revenus</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : adherant.id}) }}" style="display:block">Salaires</a>
                                     {% endif %} 
                                 </div>
                             </div>

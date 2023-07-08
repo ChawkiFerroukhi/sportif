@@ -168,6 +168,6 @@ class MesureController extends AbstractController
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_mesure_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_dossiermedical_show', ['id'=>$mesure->getDossiermedicalid()], Response::HTTP_SEE_OTHER);
     }
 }

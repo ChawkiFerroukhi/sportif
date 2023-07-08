@@ -89,10 +89,14 @@
                                                 <th width="45%">
                                                     IMC
                                                 </th>
+                                                <th width="45%">
+                                                    Actions
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  mesure in  dossiermedical.mesures %}
+                                        
+                                            {% for  mesure in  dossiermedical.mesures|sort((a, b) => b.date <=> a.date) %}
                                                 <tr>
                                                     <td width="45%">
                                                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_SUPERVISOR'] is defined and mesure.dossiermedicalid.adherantid.supervisorid.id == app.user.id) or app.user.roles['ROLE_DOCTOR'] is defined%}
@@ -109,6 +113,16 @@
                                                     <td width="45%">
                                                         {{ mesure.imc|number_format(2) }}
                                                     </td>
+                                                    <td width="45%">
+                                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_mesure_edit', {'id': mesure.id}) }}">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </a>
+                                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                                            {{ include('mesure/_delete_form.html.twig') }}
+                                                        </a>
+                                                    {% endif %}
+                                                    </td>
                                                     
                                                 </tr>
                                             {% else %}
@@ -122,14 +136,6 @@
                                     </table>
                                 </div>
                             </div>
-                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or app.user.roles['ROLE_DOCTOR'] is defined %}
-                            <div class="col-12">
-                                <a class="btn btn-outline-warning" href="{{ path('app_dossiermedical_edit',{'id' : dossiermedical.id}) }}" style="float:left">Modifier</a>
-                                <a style="float:right">
-                                    {{ include('dossiermedical/_delete_form.html.twig') }}
-                                </a>
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
