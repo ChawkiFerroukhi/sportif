@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_adherant_delete', {'id': adherant.id}) }}">
+<form method="post" action="{{ path('app_adherant_delete', {'id': adherant.id}) }}" onsubmit="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adherant.id) }}">
     <button class="btn"><i class="fa-solid fa-trash"></i></button>
 </form>

@@ -12,6 +12,7 @@ use App\Entity\Maladie;
 use App\Form\AdherantType;
 use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -305,7 +306,7 @@ class AdherantController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_adherant_delete', methods: ['POST'])]
-    public function delete(Request $request, Adherant $adherant, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Adherant $adherant, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_adherant_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
@@ -314,6 +315,7 @@ class AdherantController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$adherant->getId(), $request->request->get('_token'))) {
             $entityManager->remove($adherant);
+            $userRepo->remove($adherant);
             $entityManager->flush();
         }
 

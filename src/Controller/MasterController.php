@@ -6,6 +6,7 @@ use App\Entity\Master;
 use App\Entity\Section;
 use App\Form\MasterType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -138,7 +139,7 @@ class MasterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_master_delete', methods: ['POST'])]
-    public function delete(Request $request, Master $master, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Master $master, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
@@ -150,6 +151,7 @@ class MasterController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         if ($this->isCsrfTokenValid('delete'.$master->getId(), $request->request->get('_token'))) {
             $entityManager->remove($master);
+            $userRepo->remove($master);
             $entityManager->flush();
         }
 

@@ -6,6 +6,7 @@ use App\Entity\Coach;
 use App\Entity\Section;
 use App\Form\CoachType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -154,7 +155,7 @@ class CoachController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_coach_delete', methods: ['POST'])]
-    public function delete(Request $request, Coach $coach, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Coach $coach, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_coach_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
@@ -163,6 +164,7 @@ class CoachController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$coach->getId(), $request->request->get('_token'))) {
             $entityManager->remove($coach);
+            $userRepo->remove($coach);
             $entityManager->flush();
         }
 

@@ -6,6 +6,7 @@ use App\Entity\Supervisor;
 use App\Entity\Section;
 use App\Form\SupervisorType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -150,7 +151,7 @@ class SupervisorController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_supervisor_delete', methods: ['POST'])]
-    public function delete(Request $request, Supervisor $supervisor, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Supervisor $supervisor, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_supervisor_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
@@ -159,6 +160,7 @@ class SupervisorController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$supervisor->getId(), $request->request->get('_token'))) {
             $entityManager->remove($supervisor);
+            $userRepo->remove($supervisor);
             $entityManager->flush();
         }
 

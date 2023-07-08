@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Section;
 use App\Form\AdministrateurType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -148,7 +149,7 @@ class AdministrateurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_administrateur_delete', methods: ['POST'])]
-    public function delete(Request $request, Administrateur $administrateur, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Administrateur $administrateur, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_administrateur_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
@@ -157,6 +158,7 @@ class AdministrateurController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$administrateur->getId(), $request->request->get('_token'))) {
             $entityManager->remove($administrateur);
+            $userRepo->remove($administrateur);
             $entityManager->flush();
         }
 
