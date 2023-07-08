@@ -172,11 +172,11 @@
                                     <td>
                                         {% if encaissement.type == 'paiement' %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_show', {'id': encaissement.id}) }}">
-                                                <i class="fa-solid fa-eye"></i>
+                                                <i class="fa-solid fa-eye" style="color:green"></i>
                                             </a>
                                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_edit', {'id': encaissement.id}) }}">
-                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                             </a>
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
                                                 {{ include('encaissement/_delete_form.html.twig') }}
@@ -184,11 +184,11 @@
                                             {% endif %}
                                         {% else  %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_encaissement_show', {'id': encaissement.id}) }}">
-                                                <i class="fa-solid fa-eye"></i>
+                                                <i class="fa-solid fa-eye" style="color:green"></i>
                                             </a>
                                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_encaissement_edit', {'id': encaissement.id}) }}">
-                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                             </a>
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
                                                 {{ include('encaissement/_delete_form.html.twig') }}

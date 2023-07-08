@@ -72,6 +72,13 @@ class Administrateur extends User
     private $adresse;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="poste", type="string", length=191, nullable=false)
+     */
+    private $poste;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -166,6 +173,18 @@ class Administrateur extends User
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getPoste(): ?string
+    {
+        return $this->poste;
+    }
+
+    public function setPoste(string $poste): self
+    {
+        $this->poste = $poste;
 
         return $this;
     }

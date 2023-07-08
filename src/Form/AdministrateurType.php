@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AdministrateurType extends AbstractType
 {
@@ -34,6 +35,15 @@ class AdministrateurType extends AbstractType
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
+            ->add('poste',ChoiceType::class,[
+                'choices' => [
+                    'Président(e)' => 'Président(e)',
+                    'Vice-président(e)' => 'Vice-président(e)',
+                    'Secrétaire Général(e)' => 'Secrétaire Général(e)',
+                    'Trésorier' => 'Trésorier',
+                    'Chef de Section' => 'Chef de Section',
+                ]
+            ])
             ->add('clubid', null, [
                 'label' => 'Club',
                 'choice_label' => 'nom',

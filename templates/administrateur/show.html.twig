@@ -17,7 +17,7 @@
                     <div class="row align-items-center justify-content-between pt-3">
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
-                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                <div class="page-header-icon"><i data-feather="user"></i></div>
                                 {{ administrateur.nom }} {{ administrateur.prenom }}
                             </h1>
                         </div>
@@ -110,11 +110,20 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Poste</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.poste }}</p>
+                                    <hr>  
+                                </div>
+
+                                <div class="col-md-6">
+                                    <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Reférence</h2>
                                     <p class=" mb-1" for="inputFirstName">{{ administrateur.ref }}</p>
                                     <hr>  
                                 </div>
-                                {% if administrateur.clubid is not null %}
+                            </div>
+                            {% if administrateur.clubid is not null %}
+                            <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
@@ -122,8 +131,8 @@
                                     <a href="{{path('app_club_show',{'id' : administrateur.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ administrateur.clubid }}</p></a>
                                     <hr>  
                                 </div>
-                                {% endif %}
                             </div>
+                            {% endif %}
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->

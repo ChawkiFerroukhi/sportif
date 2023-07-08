@@ -45,7 +45,15 @@
                             <h2 class="small mb-1" for="inputFirstName">Couleur Secondaire</h2>
                             <p class=" mb-1" for="inputFirstName">{{ club.color2 }} <i style="background-color:{{ club.color2 }};color:{{ club.color2 }};border:1px solid grey; border-radius: 3px;" width="10px" height="10px" data-feather="square"></i></p>
                         </div>
+                        {% if app.user.roles['ROLE_ADMIN'] is defined %}
+                        <hr>
+                        <div class="card-body text-center">
+                            <a class="btn btn-outline-success" href="{{ path('app_administrateur_gram') }}">Organigramme</a>
+                        </div>
+                        {% endif %}
+                        
                     </div>
+
                 </div>
                 <div class="col-xl-8">
                     <!-- Account details card-->

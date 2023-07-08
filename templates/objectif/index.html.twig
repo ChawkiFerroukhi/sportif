@@ -47,11 +47,11 @@
                                             <td>{{ objectif.cycleid.nom }}</td>
                                             <td>
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_objectif_show', {'id': objectif.id}) }}">
-                                            <i class="fa-solid fa-eye"></i>
+                                            <i class="fa-solid fa-eye" style="color:green"></i>
                                         </a>
                                         {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_objectif_edit', {'id': objectif.id}) }}">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                         </a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
                                             {{ include('objectif/_delete_form.html.twig') }}
