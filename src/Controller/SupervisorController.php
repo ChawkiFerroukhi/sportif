@@ -72,6 +72,14 @@ class SupervisorController extends AbstractController
 
             $supervisor->setCreatedAt(new \DateTime());
             $supervisor->setUpdatedAt(new \DateTime());
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($supervisor->getClubid());
+                $image->setAdherantid($supervisor);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if(!empty($form->get('clubid')->getData())) {
                 $supervisor->setClubid($form->get('clubid')->getData());
             } else {
@@ -129,6 +137,14 @@ class SupervisorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($supervisor->getClubid());
+                $image->setAdherantid($supervisor);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if($form->get('password')->getData()!=null) {
                 $supervisor->setPassword($this->passwordHasher->hashPassword(
                     $supervisor,

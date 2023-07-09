@@ -58,7 +58,14 @@ class MasterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($master->getClubid());
+                $image->setAdherantid($master);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             $master->setCreatedAt(new \DateTime());
             $master->setUpdatedAt(new \DateTime());
             $master->setPassword($this->passwordHasher->hashPassword(
@@ -118,6 +125,14 @@ class MasterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($form->get('password')->getData()!=null) {
+                $image = $form->get('image')->getData();
+                if($image != null) {
+                    $image->setClubid($master->getClubid());
+                    $image->setAdherantid($master);
+                    $image->setCreatedAt(new \DateTime());
+                    $image->setUpdatedAt(new \DateTime());
+                    $entityManager->persist($image);
+                }
                 $master->setPassword($this->passwordHasher->hashPassword(
                     $master,
                     $form->get('password')->getData()

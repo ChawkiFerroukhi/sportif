@@ -1,5 +1,23 @@
+{{ form_start(form) }}
 <div class="row">
-    {{ form_start(form) }}
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                Image          
+            </div>
+            <div class="card-body text-center">
+                <div class="small font-italic text-muted mb-4">
+                    No larger than 5 MB </br>                        
+                    {% if doctor is defined %}
+                        <img src="{{ vich_uploader_asset(doctor.picture, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body text-center">
+                {{ form_widget(form.image, {'attr':{'title':'', 'width':'10' }}) }}
+            </div>
+        </div>
+    </div>
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header">
@@ -112,3 +130,17 @@
         </div>
     </div>
 </div>
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#doctor_image_imageFile_file").change(function () {
+    filePreview(this);
+});
+</script>

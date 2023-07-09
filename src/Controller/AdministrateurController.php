@@ -124,6 +124,14 @@ class AdministrateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($administrateur->getClubid());
+                $image->setAdherantid($administrateur);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if(!empty($form->get('clubid')->getData())) {
                 $administrateur->setClubid($form->get('clubid')->getData());
             } else {
@@ -181,6 +189,14 @@ class AdministrateurController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($administrateur->getClubid());
+                $image->setAdherantid($administrateur);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if($form->get('password')->getData()!=null) {
                 $administrateur->setPassword($this->passwordHasher->hashPassword(
                     $administrateur,

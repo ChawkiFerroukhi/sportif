@@ -31,6 +31,9 @@ class AdministrateurType extends AbstractType
                 'second_options' => ['label' => 'Repeat Password'],
                 
             ])
+            ->add('image', PictureType::class,[
+                'mapped' => false
+            ] )
             ->add('ref')
             ->add('numTel')
             ->add('cin')

@@ -220,6 +220,7 @@ class Coach extends User
 
         return $this;
     }
+    
 
     public function getNomprenom()
     {

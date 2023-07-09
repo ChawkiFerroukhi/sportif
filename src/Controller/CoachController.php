@@ -70,6 +70,14 @@ class CoachController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $coach->setCreatedAt(new \DateTime());
             $coach->setUpdatedAt(new \DateTime());
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($coach->getClubid());
+                $image->setAdherantid($coach);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if(!empty($form->get('clubid')->getData())) {
                 $coach->setClubid($form->get('clubid')->getData());
             } else {
@@ -132,7 +140,14 @@ class CoachController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($coach->getClubid());
+                $image->setAdherantid($coach);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if($form->get('password')->getData()!=null) {
                 $coach->setPassword($this->passwordHasher->hashPassword(
                     $coach,

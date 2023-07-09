@@ -53,9 +53,9 @@ class Picture implements \Serializable
     private  $imageFile = null;
 
     /**
-     * @var \Adherant
+     * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="Adherant")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="adherantid", referencedColumnName="id" , onDelete="CASCADE")
      * })
@@ -126,12 +126,12 @@ class Picture implements \Serializable
             $this->updatedat = new \DateTime();
         }
     }
-    public function getAdherantid(): ?Adherant
+    public function getAdherantid(): ?User
     {
         return $this->adherantid;
     }
 
-    public function setAdherantid(?Adherant $adherantid): self
+    public function setAdherantid(?User $adherantid): self
     {
         $this->adherantid = $adherantid;
 

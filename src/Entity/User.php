@@ -9,10 +9,15 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"user" = "User", "adherant" = "Adherant", "administrateur" = "Administrateur", "coach" = "Coach", "doctor" = "Doctor", "supervisor" = "Supervisor", "master" = "Master"})
@@ -55,6 +60,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     protected $isActive = true;
     
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="adherantid")
+     */
+    private $pictures;
 
     /**
      * @var \Club
@@ -208,6 +218,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): self
     {   
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        if($this->pictures == null || $this->pictures->isEmpty()) {
+            return new Picture();
+        }
+        return $this->pictures->last();
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setAdherantid($this);
+        }
 
         return $this;
     }

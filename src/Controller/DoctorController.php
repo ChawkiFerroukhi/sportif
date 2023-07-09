@@ -69,6 +69,14 @@ class DoctorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $doctor->setCreatedAt(new \DateTime());
             $doctor->setUpdatedAt(new \DateTime());
+            $image = $form->get('image')->getData();
+            if($image != null) {
+                $image->setClubid($doctor->getClubid());
+                $image->setAdherantid($doctor);
+                $image->setCreatedAt(new \DateTime());
+                $image->setUpdatedAt(new \DateTime());
+                $entityManager->persist($image);
+            }
             if(!empty($form->get('clubid')->getData())) {
                 $doctor->setClubid($form->get('clubid')->getData());
             } else {
@@ -131,6 +139,14 @@ class DoctorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($form->get('password')->getData()!=null) {
+                $image = $form->get('image')->getData();
+                if($image != null) {
+                    $image->setClubid($doctor->getClubid());
+                    $image->setAdherantid($doctor);
+                    $image->setCreatedAt(new \DateTime());
+                    $image->setUpdatedAt(new \DateTime());
+                    $entityManager->persist($image);
+                }
                 $doctor->setPassword($this->passwordHasher->hashPassword(
                     $doctor,
                     $form->get('password')->getData()
