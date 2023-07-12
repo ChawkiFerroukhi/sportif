@@ -47,6 +47,13 @@
                                     <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="display:block">Liste des Testes</a>
                                 </div>
                             </div>
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_COACH'] is defined %}
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-12">
+                                    <a class="btn btn-outline-success" href="{{ path('app_presence_new',{'id' : equipe.id}) }}" style="display:block">Marque Présence</a>
+                                </div>
+                            </div>
+                            {% endif %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
