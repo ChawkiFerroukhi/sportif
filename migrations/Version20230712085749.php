@@ -20,12 +20,12 @@ final class Version20230712085749 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649146F3EA3 ON user (ref)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649 ON user (ref)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_8D93D649146F3EA3 ON user');
+        $this->addSql('DROP INDEX UNIQ_8D93D649ON user');
     }
 }
