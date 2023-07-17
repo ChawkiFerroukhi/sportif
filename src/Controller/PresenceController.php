@@ -7,6 +7,7 @@ use App\Entity\Equipe;
 use App\Entity\Adherant;
 use App\Entity\Section;
 use App\Form\PresenceType;
+use App\Repository\PresenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,22 +19,31 @@ date_default_timezone_set("Africa/Tunis");
 class PresenceController extends AbstractController
 {
     #[Route('/adherant/{id}', name: 'app_presence_adherant_index', methods: ['GET'])]
-    public function indexAdherant(Adherant $adherant,EntityManagerInterface $entityManager): Response
+    public function indexAdherant(Adherant $adherant,EntityManagerInterface $entityManager, PresenceRepository $presenceRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }        
-        $presences = $entityManager
-            ->getRepository(Presence::class)
-            ->findBy(['adherantid' => $adherant->getId()]);
+        $presences = $presenceRepo->getOrdered($adherant->getId());
+        $dates=[];
+        foreach($presences as $presence) {
+            $date = date('Y-m',$presence->getDate()->getTimestamp());
+            if(isset($dates[$date])) {
+                $dates[$date] ++;
+            } else {
+                $dates[$date] = 1;
+            }
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $this->user = $usr;
         return $this->render('presence/index.html.twig', [
             'presences' => $presences,
+            'dates' => $dates,
+            'adherant' => $adherant,
             'sections' => $sections,
             'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid()
         ]);

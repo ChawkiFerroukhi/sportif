@@ -28,6 +28,17 @@
         <div class="container-fluid px-4">
             <div class="card">
                 <div class="card-body">
+                {% if adherant is defined %}
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-12">
+                            <hr>
+                            <h2 class="small mb-1" for="inputFirstName">Présence</h2>
+                            <div id="area-chart" ></div>
+                            <hr>  
+                        </div>
+                    </div>
+                {% endif %}
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
@@ -68,4 +79,31 @@
             </div>
         </div>
     </main>
+
+{% block scripts %}
+{% if adherant is defined %}
+<script>
+var data = [
+    {% for date,data in dates %}
+        { y: '{{ date|date("Y-m") }}', a: {{ data }} },
+    {% endfor %}
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 'a'],
+        labels: [ 'Présence'],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        lineColors:['green']
+    };
+    config.element = 'area-chart';
+    Morris.Line(config);
+</script>
+{% endif %}
+{% endblock %}
 {% endblock %}
