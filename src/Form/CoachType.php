@@ -29,7 +29,8 @@ class CoachType extends AbstractType
                 'second_options' => ['label' => 'Repeat Password'],
             ])
             ->add('image', PictureType::class,[
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
             ] )
             ->add('ref')
             ->add('numTel')

@@ -32,7 +32,8 @@ class AdministrateurType extends AbstractType
                 
             ])
             ->add('image', PictureType::class,[
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
             ] )
             ->add('ref')
             ->add('numTel')

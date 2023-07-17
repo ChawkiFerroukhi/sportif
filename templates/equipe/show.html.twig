@@ -50,7 +50,7 @@
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_COACH'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-12">
-                                    <a class="btn btn-outline-success" href="{{ path('app_presence_new',{'id' : equipe.id}) }}" style="display:block">Marque Présence</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_presence_new',{'id' : equipe.id}) }}" style="display:block">Marquer Présence</a>
                                 </div>
                             </div>
                             {% endif %}
@@ -136,13 +136,14 @@
                                                         {{ adherant.birthdate | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
-                                            {% else %}
+                                            {% endfor %}
+                                            {% if equipe.adherants|length == 0 and equipe.adherants2|length == 0 %}
                                                 <tr>
                                                     <td colspan="17">
                                                         aucune entrée
                                                     </td>
                                                 </tr>
-                                            {% endfor %}
+                                            {% endif %}
                                         </tbody>
                                     </table>
                                 </div>

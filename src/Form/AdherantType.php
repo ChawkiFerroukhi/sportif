@@ -36,7 +36,8 @@ class AdherantType extends AbstractType
             ])
             ->add('ref')
             ->add('image', PictureType::class,[
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
             ] )
             ->add('nom')
             ->add('prenom')
