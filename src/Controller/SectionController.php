@@ -87,9 +87,27 @@ class SectionController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $M=0;
+        $F=0;
+        $niveaux = $section->getNiveaux();
+        foreach($niveaux as $niveau) {
+            $equipes = $niveau->getEquipes();
+            foreach($equipes as $equipe) {
+                $adherants = $equipe->getAdherants();
+                foreach($adherants as $adherant) {
+                    if($adherant->getSexe() == "M") {
+                        $M++;
+                    } else {
+                        $F++;
+                    }
+                }
+            }
+        }
         $this->user = $usr;
         return $this->render('section/show.html.twig', [
             'section' => $section,
+            'M' => $M,
+            'F' => $F,
             'sections' => $sections,
         ]);
     }

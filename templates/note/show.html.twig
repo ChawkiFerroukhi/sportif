@@ -18,7 +18,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="percent"></i></div>
-                                {{ note.createdat|date('d/m/Y') }}
+                                {{nt.createdat|date('d/m/Y') }}
                             </h1>
                         </div>
                     </div>
@@ -40,20 +40,20 @@
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Adherant</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_adherant_show',{'id' : note.adherantid.id})}}">{{ note.adherantid.nom }} {{ note.adherantid.prenom }}</a> 
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_adherant_show',{'id' : nt.adherantid.id})}}">{{ nt.adherantid.nom }} {{ nt.adherantid.prenom }}</a> 
                                     <hr>  
                                 </div>
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Objective</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_objectif_show',{'id' : note.objectifid.id})}}">{{ note.objectifid.nom }}</a> 
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_objectif_show',{'id' : nt.objectifid.id})}}">{{ nt.objectifid.nom }}</a> 
                                     <hr>  
                                 </div>
 
                                 <div class="col-md-4">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Note</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ note.note }}%</p> 
+                                    <p class=" mb-1" for="inputFirstName">{{ nt.note }}%</p> 
                                     <hr>  
                                 </div>
                             </div>
@@ -63,14 +63,14 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Date</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ note.createdat|date('d/m/Y') }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ nt.createdat|date('d/m/Y') }}</p>
                                     <hr>  
                                 </div>
 
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Teste</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_teste_show',{'id' : note.testeid.id})}}">{{ note.testeid.nom }}</a> 
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_teste_show',{'id' : nt.testeid.id})}}">{{ nt.testeid.nom }}</a> 
                                     <hr>  
                                 </div>
                             </div>
@@ -80,14 +80,14 @@
                                 <div class="col-md-12">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Observation</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ note.observation|raw }}</p>
+                                    <p class=" mb-1" for="inputFirstName">{{ nt.observation|raw }}</p>
                                     <hr>  
                                 </div>
                             </div>
                             <hr>
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or app.user.roles['ROLE_COACH'] is defined%}
                             <div class="col-12">
-                                <a class="btn btn-outline-warning" href="{{ path('app_note_edit',{'id' : note.id}) }}" style="float:left">Modifier</a>
+                                <a class="btn btn-outline-warning" href="{{ path('app_note_edit',{'id' : nt.id}) }}" style="float:left">Modifier</a>
                                 <a style="float:right">
                                     {{ include('note/_delete_form.html.twig') }}
                                 </a>

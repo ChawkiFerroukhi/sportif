@@ -7,7 +7,12 @@ use App\Entity\Niveau;
 use App\Entity\Coach;
 use App\Entity\Doctor;
 use App\Entity\Section;
+use App\Entity\Seance;
+use App\Entity\Presence;
+use App\Entity\Teste;
 use App\Form\EquipeType;
+use App\Repository\SeanceRepository;
+use App\Repository\TesteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -132,15 +137,62 @@ class EquipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_equipe_show', methods: ['GET'])]
-    public function show(Equipe $equipe,EntityManagerInterface $entityManager): Response
+    public function show(Equipe $equipe,EntityManagerInterface $entityManager, SeanceRepository $seanceRepo, TesteRepository $testeRepo): Response
     {
         $usr = $this->getUser();
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $testes = $entityManager
+            ->getRepository(Teste::class)
+            ->findBy(['equipeid' => $equipe->getId()]);
+        $nbNotes = 0;
+        $nts = 0;
+        foreach($testes as $teste) {
+            $notes = $teste->getNotes();
+            foreach($notes as $note) {
+                $nbNotes++;
+                $nts += $note->getNote();
+            }
+        }
+        if($nbNotes != 0){
+            $nts = $nts/$nbNotes;
+        } else {
+            $nts = "N/A";
+        }
+        $adherants = $equipe->getAdherants();
+        $nbPres = 0;
+        foreach($adherants as $adherant) {
+            $presences = $entityManager
+                ->getRepository(Presence::class)
+                ->findBy(['adherantid' => $adherant->getId()]);
+            foreach($presences as $presence) {
+                $date = $presence->getDate()->format( 'Y-m-d' );
+                $dt = new \DateTime($date);
+                $seance = $entityManager
+                    ->getRepository(Seance::class)
+                    ->findOneBy(['equipeid' => $adherant->getEquipeid(),'date' => $dt]);
+                if($seance) {
+                    $nbPres++;
+                }
+            }
+        }
+        $seances = $seanceRepo->getByOld($equipe->getId());
+        if(count($adherants) != 0 && count($seances) != 0){
+            $prs = $nbPres/(count($seances)*count($adherants));
+            $prs *= 100;
+        } else {
+            $prs = "N/A";
+        }
+        $seances = $seanceRepo->getByNew($equipe->getId());
+        $testes = $testeRepo->getByNew($equipe->getId());
         $this->user = $usr;
         return $this->render('equipe/show.html.twig', [
             'equipe' => $equipe,
+            'prs' => $prs,
+            'nts' => $nts,
+            'seances' => count($seances),
+            'testes' => count($testes),
             'sections' => $sections,
             'section' => $equipe->getNiveauid()->getSectionid(),
         ]);

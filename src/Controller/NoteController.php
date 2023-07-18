@@ -90,9 +90,10 @@ class NoteController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        echo $note->getId();
         $this->user = $usr;
         return $this->render('note/show.html.twig', [
-            'note' => $note,
+            'nt' => $note,
             'sections' => $sections,
             'section' => $note->getTesteid()->getEquipeid()->getNiveauid()->getSectionid()
         ]);

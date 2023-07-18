@@ -125,7 +125,7 @@
                                 <div class="col-md-4">
                                     <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Catégories</h5>
+                                        <h5 class="card-title">Adherants par sexe</h5>
                                         <div id="pie-chart" ></div>
                                     </div>
                                 </div>
@@ -159,9 +159,8 @@
 Morris.Donut({
   element: 'pie-chart',
   data: [
-    {% for niveau in section.niveaux %}
-                {label: "{{ niveau.nom }}", value: {{ niveau.equipes|length }} },
-    {% endfor %}
+    {label: "Male", value: {{ M }}  },
+    {label: "Femme", value: {{ F }} },
   ]
 });
 </script>
