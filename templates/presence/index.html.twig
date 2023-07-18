@@ -85,21 +85,22 @@
 <script>
 var data = [
     {% for date,data in dates %}
-        { y: '{{ date|date("Y-m") }}', a: {{ data }} },
+        { y: '{{ date|date("Y-m") }}', a: {{ data }},b : {{dts[date] is defined ? dts[date] : 0}} },
     {% endfor %}
+    
     ],
     config = {
         data: data,
         xkey: 'y',
-        ykeys: [ 'a'],
-        labels: [ 'Présence'],
+        ykeys: [ 'a','b'],
+        labels: [ 'Présences','Séances'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,
         resize: true,
         pointFillColors:['#ffffff'],
         pointStrokeColors: ['black'],
-        lineColors:['green']
+        lineColors:['green','grey']
     };
     config.element = 'area-chart';
     Morris.Line(config);

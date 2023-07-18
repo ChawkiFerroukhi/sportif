@@ -62,6 +62,16 @@ class SeanceRepository extends ServiceEntityRepository
         ->orderBy('p.date','ASC');
         return $qb->getQuery()->getResult();
     }
+    public function getOrdered($id) : array {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('p')
+        ->from(Seance::class,'p')
+        ->where('p.equipeid = '.$id)
+        ->orderBy('p.date','ASC');
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Seance[] Returns an array of Seance objects

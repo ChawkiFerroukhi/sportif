@@ -8,6 +8,7 @@ use App\Entity\Adherant;
 use App\Entity\Section;
 use App\Form\PresenceType;
 use App\Repository\PresenceRepository;
+use App\Repository\SeanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ date_default_timezone_set("Africa/Tunis");
 class PresenceController extends AbstractController
 {
     #[Route('/adherant/{id}', name: 'app_presence_adherant_index', methods: ['GET'])]
-    public function indexAdherant(Adherant $adherant,EntityManagerInterface $entityManager, PresenceRepository $presenceRepo): Response
+    public function indexAdherant(Adherant $adherant,EntityManagerInterface $entityManager, PresenceRepository $presenceRepo, SeanceRepository $seanceRepo): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_COACH']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
@@ -36,6 +37,28 @@ class PresenceController extends AbstractController
                 $dates[$date] = 1;
             }
         }
+        $seances = $seanceRepo->getOrdered($adherant->getEquipeid()->getId());
+        $seances2 = [];
+        if($adherant->getEquipe2id()!=null) {
+            $seances2 = $seanceRepo->getOrdered($adherant->getEquipe2id()->getId());
+        }
+        $dts=[];
+        foreach($seances as $presence) {
+            $date = date('Y-m',$presence->getDate()->getTimestamp());
+            if(isset($dts[$date])) {
+                $dts[$date] ++;
+            } else {
+                $dts[$date] = 1;
+            }
+        }
+        foreach($seances2 as $presence) {
+            $date = date('Y-m',$presence->getDate()->getTimestamp());
+            if(isset($dts[$date])) {
+                $dts[$date] ++;
+            } else {
+                $dts[$date] = 1;
+            }
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -43,6 +66,7 @@ class PresenceController extends AbstractController
         return $this->render('presence/index.html.twig', [
             'presences' => $presences,
             'dates' => $dates,
+            'dts' => $dts,
             'adherant' => $adherant,
             'sections' => $sections,
             'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid()
