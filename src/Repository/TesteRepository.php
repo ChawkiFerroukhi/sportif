@@ -45,8 +45,8 @@ class TesteRepository extends ServiceEntityRepository
 
         $qb->select('p')
         ->from(Teste::class,'p')
-        ->where('p.equipeid = '.$id)
         ->where('p.date <= CURRENT_DATE()')
+        ->where('p.equipeid = '.$id)
         ->orderBy('p.date','ASC');
         return $qb->getQuery()->getResult();
     }
@@ -57,8 +57,8 @@ class TesteRepository extends ServiceEntityRepository
 
         $qb->select('p')
         ->from(Teste::class,'p')
-        ->where('p.equipeid = '.$id)
         ->where('p.date > CURRENT_DATE()')
+        ->where('p.equipeid = '.$id)
         ->orderBy('p.date','ASC');
         return $qb->getQuery()->getResult();
     }
