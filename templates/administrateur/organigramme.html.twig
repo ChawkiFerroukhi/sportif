@@ -31,7 +31,7 @@
                 <div class="col-xl-6">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                        <div class="card-header">Présidence</div>
+                        <div class="card-header">Président</div>
                         <div class="card-body">
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card mb-4">
-                        <div class="card-header">Vice-Présidence</div>
+                        <div class="card-header">Vice-Président</div>
                         <div class="card-body">
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card mb-4">
-                        <div class="card-header">Secrétariat</div>
+                        <div class="card-header">Secrétaire Général</div>
                         <div class="card-body">
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card mb-4">
-                        <div class="card-header">Trésorie</div>
+                        <div class="card-header">Trésorier</div>
                         <div class="card-body">
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -124,6 +124,27 @@
                         </div>
                     </div>
                 </div>
+                {% for poste,other in others %}
+                <div class="col-xl-12">
+                    <div class="card mb-4">
+                        <div class="card-header">{{ poste }}</div>
+                        <div class="card-body">
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                {% for pres in other %}
+                                <div class="col-md-4" >
+                                    <div class="clearfix">
+                                        <img src="{{ vich_uploader_asset(pres.picture, 'imageFile') }}" height="115px"style="float:left"/>
+                                        <h2 class="small mb-1" for="inputFirstName" style="background-color:#f3f3f3; padding:50px;border-radius:5px; text-align:center;"><a href="{{ path('app_administrateur_show',{'id':pres.id}) }}">{{ pres.nomprenom}}</a></h2>
+                                    </div>                               
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </main>
