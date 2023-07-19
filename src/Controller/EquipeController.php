@@ -178,12 +178,18 @@ class EquipeController extends AbstractController
             }
         }
         $seances = $seanceRepo->getByOld($equipe->getId());
+        
         if(count($adherants) != 0 && count($seances) != 0){
             $prs = $nbPres/(count($seances)*count($adherants));
             $prs *= 100;
         } else {
             $prs = "N/A";
         }
+        echo "<script>
+        console.log(".count($adherants).");
+        console.log(".count($seances).");
+        console.log('".$prs."');
+        </script>";
         $seances = $seanceRepo->getByNew($equipe->getId());
         $testes = $testeRepo->getByNew($equipe->getId());
         $this->user = $usr;
