@@ -51,7 +51,7 @@ class AdherantType extends AbstractType
             ->add('licence')
             ->add('sexe', ChoiceType::class,[
                 'choices' => [
-                    'M' => 'M',
+                    'H' => 'H',
                     'F' => 'F'
                 ]
             ])

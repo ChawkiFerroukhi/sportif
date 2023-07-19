@@ -37,7 +37,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{prs}}%</h3>
+                                <h3>{{prs|number_format(2)}}%</h3>
                                 <span>Taux de Présence</span>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{seances}}</h3>
-                                <span>Séances à venir</span>
+                                <span>Séances Restantes</span>
                                 </div>
                             </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{nts}}%</h3>
+                                <h3>{{nts|number_format(2)}}%</h3>
                                 <span>Note Moyenne</span>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{testes}}</h3>
-                                <span>Testes à venir</span>
+                                <span>Tests Restants</span>
                                 </div>
                             </div>
                             </div>
@@ -114,7 +114,7 @@
                                     <a class="btn btn-outline-success" href="{{ path('app_seance_index',{'id' : equipe.id}) }}" style="display:block">Liste des Seances</a>
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="display:block">Liste des Testes</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="display:block">Liste des Tests</a>
                                 </div>
                             </div>
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_COACH'] is defined %}
