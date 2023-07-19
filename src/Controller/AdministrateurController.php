@@ -82,21 +82,24 @@ class AdministrateurController extends AbstractController
         $chefs = [];
         $others = [];
         foreach($administrateurs as $administrateur) {
-            if($administrateur->getPoste()=="Président"){
-                array_push($presidents,$administrateur);
-            } else if($administrateur->getPoste()=="Vice-président"){
-                array_push($vices,$administrateur);
-            } else if($administrateur->getPoste()=="Trésorier"){
-                array_push($tresoriers,$administrateur);
-            } else if($administrateur->getPoste()=="Secrétaire Général"){
-                array_push($SGs,$administrateur);
-            } else {
-                if(isset($others[$administrateur->getPoste()])){
-                    array_push($others[$administrateur->getPoste()],$administrateur);
+            if($administrateur->getPoste() != null) {
+                if($administrateur->getPoste()->getNom()=="Président"){
+                    array_push($presidents,$administrateur);
+                } else if($administrateur->getPoste()->getNom()=="Vice-président"){
+                    array_push($vices,$administrateur);
+                } else if($administrateur->getPoste()->getNom()=="Trésorier"){
+                    array_push($tresoriers,$administrateur);
+                } else if($administrateur->getPoste()->getNom()=="Secrétaire Général"){
+                    array_push($SGs,$administrateur);
                 } else {
-                    $others[$administrateur->getPoste()] = [$administrateur];
+                    if(isset($others[$administrateur->getPoste()->getNom()])){
+                        array_push($others[$administrateur->getPoste()->getNom()],$administrateur);
+                    } else {
+                        $others[$administrateur->getPoste()->getNom()] = [$administrateur];
+                    }
                 }
             }
+            
         }
         $section = new Section();
         $this->user = $usr;
@@ -142,7 +145,6 @@ class AdministrateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $administrateur->setCreatedAt(new \DateTime());
             $administrateur->setUpdatedAt(new \DateTime());
-            $administrateur->setPoste($form->get('poste')->getData()->getNom());
             $image = $form->get('image')->getData();
             if($image != null) {
                 $image->setClubid($administrateur->getClubid());
@@ -218,7 +220,6 @@ class AdministrateurController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $administrateur->setPoste($form->get('poste')->getData()->getNom());
             $image = $form->get('image')->getData();
             if($image != null) {
                 $image->setClubid($administrateur->getClubid());

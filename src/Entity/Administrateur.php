@@ -75,9 +75,12 @@ class Administrateur extends User
     private $adresse;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="poste", type="string", length=191, nullable=false)
+     * @var \Poste
+     * 
+     * @ORM\ManyToOne(targetEntity="Poste")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="poste", referencedColumnName="id" )
+     * })
      */
     private $poste;
 
@@ -181,12 +184,12 @@ class Administrateur extends User
         return $this;
     }
 
-    public function getPoste(): ?string
+    public function getPoste(): ?Poste
     {
         return $this->poste;
     }
 
-    public function setPoste(string $poste): self
+    public function setPoste(?Poste $poste): self
     {
         $this->poste = $poste;
 

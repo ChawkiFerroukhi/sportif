@@ -105,25 +105,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-12">
-                    <div class="card mb-4">
-                        <div class="card-header">Chefs de Section</div>
-                        <div class="card-body">
-                            <!-- Form Row-->
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                {% for pres in chefs %}
-                                <div class="col-md-4" >
-                                    <div class="clearfix">
-                                        <img src="{{ vich_uploader_asset(pres.picture, 'imageFile') }}" height="115px"style="float:left"/>
-                                        <h2 class="small mb-1" for="inputFirstName" style="background-color:#f3f3f3; padding:50px;border-radius:5px; text-align:center;"><a href="{{ path('app_administrateur_show',{'id':pres.id}) }}">{{ pres.nomprenom}}</a></h2>
-                                    </div>                               
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {% for poste,other in others %}
                 <div class="col-xl-12">
                     <div class="card mb-4">

@@ -46,6 +46,12 @@ class Poste
     private $nom;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity=Administrateur::class, mappedBy="maladie")
+     */
+    private $administrateurs;
+
+    /**
      * @var \Club
      *
      * @ORM\ManyToOne(targetEntity="Club")
@@ -108,6 +114,35 @@ class Poste
         return $this;
     }
 
+    /**
+     * @return Collection<int, Administrateur>
+     */
+    public function getAdministrateurs(): Collection
+    {
+        return $this->administrateurs;
+    }
+
+    public function addAdministrateur(Administrateur $administrateur): self
+    {
+        if (!$this->administrateurs->contains($administrateur)) {
+            $this->administrateurs[] = $administrateur;
+            $administrateurs->setMaladie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdministrateur(Administrateur $administrateur): self
+    {
+        if ($this->administrateurs->removeElement($administrateur)) {
+            // set the owning side to null (unless already changed)
+            if ($administrateur->getMaladie() === $this) {
+                $administrateur->setMaladie(null);
+            }
+        }
+
+        return $this;
+    }
     
 
 }

@@ -43,7 +43,6 @@ class AdministrateurType extends AbstractType
                 'choices' => $options['postes'],
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir une poste',
-                'mapped' => false,
                 'required' => false
             ])
             ->add('clubid', null, [
