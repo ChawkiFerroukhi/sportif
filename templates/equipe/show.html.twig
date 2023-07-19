@@ -37,7 +37,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{prs|number_format(2)}}%</h3>
+                                <h3>{{prs != 'N/A' ? prs|number_format(2) : 'N/A'}}%</h3>
                                 <span>Taux de Présence</span>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{nts|number_format(2)}}%</h3>
+                                <h3>{{nts != 'N/A' ? nts|number_format(2) : 'N/A'}}%</h3>
                                 <span>Note Moyenne</span>
                                 </div>
                             </div>
