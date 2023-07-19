@@ -47,7 +47,7 @@ class Poste
 
     /**
      *
-     * @ORM\OneToMany(targetEntity=Administrateur::class, mappedBy="maladie")
+     * @ORM\OneToMany(targetEntity=Administrateur::class, mappedBy="poste")
      */
     private $administrateurs;
 

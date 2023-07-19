@@ -87,12 +87,8 @@ class PosteController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $administrateurs = $entityManager
-            ->getRepository(Administrateur::class)
-            ->findBy(['clubid'=>$poste->getClubid(),'poste'=>$poste->getNom()]);
         return $this->render('poste/show.html.twig', [
             'poste' => $poste,
-            'administrateurs' => $administrateurs,
             'sections' => $sections,
             'section' => new Section()
         ]);

@@ -61,7 +61,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  administrateur in  administrateurs %}
+                                            {% for  administrateur in  poste.administrateurs %}
                                                 <tr>
                                                     <td width="45%">
                                                         <a href="{{ path('app_administrateur_show',{'id' : administrateur.id})}}">{{  administrateur.nom }} {{  administrateur.prenom }}</a>
