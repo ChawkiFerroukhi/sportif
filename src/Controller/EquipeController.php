@@ -185,11 +185,7 @@ class EquipeController extends AbstractController
         } else {
             $prs = "N/A";
         }
-        echo "<script>
-        console.log(".count($adherants).");
-        console.log(".count($seances).");
-        console.log('".$prs."');
-        </script>";
+        
         $seances = $seanceRepo->getByNew($equipe->getId());
         $testes = $testeRepo->getByNew($equipe->getId());
         $this->user = $usr;
