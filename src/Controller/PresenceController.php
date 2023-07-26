@@ -28,6 +28,15 @@ class PresenceController extends AbstractController
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }        
         $presences = $presenceRepo->getOrdered($adherant->getId());
+        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+            $tmp = [];
+            foreach($presences as $presence) {
+                if($presence->getDate() >= new \DateTime($_GET['from']) && $presence->getDate() <= new \DateTime($_GET['to'])) {
+                    $tmp[] = $presence;
+                }
+            }
+            $presences = $tmp;
+        }
         $dates=[];
         foreach($presences as $presence) {
             $date = date('Y-m',$presence->getDate()->getTimestamp());
@@ -67,6 +76,7 @@ class PresenceController extends AbstractController
             'presences' => $presences,
             'dates' => $dates,
             'dts' => $dts,
+            'GET' => $_GET,
             'adherant' => $adherant,
             'sections' => $sections,
             'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid()
