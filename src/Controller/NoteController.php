@@ -24,9 +24,14 @@ class NoteController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
+        $nts = 0;
         $notes = $entityManager
             ->getRepository(Note::class)
             ->findBy(['adherantid' => $adherant->getId()]);
+        foreach($notes as $note) {
+            $nts += $note->getNote();
+        }
+        $nts = $nts != 0 && count($notes) != 0 ? $nts / count($notes) : 'N/A';
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -34,7 +39,8 @@ class NoteController extends AbstractController
         return $this->render('note/index.html.twig', [
             'notes' => $notes,
             'sections' => $sections,
-            'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid()
+            'section' => $adherant->getEquipeid()->getNiveauid()->getSectionid(),
+            'nts' => $nts
         ]);
     }
 
