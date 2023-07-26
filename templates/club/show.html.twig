@@ -87,7 +87,7 @@
                                                     <div class="dropdown-notifications-item-content">
                                                         <div class="dropdown-notifications-item-content-details">
                                                             <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
-                                                            <h3 style="float:right">{{ TESTES[sctn.id]|number_format(2)}}%</h3>
+                                                            <h3 style="float:right">{{ TESTES[sctn.id] != 'N/A' ? TESTES[sctn.id]|number_format(2)~'%' : 'N/A' }}</h3>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -123,7 +123,7 @@
                                                     <div class="dropdown-notifications-item-content">
                                                         <div class="dropdown-notifications-item-content-details">
                                                             <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
-                                                            <h3 style="float:right">{{ IMC[sctn.id]|number_format(2)}}</h3>
+                                                            <h3 style="float:right">{{ IMC[sctn.id] != 'N/A' ? IMC[sctn.id]|number_format(2) : 'N/A' }}</h3>
                                                         </div>
                                                     </div>
                                                 </a>
