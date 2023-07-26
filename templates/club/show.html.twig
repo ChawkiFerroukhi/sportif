@@ -27,7 +27,7 @@
         </header>
         <!-- Main page content-->
         <div class="container-xl px-4 mt-4">
-        {% if app.user.roles['ROLE_ADMIN'] or app.user.roles['ROLE_DOCTOR'] or app.user.roles['ROLE_COACH']  %}
+        {% if app.user.roles['ROLE_ADMIN'] is defined  or app.user.roles['ROLE_DOCTOR'] is defined  or app.user.roles['ROLE_COACH'] is defined   %}
             <div class="row"style="margin-bottom:25px;">
                 <div class="col-xl-3 col-sm-6 col-12">
                     <div class="card">
