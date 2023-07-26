@@ -21,7 +21,7 @@ class EquipeType extends AbstractType
             ->add('doctorid',ChoiceType::class,[
                 'choices' => $options['doctors'],
                 'choice_label' => 'nomprenom',
-                'placeholder' => 'Choisir un doctor',
+                'placeholder' => 'Choisir un Docteur',
                 'required' => false
             ])
             ->add('coachid',ChoiceType::class,[

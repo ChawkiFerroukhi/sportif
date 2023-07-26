@@ -33,7 +33,7 @@ class UserType extends AbstractType
 
 
                     'Administrateur' => 'ROLE_ADMIN',
-                    'Doctor' => 'ROLE_DOCTOR',
+                    'Docteur' => 'ROLE_DOCTOR',
                     'Coach' => 'ROLE_COACH',
                     'Parent' => 'ROLE_SUPERVISOR',
                     'Adherant' => 'ROLE_ADHERANT',
@@ -56,11 +56,11 @@ class UserType extends AbstractType
                     'Fiche Coach' => 'app_coach_show',
                     'Supprimer Coach' => 'app_coach_delete',
 
-                    'Ajouter Doctor' => 'app_doctor_new',
-                    'Modifier Doctor' => 'app_doctor_edit',
+                    'Ajouter Docteur' => 'app_doctor_new',
+                    'Modifier Docteur' => 'app_doctor_edit',
                     'Afficher Doctors' => 'app_doctor_index',
-                    'Fiche Doctor' => 'app_doctor_show',
-                    'Supprimer Doctor' => 'app_doctor_delete',
+                    'Fiche Docteur' => 'app_doctor_show',
+                    'Supprimer Docteur' => 'app_doctor_delete',
 
                     'Ajouter Administrateur' => 'app_administrateur_new',
                     'Modifier Administrateur' => 'app_administrateur_edit',
