@@ -95,7 +95,7 @@ class SectionController extends AbstractController
             foreach($equipes as $equipe) {
                 $adherants = $equipe->getAdherants();
                 foreach($adherants as $adherant) {
-                    if($adherant->getSexe() == "M") {
+                    if($adherant->getSexe() == "H") {
                         $M++;
                     } else {
                         $F++;

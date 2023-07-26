@@ -138,8 +138,7 @@ class DoctorController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form->get('password')->getData()!=null) {
-                $image = $form->get('image')->getData();
+            $image = $form->get('image')->getData();
                 if($image != null) {
                     $image->setClubid($doctor->getClubid());
                     $image->setAdherantid($doctor);
@@ -147,6 +146,7 @@ class DoctorController extends AbstractController
                     $image->setUpdatedAt(new \DateTime());
                     $entityManager->persist($image);
                 }
+            if($form->get('password')->getData()!=null) {
                 $doctor->setPassword($this->passwordHasher->hashPassword(
                     $doctor,
                     $form->get('password')->getData()
