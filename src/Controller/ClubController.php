@@ -92,6 +92,7 @@ class ClubController extends AbstractController
             $M[$sctn->getId()] = [];
             $imc = 0;
             $nb = 0;
+            $nb = 0;
             $nbNotes = 0;
             $nts = 0;
             $nbPres = 0;
@@ -137,8 +138,8 @@ class ClubController extends AbstractController
                     
                 }
             }
-            $IMC[$sctn->getId()] = $nb != 0 ? $imc / $nb : 'N/A';
-            $TESTES[$sctn->getId()] = $nbNotes != 0 ? $nts/$nbNotes : 'N/A';
+            $IMC[$sctn->getId()] = $nb != 0 && $imc != 0 ? $imc / $nb : 'N/A';
+            $TESTES[$sctn->getId()] = $nbNotes != 0 && $nts != 0 ? $nts/$nbNotes : 'N/A';
             $PRESENCE[$sctn->getId()] = $nb != 0 && $seances !=0 ? $nbPres/($seances*$nb) * 100 : 'N/A';
         }
         $this->user = $usr;
