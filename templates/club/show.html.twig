@@ -27,6 +27,161 @@
         </header>
         <!-- Main page content-->
         <div class="container-xl px-4 mt-4">
+            <div class="row"style="margin-bottom:25px;">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-right">
+                                        <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
+                                            <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownStat1" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="me-2" data-feather="percent" style="color: {{ app.user.clubid.color }}"></i>
+                                                <span style="color: {{ app.user.clubid.color }}">Taux de Présence</span>                      
+                                            </a>
+                                            <div class="dropdown-menu border-0 shadow animated--fade-in-up"  aria-labelledby="navbarDropdownStat1">
+
+                                                {% for sctn in sections %}
+                                                
+                                                <a class="nav-link {% if section.id is defined and sctn.id == section.id %}
+                                                active" style="border-bottom: 4px solid {{ app.user.clubid.color }};margin:0.5em;
+                                                {% else %} " style="border-bottom: 1px solid grey;margin:0.5em;
+                                                {% endif %}"  
+                                                href="{{ path('app_section_show',{'id':sctn.id})}}">
+                                                    <div class="dropdown-notifications-item-content">
+                                                        <div class="dropdown-notifications-item-content-details">
+                                                            <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
+                                                            <h3 style="float:right">{{ PRESENCE[sctn.id]|number_format(2)}}%</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-right">
+                                        <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications" >
+                                            <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownStat2" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                                <i class="me-2" data-feather="percent" style="color: {{ app.user.clubid.color }}"></i>
+                                                <span style="color: {{ app.user.clubid.color }}">Pérformance </span>                      
+                                            </a>
+                                            <div class="dropdown-menu border-0 shadow animated--fade-in-up"  aria-labelledby="navbarDropdownStat2">
+                                                {% for sctn in sections %}
+                                                
+                                                <a class="nav-link {% if section.id is defined and sctn.id == section.id %}
+                                                active" style="border-bottom: 4px solid {{ app.user.clubid.color }};margin:0.5em;
+                                                {% else %} " style="border-bottom: 1px solid grey;margin:0.5em;
+                                                {% endif %}"  
+                                                href="{{ path('app_section_show',{'id':sctn.id})}}">
+                                                    <div class="dropdown-notifications-item-content">
+                                                        <div class="dropdown-notifications-item-content-details">
+                                                            <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
+                                                            <h3 style="float:right">{{ TESTES[sctn.id]|number_format(2)}}%</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-right">
+                                        <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
+                                            <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownStat3" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="me-2" data-feather="percent" style="color: {{ app.user.clubid.color }}"></i>
+                                                <span style="color: {{ app.user.clubid.color }}">IMC Moyenne</span>                      
+                                            </a>
+                                            <div class="dropdown-menu border-0 shadow animated--fade-in-up"  aria-labelledby="navbarDropdownStat3">
+                                                {% for sctn in sections %}
+                                                
+                                                <a class="nav-link {% if section.id is defined and sctn.id == section.id %}
+                                                active" style="border-bottom: 4px solid {{ app.user.clubid.color }};margin:0.5em;
+                                                {% else %} " style="border-bottom: 1px solid grey;margin:0.5em;
+                                                {% endif %}"  
+                                                href="{{ path('app_section_show',{'id':sctn.id})}}">
+                                                    <div class="dropdown-notifications-item-content">
+                                                        <div class="dropdown-notifications-item-content-details">
+                                                            <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
+                                                            <h3 style="float:right">{{ IMC[sctn.id]|number_format(2)}}</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-right">
+                                        <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
+                                            <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownStat4" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="me-2" data-feather="percent" style="color: {{ app.user.clubid.color }}"></i>
+                                                <span style="color: {{ app.user.clubid.color }}">Proportion par sexe</span>                      
+                                            </a>
+                                            <div class="dropdown-menu border-0 shadow animated--fade-in-up"  aria-labelledby="navbarDropdownStat4">
+                                                {% for sctn in sections %}
+                                                
+                                                <a class="nav-link {% if section.id is defined and sctn.id == section.id %}
+                                                active" style="border-bottom: 4px solid {{ app.user.clubid.color }};margin:0.5em;
+                                                {% else %} " style="border-bottom: 1px solid grey;margin:0.5em;
+                                                {% endif %}"  
+                                                href="{{ path('app_section_show',{'id':sctn.id})}}">
+                                                    <div class="dropdown-notifications-item-content">
+                                                        <div class="dropdown-notifications-item-content-details">
+                                                            <i class="me-2"><img src="{{ vich_uploader_asset(sctn, 'logoFile') }}" width="30px" hight="30px"/></i>
+                                                            <h3 style="float:right">
+                                                            {% if M[sctn.id]|length != 0 and F[sctn.id]|length != 0 %}
+                                                            {% set base = F[sctn.id]|length + M[sctn.id]|length %} 
+                                                            {% set ratM = M[sctn.id]|length %}
+                                                            {% set ratF = F[sctn.id]|length %}
+                                                            {{ (ratM / base  )|number_format(3) * 100 }}% <i class="fa-solid fa-mars"></i> | {{  (ratF / base )|number_format(3) * 100 }}% <i class="fa-solid fa-venus"></i>
+                                                            {% else %}
+                                                            N/A
+                                                            {% endif %}
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+            </div>
             <div class="row">
                 <div class="col-xl-4">
                     <div class="card mb-4 mb-xl-0">

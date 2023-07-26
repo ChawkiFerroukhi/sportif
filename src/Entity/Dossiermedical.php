@@ -125,6 +125,16 @@ class Dossiermedical
         return $this->mesures;
     }
 
+    public function getMesure(): Mesure
+    {
+        $msr = $this->mesures->toArray();
+        usort($msr, function ($a, $b) {
+            return strtotime($b->getDate()->format('Y-m-d')) - strtotime($a->getDate()->format('Y-m-d'));
+        });
+        
+        return isset($msr[0]) ? $msr[0] : new Mesure();
+    }
+
     public function addMesure(Mesure $mesure): self
     {
         if (!$this->mesures->contains($mesure)) {
