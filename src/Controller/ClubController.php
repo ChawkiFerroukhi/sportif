@@ -87,6 +87,9 @@ class ClubController extends AbstractController
         $IMC = [];
         $TESTES = [];
         $PRESENCE = [];
+        $nbTESTES = [];
+        $nbIMC = [];
+        $nbSEANCES = [];
         foreach($sections as $sctn) {
             $F[$sctn->getId()] = [];
             $M[$sctn->getId()] = [];
@@ -97,12 +100,15 @@ class ClubController extends AbstractController
             $nts = 0;
             $nbPres = 0;
             $seances = 0;
+            $nbTestes = 0;
+            $nbImc = 0;
             foreach($sctn->getNiveaux() as $niveau) {
                 foreach($niveau->getEquipes() as $equipe) {
 
                     $testes = $entityManager
                         ->getRepository(Teste::class)
                         ->findBy(['equipeid' => $equipe->getId()]);
+                    $nbTestes += count($testes);
                     foreach($testes as $teste) {
                         $notes = $teste->getNotes();
                         foreach($notes as $note) {
@@ -114,6 +120,7 @@ class ClubController extends AbstractController
                         if(!isset($F[$sctn->getId()][$adherant->getId()]) && !isset($F[$sctn->getId()][$adherant->getId()])){
                             $nb++;
                             $imc += $adherant->getDossiermedicalid()->getMesure()->getImc();
+                            $nbImc += count($adherant->getDossiermedicalid()->getMesures());
                             $presences = $entityManager
                                 ->getRepository(Presence::class)
                                 ->findBy(['adherantid' => $adherant->getId()]);
@@ -141,6 +148,9 @@ class ClubController extends AbstractController
             $IMC[$sctn->getId()] = $nb != 0 && $imc != 0 ? $imc / $nb : 'N/A';
             $TESTES[$sctn->getId()] = $nbNotes != 0 && $nts != 0 ? $nts/$nbNotes : 'N/A';
             $PRESENCE[$sctn->getId()] = $nb != 0 && $seances !=0 ? $nbPres/($seances*$nb) * 100 : 'N/A';
+            $nbTESTES[$sctn->getId()] = $nbTestes;
+            $nbIMC[$sctn->getId()] = $nbImc;
+            $nbSEANCES[$sctn->getId()] = $seances;
         }
         $this->user = $usr;
         return $this->render('club/show.html.twig', [
@@ -151,7 +161,10 @@ class ClubController extends AbstractController
             'M' => $M,
             'IMC' => $IMC,
             'TESTES' => $TESTES,
-            'PRESENCE' => $PRESENCE
+            'PRESENCE' => $PRESENCE,
+            'testes' => $nbTESTES,
+            'seances' => $nbSEANCES,
+            'imc' => $nbIMC
 
         ]);
     }
