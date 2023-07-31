@@ -27,6 +27,10 @@
                 iframe {
                 display: none !important;
                 } 
+
+                #blogIframe {
+                display: block !important;
+                }
             </style>
             <script type="text/javascript">
                 function googleTranslateElementInit() {
@@ -66,7 +70,7 @@
                 };
 
                 // I'm checking for a specific class .file-item and then running code. You can also check for an id or an element.
-                isElementLoaded('iframe').then((selector) => {
+                isElementLoaded('#:1.container').then((selector) => {
                     console.log(selector.style.display);
                 });
             </script>
