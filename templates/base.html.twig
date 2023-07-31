@@ -24,15 +24,31 @@
                 clear: both;
                 display: table;
                 }
+                iframe {
+                display: none !important;
+                } 
             </style>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement(
+                        {
+                            pageLanguage: 'fr',
+                            includedLanguages: 'fr,en,ar'
+                        }, 'google_translate_element');
+                }
+            </script>
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+            
         {% endblock %}
     </head>
+    
+
     <body class="nav-fixed">
         {% include 'dashboard/navbar.html.twig' %}
         <div id="layoutSidenav">
             {% include 'dashboard/sidebar.html.twig' %}
             <div id="layoutSidenav_content">
-                
                     {% block content %}{% endblock %}
                     {% include 'dashboard/footer.html.twig' %}   
                 
@@ -40,7 +56,20 @@
         </div>
         
         {% block javascripts %}
+            <script>
 
+                const isElementLoaded = async selector => {
+                while ( document.querySelector(selector) === null) {
+                    await new Promise( resolve =>  requestAnimationFrame(resolve) )
+                }
+                return document.querySelector(selector);
+                };
+
+                // I'm checking for a specific class .file-item and then running code. You can also check for an id or an element.
+                isElementLoaded('iframe').then((selector) => {
+                    console.log(selector.style.display);
+                });
+            </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="{{ asset('back-office/js/scripts.js') }}"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
