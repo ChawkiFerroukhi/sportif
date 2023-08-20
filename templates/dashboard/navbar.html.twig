@@ -1,13 +1,13 @@
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
-    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
+    <button class="btn btn-icon btn-transparent-dark  order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i data-feather="menu"></i>
     </button>
     <!-- Navbar Brand-->
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#"> IGMS
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-none d-lg-block" href="#"> IGMS
         </a>
     <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
@@ -19,6 +19,8 @@
         <!-- * * Note: * * Visible only below the lg breakpoint-->
         
         <!-- Alerts Dropdown-->
+        <li >
+        </li>
         {% if app.user.roles['ROLE_MASTER'] is not defined %}
         <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -98,7 +100,7 @@
                     <div class="dropdown-item-icon">
                         <i data-feather="settings"></i>
                     </div>
-                    Profile                        
+                    Profil                       
                 </a>
                 <a class="dropdown-item" href="{{path('logout')}}">
                     <div class="dropdown-item-icon">
@@ -107,11 +109,10 @@
                     Se déconnecter                        
                 </a>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item">
-                    <div id="google_translate_element"></div>
-                </div>
-
             </div>
         </li>
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#" >
+            <div  id="google_translate_element"></div>
+        </a>
     </ul>
 </nav>
