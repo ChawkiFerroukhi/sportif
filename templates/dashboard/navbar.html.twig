@@ -7,7 +7,8 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#"> IGMS
+        </a>
     <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
     
@@ -19,9 +20,6 @@
         
         <!-- Alerts Dropdown-->
         {% if app.user.roles['ROLE_MASTER'] is not defined %}
-        <li class="nav-item">
-                <div id="google_translate_element"></div>
-        </li>
         <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="me-2" data-feather="grid" style="color: {{ app.user.clubid.color }}"></i>
@@ -108,6 +106,11 @@
                     </div>
                     Se déconnecter                        
                 </a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item">
+                    <div id="google_translate_element"></div>
+                </div>
+
             </div>
         </li>
     </ul>
