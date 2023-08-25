@@ -19,9 +19,13 @@
         <!-- * * Note: * * Visible only below the lg breakpoint-->
         
         <!-- Alerts Dropdown-->
-        <li >
-        </li>
         {% if app.user.roles['ROLE_MASTER'] is not defined %}
+
+        <li class="nav-item">
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#" >
+            <div  id="google_translate_element"></div>
+        </a>
+        </li>
         <li class="nav-item dropdown no-caret d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="me-2" data-feather="grid" style="color: {{ app.user.clubid.color }}"></i>
@@ -111,8 +115,5 @@
                 <div class="dropdown-divider"></div>
             </div>
         </li>
-        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#" >
-            <div  id="google_translate_element"></div>
-        </a>
     </ul>
 </nav>
