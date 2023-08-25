@@ -73,7 +73,184 @@ class ClubController extends AbstractController
             'section' => $section
         ]);
     }
+    #[Route('/stats', name: 'app_club_stats', methods: ['GET', 'POST'])]
+    public function stats(EntityManagerInterface $entityManager, SeanceRepository $seanceRepo): Response
+    {
+        $usr = $this->getUser();
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        if(isset($_GET['section'])) {
+            $section = $entityManager
+                ->getRepository(Section::class)
+                ->findOneBy(['id' => $_GET['section']]);
+        } else if(isset($sections[0])){
+            $section = $sections[0] ;
+        } else {
+            $section = new Section();
+        }
+        $seances = [];
+        $dts = [];
+        $niveaux = [];
+        $dates = [];
+        $F = [];
+        $M = [];
+        $IMC = [];
+        $TESTES = [];
+        $PRESENCE = [];
+        $nbTESTES = [];
+        $nbIMC = [];
+        $nbSEANCES = [];
+        $totalAdherants = 0;
+        $totalTests = 0;
+        $totalSeances = 0;
+        $totalPresences = 0;
+        $totalNotes = 0;
+        $totalImc = 0;
+        foreach($section->getNiveaux() as $niveau) {
+            $F[$niveau->getId()] = [];
+            $M[$niveau->getId()] = [];
+            $seances[$niveau->getId()] = [];
+            $dts[$niveau->getId()] = [];
+            $niveaux[$niveau->getId()] = $niveau;
+            $testes[$niveau->getId()] = 0;
+            $imc = 0;
+            $nb = 0;
+            $nbNotes = 0;
+            $nts = 0;
+            $nbPres = 0;
+            $nbSeances = 0;
+            $nbTestes = 0;
+            $nbImc = 0;
+            foreach($niveau->getEquipes() as $equipe) {
+                $testes = $entityManager
+                    ->getRepository(Teste::class)
+                    ->findBy(['equipeid' => $equipe->getId()]);
+                if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+                    $tmp = [];
+                    foreach($testes as $teste) {
+                        if($teste->getDate() >= new \DateTime($_GET['from']) && $teste->getDate() <= new \DateTime($_GET['to'])) {
+                            $tmp[] = $teste;
+                        }
+                    }
+                    $testes = $tmp;
+                }
+                $nbTestes += count($testes);
+                foreach($testes as $teste) {
+                    $notes = $teste->getNotes();
+                    foreach($notes as $note) {
+                        $nbNotes++;
+                        $nts += $note->getNote();
+                    }
+                }
+                $sncs = $seanceRepo->getOrdered($equipe->getId());
+                if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+                    $tmp = [];
+                    foreach($sncs as $snc) {
+                        if($snc->getDate() >= new \DateTime($_GET['from']) && $snc->getDate() <= new \DateTime($_GET['to'])) {
+                            $tmp[] = $snc;
+                        }
+                    }
+                    $sncs = $tmp;
+                }
+                $seances[$niveau->getId()] = array_merge($seances[$niveau->getId()], $sncs);
+                $nbSeances += count($sncs);
+                foreach($equipe->getAdherants() as $adherant) {
+                    if(!isset($F[$niveau->getId()][$adherant->getId()]) && !isset($M[$niveau->getId()][$adherant->getId()])){
+                        $nb++;
+                        $imc += $adherant->getDossiermedicalid()->getMesure()->getImc();
+                        $nbImc += count($adherant->getDossiermedicalid()->getMesures());
+                        $presences = $entityManager
+                            ->getRepository(Presence::class)
+                            ->findBy(['adherantid' => $adherant->getId()]);
+                        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+                            $tmp = [];
+                            foreach($presences as $presence) {
+                                if($presence->getDate() >= new \DateTime($_GET['from']) && $presence->getDate() <= new \DateTime($_GET['to'])) {
+                                    $tmp[] = $presence;
+                                }
+                            }
+                            $presences = $tmp;
+                        }
+                        foreach($presences as $presence) {
+                            $date = $presence->getDate()->format( 'Y-m-d' );
+                            $dt = new \DateTime($date);
+                            $seance = $entityManager
+                                ->getRepository(Seance::class)
+                                ->findOneBy(['equipeid' => $adherant->getEquipeid(),'date' => $dt]);
+                            $seance2 = $entityManager
+                                ->getRepository(Seance::class)
+                                ->findOneBy(['equipeid' => $adherant->getEquipe2id(),'date' => $dt]);
+                            if($seance || $seance2) {
+                                $nbPres++;
+                            }
+                        }
+                    }
+                    if($adherant->getSexe() === 'F') {
+                        $F[$niveau->getId()][$adherant->getId()] = $adherant;
+                    } else {
+                        $M[$niveau->getId()][$adherant->getId()] = $adherant;
+                    }
+                }
+            }
+            foreach($seances[$niveau->getId()] as $seance) {
+                $date = date('Y-m',$seance->getDate()->getTimestamp());
+                if(isset($dts[$niveau->getId()][$date])) {
+                    $dts[$niveau->getId()][$date] ++;
+                } else {
+                    $dts[$niveau->getId()][$date] = 1;
+                    
+                    $dates[] = $date;
+                }
+            }
 
+            $IMC[$niveau->getId()] = $nb != 0 && $imc != 0 ? $imc / $nb : 'N/A';
+            $TESTES[$niveau->getId()] = $nbNotes != 0 && $nts != 0 ? $nts/$nbNotes : 'N/A';
+            $PRESENCE[$niveau->getId()] = $nb != 0 && $nbSeances !=0 ? $nbPres/($nbSeances*$nb) * 100 : 'N/A';
+            $nbTESTES[$niveau->getId()] = $nbTestes;
+            $nbIMC[$niveau->getId()] = $nbImc;
+            $nbSEANCES[$niveau->getId()] = $nbSeances;
+            $totalTests += $nbTestes;
+            $totalAdherants += $nb;
+            $totalSeances += $nbSeances;
+            $totalPresences += $nbPres;
+            $totalNotes += $nbNotes;
+            $totalImc += $nbImc;
+        }
+        foreach($niveaux as $niveau) {
+            foreach($dates as $date) {
+                if(!isset($dts[$niveau->getId()][$date])) {
+                    $dts[$niveau->getId()][$date] = 0;
+                }
+            }
+        }
+        $dates = array_unique($dates);
+        
+        $this->user = $usr;
+        return $this->render('club/stats.html.twig', [
+            'club' => $section->getClubid(),
+            'sections' => $sections,
+            'section' => $section,
+            'dts' => $dts,
+            'dates' => $dates,
+            'niveaux' => $niveaux,
+            'F' => $F,
+            'M' => $M,
+            'IMC' => $IMC,
+            'TESTES' => $TESTES,
+            'PRESENCE' => $PRESENCE,
+            'testes' => $nbTESTES,
+            'totalTests' => $totalTests,
+            'totalAdherants' => $totalAdherants,
+            'totalSeances' => $totalSeances,
+            'totalPresences' => $totalPresences,
+            'totalNotes' => $totalNotes,
+            'totalImc' => $totalImc,
+            'seances' => $nbSEANCES,
+            'imc' => $nbIMC,
+            'GET' => $_GET
+        ]);
+    }
     #[Route('/{id}', name: 'app_club_show', methods: ['GET'])]
     public function show(Club $club, EntityManagerInterface $entityManager, SeanceRepository $seanceRepo): Response
     {
@@ -117,7 +294,7 @@ class ClubController extends AbstractController
                         }
                     }
                     foreach($equipe->getAdherants() as $adherant) {
-                        if(!isset($F[$sctn->getId()][$adherant->getId()]) && !isset($F[$sctn->getId()][$adherant->getId()])){
+                        if(!isset($F[$sctn->getId()][$adherant->getId()]) && !isset($M[$sctn->getId()][$adherant->getId()])){
                             $nb++;
                             $imc += $adherant->getDossiermedicalid()->getMesure()->getImc();
                             $nbImc += count($adherant->getDossiermedicalid()->getMesures());
@@ -130,7 +307,10 @@ class ClubController extends AbstractController
                                 $seance = $entityManager
                                     ->getRepository(Seance::class)
                                     ->findOneBy(['equipeid' => $adherant->getEquipeid(),'date' => $dt]);
-                                if($seance) {
+                                $seance2 = $entityManager
+                                    ->getRepository(Seance::class)
+                                    ->findOneBy(['equipeid' => $adherant->getEquipe2id(),'date' => $dt]);
+                                if($seance || $seance2) {
                                     $nbPres++;
                                 }
                             }

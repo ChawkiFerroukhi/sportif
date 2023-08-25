@@ -96,6 +96,12 @@
                         {{app.user.clubid.nom}}
                     </a>
                     {% if app.user.roles['ROLE_ADMIN'] is defined %}  
+                    <a class="nav-link " href="{{ path('app_club_stats') }}">
+                        <div class="nav-link-icon">
+                            <i data-feather="activity"></i>
+                        </div>
+                        Statistiques
+                    </a>
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapsePages">
                         <div class="nav-link-icon">
                             <i data-feather="users"></i>

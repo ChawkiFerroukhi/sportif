@@ -1,0 +1,278 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
+    {% endif %}
+                    <div class="col-lg-12" >
+                        <div class="page-header-content">
+                            <div class="row align-items-center justify-content-between pt-3">
+                                <div class="col-auto mb-3">
+                                    <h1 class="page-header-title">
+                                        <div class="page-header-icon"><i data-feather="bookmark"></i></div>
+                                        {{ club.nom }}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+        {% if app.user.roles['ROLE_ADMIN'] is defined  or app.user.roles['ROLE_DOCTOR'] is defined  or app.user.roles['ROLE_COACH'] is defined   %}
+            
+        {% endif %}
+            <div class="row">
+
+                <div class="col-xl-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="GET">
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (first name)-->
+                                    <div class="col-md-3">
+                                        <h2 class="small mb-1" for="inputFirstName">Début</h2>
+                                        <input class="form-control" type="date" name="from"  {% if GET['from'] is defined and GET['from'] != "" %} value="{{ GET['from'] |date('Y-m-d') }}" {% endif %}></input>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h2 class="small mb-1" for="inputFirstName">Fin</h2>
+                                        <input class="form-control" type="date" name="to"  {% if GET['to'] is defined and GET['to'] != "" %} value="{{ GET['to'] |date('Y-m-d') }}" {% endif %}></input>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <h2 class="small mb-1" for="inputFirstName">Section</h2>
+                                        <select class="form-control" name="section"> 
+                                            {% for sctn in sections %}
+                                                <option value="{{ sctn.id }}" {{sctn.id == section.id ? "selected" : ""}}>{{ sctn.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <br>
+                                        <button class="btn btn-outline-success" type="submit" style="float:left">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Adhérants<span style="float:right">Total: {{ totalAdherants }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="adherants" ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Proportion par sexe<span style="float:right">Total: {{ totalAdherants }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="sex" ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Séances Effectées<span style="float:right">Total: {{ totalSeances }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="seances" ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Taux de Présence<span style="float:right">Total: {{ totalPresences }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="presence" ></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Tests Effectés<span style="float:right">Total: {{ totalTests }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="tests" ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Performance moyenne<span style="float:right">Total: {{ totalNotes }}</span></div>
+                        <div class="card-body text-center">
+                            <div id="notes" ></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+var data = [
+    {% for date,data in dates %}
+        { 
+            y: '{{ data|date("Y-m") }}',
+            {% for niveau in niveaux %}
+            {{ niveau.id }} : {{ dts[niveau.id][data] }},
+            {% endfor %}
+        },
+    {% endfor %}
+    
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 
+            {% for niveau in niveaux %}
+            {{ niveau.id }} ,
+            {% endfor %}
+        ],
+        labels: [ 
+            {% for niveau in niveaux %}
+            '{{ niveau.nom }}' ,
+            {% endfor %}
+        ],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black']
+    };
+    config.element = 'seances';
+    Morris.Line(config);
+
+    Morris.Donut({
+    element: 'tests',
+    data: [
+        {% for niveau in niveaux %}
+                {label: "{{ niveau.nom }}", value: {{ testes[niveau.id] }} },
+        {% endfor %}
+    ]
+    });
+
+    data = [
+    {% for id,data in PRESENCE %}
+        {% if data != 'N/A' %}
+        { 
+            y : '{{ niveaux[id].nom }}',
+            a : {{ data|number_format(2) }},
+        },
+        {% endif %}
+    {% endfor %}
+    
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 
+            'a',
+        ],
+        labels: [ 
+            'Taux de Présence(%)',
+        ],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black']
+    };
+    config.element = 'presence';
+    Morris.Bar(config);
+
+    data = [
+    {% for id,data in TESTES %}
+        {% if data != 'N/A' %}
+        { 
+            y : '{{ niveaux[id].nom }}',
+            a : {{ data|number_format(2) }},
+        },
+        {% endif %}
+    {% endfor %}
+    
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 
+            'a',
+        ],
+        labels: [ 
+            'Performance Moyenne(%)',
+        ],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black']
+    };
+    config.element = 'notes';
+    Morris.Bar(config);
+
+    data = [
+    {% for id,niveau in niveaux %}
+        { 
+            y : '{{ niveau.nom }}',
+            a : {{ M[niveau.id]|length }},
+            b : {{ F[niveau.id]|length }},
+        },
+    {% endfor %}
+    
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 
+            'a',
+            'b',
+        ],
+        labels: [ 
+            'Homme',
+            'Femme',
+        ],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black']
+    };
+    config.element = 'sex';
+    Morris.Bar(config);
+
+    Morris.Donut({
+    element: 'adherants',
+    data: [
+        {% for niveau in niveaux %}
+        {% if IMC[niveau.id] != 'N/A' %}
+                {label: "{{ niveau.nom }}", value: {{ F[niveau.id]|length +M[niveau.id]|length }} },
+        {% endif %}
+        {% endfor %}
+    ]
+    });
+</script>
+
+{% endblock %}
+
