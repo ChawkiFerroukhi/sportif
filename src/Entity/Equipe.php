@@ -256,4 +256,8 @@ class Equipe
         return $this;
     }
 
+    public function nomsection(): string {
+        return $this->niveauid->getSectionid()->getNom()." : ".$this->getNom();
+    }
+
 }

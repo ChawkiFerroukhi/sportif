@@ -64,13 +64,13 @@ class AdherantType extends AbstractType
             ->add('dossierMedicalId')
             ->add('equipeid',ChoiceType::class,[
                 'choices' => $options['equipes'],
-                'choice_label' => 'nom',
+                'choice_label' => 'nomsection',
                 'placeholder' => 'Choisir un niveau',
                 'required' => true
             ])
             ->add('equipe2id',ChoiceType::class,[
                 'choices' => $options['equipes'],
-                'choice_label' => 'nom',
+                'choice_label' => 'nomsection',
                 'placeholder' => 'Choisir un 2éme niveau',
                 'required' => false
             ])
