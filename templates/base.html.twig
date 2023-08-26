@@ -40,6 +40,7 @@
                             includedLanguages: 'fr,en,ar'
                         }, 'google_translate_element');
                 }
+                
             </script>
             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -66,12 +67,17 @@
                 while ( document.querySelector(selector) === null) {
                     await new Promise( resolve =>  requestAnimationFrame(resolve) )
                 }
+                let div = document.querySelector('div.skiptranslate');
+                let select = document.getElementById(':0.targetLanguage');
+                div.innerHTML = ""
+                div.appendChild(select);
                 return document.querySelector(selector);
                 };
 
                 // I'm checking for a specific class .file-item and then running code. You can also check for an id or an element.
-                isElementLoaded('#:1.container').then((selector) => {
+                isElementLoaded('select.goog-te-combo').then((selector) => {
                     console.log(selector.style.display);
+                    
                 });
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
