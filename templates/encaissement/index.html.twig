@@ -17,7 +17,7 @@
                                 <div class="page-header-icon">
                                     <i data-feather="dollar-sign"></i>
                                 </div>
-                                Liste des Encaissements                        
+                                Liste des Entrées                        
                             </h1>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                 <div class="col-12 col-xl-auto mb-3" >
                     <a class="btn btn-sm btn-light text-primary" href="{{ path('app_encaissement_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
-                        Ajouter Encaissement                                                                              
+                        Ajouter Entrée                                                                              
                     </a>
                 </div>
             {% endif %}
@@ -145,7 +145,7 @@
                         <!-- Form Group (first name)-->
                         <div class="col-md-12">
                             <hr>
-                            <h2 class="small mb-1" for="inputFirstName">Encaissements</h2>
+                            <h2 class="small mb-1" for="inputFirstName">Entrées</h2>
                             <div id="area-chart" ></div>
                             <hr>  
                         </div>
@@ -157,7 +157,7 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Reférence</th>
-                                    <th>Etat</th>
+                                    <th>Désignation</th>
                                     <th></th>
                                 </tr>
                             </tr>
@@ -168,7 +168,7 @@
                                     <td>{{ encaissement.id }}</td>
                                     <td>{{ encaissement.date|date('d/m/Y') }}</td>
                                     <td>{{ encaissement.ref }}</td>
-                                    <td>{{ encaissement.status }}</td>
+                                    <td>{{ encaissement.designation }}</td>
                                     <td>
                                         {% if encaissement.type == 'paiement' %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_show', {'id': encaissement.id}) }}">

@@ -7,7 +7,7 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-none d-lg-block" href="#"> IGMS
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-none d-lg-block" href="#"> <b>ALL </b><small>in</small> <b>ONE</b>
         </a>
     <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
@@ -74,9 +74,9 @@
                             {% elseif app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             Administrateur
                             {% elseif app.user.roles['ROLE_ADHERANT'] is defined %}
-                            Adherant
+                            Adhérent
                             {% elseif app.user.roles['ROLE_COACH'] is defined %}
-                            Coach
+                            Entaîneur
                             {% elseif app.user.roles['ROLE_DOCTOR'] is defined %}
                             Docteur
                             {% elseif app.user.roles['ROLE_SUPERVISOR'] is defined %}

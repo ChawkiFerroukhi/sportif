@@ -17,7 +17,7 @@
                                 <div class="page-header-icon">
                                     <i data-feather="dollar-sign"></i>
                                 </div>
-                                Liste des Decaissements                        
+                                Liste des Sorties                        
                             </h1>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                 <div class="col-12 col-xl-auto mb-3" >
                     <a class="btn btn-sm btn-light text-primary" href="{{ adherant is defined ? path('app_decaissement_new_adherant',{'id' : adherant.id}) : path('app_decaissement_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
-                        Ajouter Decaissement                                                                              
+                        Ajouter Sortie                                                                              
                     </a>
                 </div>
             {% endif %}
@@ -145,7 +145,7 @@
                         <!-- Form Group (first name)-->
                         <div class="col-md-12">
                             <hr>
-                            <h2 class="small mb-1" for="inputFirstName">Decaissements</h2>
+                            <h2 class="small mb-1" for="inputFirstName">Sorties</h2>
                             <div id="area-chart" ></div>
                             <hr>  
                         </div>
@@ -157,7 +157,7 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Reférence</th>
-                                    <th>Etat</th>
+                                    <th>Désignation</th>
                                     <th></th>
                                 </tr>
                             </tr>
@@ -168,7 +168,7 @@
                                     <td>{{ decaissement.id }}</td>
                                     <td>{{ decaissement.date|date('d/m/Y') }}</td>
                                     <td>{{ decaissement.ref }}</td>
-                                    <td>{{ decaissement.status }}</td>
+                                    <td>{{ decaissement.designation }}</td>
                                     <td>
                                         {% if decaissement.type == 'income' %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_income_show', {'id': decaissement.id}) }}">

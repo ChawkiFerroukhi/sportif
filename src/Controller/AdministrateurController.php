@@ -54,68 +54,6 @@ class AdministrateurController extends AbstractController
         ]);
     }
 
-    #[Route('/organigramme', name: 'app_administrateur_gram', methods: ['GET'])]
-    public function organigramme(EntityManagerInterface $entityManager): Response
-    {
-        $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_administrateur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])&& !isset($usr->getRoles()['ROLE_ADMIN'])) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
-        }
-        $administrateurs = [];
-        if(isset($usr->getRoles()["ROLE_MASTER"])) {
-            $administrateurs = $entityManager
-                ->getRepository(Administrateur::class)
-                ->findAll();
-        } else {
-            $administrateurs = $entityManager
-                ->getRepository(Administrateur::class)
-                ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        }
-        $sections = $entityManager
-            ->getRepository(Section::class)
-            ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $presidents = [];
-        $vices = [];
-        $tresoriers = [];
-        $SGs = [];
-        $chefs = [];
-        $others = [];
-        foreach($administrateurs as $administrateur) {
-            if($administrateur->getPoste() != null) {
-                if($administrateur->getPoste()->getNom()=="Président"){
-                    array_push($presidents,$administrateur);
-                } else if($administrateur->getPoste()->getNom()=="Vice-président"){
-                    array_push($vices,$administrateur);
-                } else if($administrateur->getPoste()->getNom()=="Trésorier"){
-                    array_push($tresoriers,$administrateur);
-                } else if($administrateur->getPoste()->getNom()=="Secrétaire Général"){
-                    array_push($SGs,$administrateur);
-                } else {
-                    if(isset($others[$administrateur->getPoste()->getNom()])){
-                        array_push($others[$administrateur->getPoste()->getNom()],$administrateur);
-                    } else {
-                        $others[$administrateur->getPoste()->getNom()] = [$administrateur];
-                    }
-                }
-            }
-            
-        }
-        $section = new Section();
-        $this->user = $usr;
-        return $this->render('administrateur/organigramme.html.twig', [
-            'administrateurs' => $administrateurs,
-            'presidents' => $presidents,
-            'vices' => $vices,
-            'tresoriers' => $tresoriers,
-            'SGs' => $SGs,
-            'chefs' => $chefs,
-            'others' => $others,
-            'sections' => $sections,
-            'section' => $section,
-        ]);
-    }
-
     #[Route('/new', name: 'app_administrateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

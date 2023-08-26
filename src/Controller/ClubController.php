@@ -7,6 +7,7 @@ use App\Entity\Teste;
 use App\Entity\Presence;
 use App\Entity\Seance;
 use App\Entity\Section;
+use App\Entity\Payment;
 use App\Form\ClubType;
 use App\Repository\SeanceRepository;
 use DateTime;
@@ -98,6 +99,7 @@ class ClubController extends AbstractController
         $IMC = [];
         $TESTES = [];
         $PRESENCE = [];
+        $PAYMENT = [];
         $nbTESTES = [];
         $nbIMC = [];
         $nbSEANCES = [];
@@ -122,6 +124,7 @@ class ClubController extends AbstractController
             $nbSeances = 0;
             $nbTestes = 0;
             $nbImc = 0;
+            $totalPayment = 0;
             foreach($niveau->getEquipes() as $equipe) {
                 $testes = $entityManager
                     ->getRepository(Teste::class)
@@ -185,6 +188,23 @@ class ClubController extends AbstractController
                                 $nbPres++;
                             }
                         }
+                        $payments = $entityManager
+                            ->getRepository(Payment::class)
+                            ->findBy(['userid' => $adherant->getId()]);
+                        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+                            $tmp = [];
+                            foreach($payments as $payment) {
+                                if($payment->getDate() >= new \DateTime($_GET['from']) && $payment->getDate() <= new \DateTime($_GET['to'])) {
+                                    $tmp[] = $payment;
+                                }
+                            }
+                            $payments = $tmp;
+                        }
+                        foreach($payments as $payment) {
+                            if($payment->getStatus() === "Payé") {
+                                $totalPayment += $payment->getTotal();
+                            }
+                        }
                     }
                     if($adherant->getSexe() === 'F') {
                         $F[$niveau->getId()][$adherant->getId()] = $adherant;
@@ -216,6 +236,7 @@ class ClubController extends AbstractController
             $totalPresences += $nbPres;
             $totalNotes += $nbNotes;
             $totalImc += $nbImc;
+            $PAYMENT[$niveau->getId()] = $totalPayment;
         }
         foreach($niveaux as $niveau) {
             foreach($dates as $date) {
@@ -247,6 +268,7 @@ class ClubController extends AbstractController
             'totalNotes' => $totalNotes,
             'totalImc' => $totalImc,
             'seances' => $nbSEANCES,
+            'payments' => $PAYMENT,
             'imc' => $nbIMC,
             'GET' => $_GET
         ]);

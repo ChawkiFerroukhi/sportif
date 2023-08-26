@@ -3,7 +3,7 @@
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header">
-                Fiche Encaissement                                            
+                Fiche Entrée                                            
             </div>
             <div class="card-body">
                 <div class="row gx-3 mb-3">
@@ -26,14 +26,14 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        {{ form_label(form.mode, "Mode d'Encaissement", {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.mode, "Mode d'Entrée", {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.mode, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.mode) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.status, "Status d'Encaissement", {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.status, "Status d'Entrée", {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.status, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">

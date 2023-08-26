@@ -21,44 +21,10 @@
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header">
-                Fiche Adherant                                            
+                Fiche d'inscription                                            
             </div>
             <div class="card-body">
-                <h6> Fiche Adherant </h6>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.Email) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.ref) }}
-                    </div>
-                </div>
-                {% if adherant.id is null or app.user.id == adherant.id or app.user.roles['ROLE_MASTER'] is defined %}
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">                                
-                        {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
-                        {{ form_row(form.password.second, {'attr':{'required':'true' }})}}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.password) }}
-                    </div>
-                </div>
-                {% else %}
-                <div hidden>
-                    {{ form_widget(form.password) }}
-                </div>
-                {% endif %}
-                
+                <hr>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
@@ -68,7 +34,7 @@
                         {{ form_errors(form.nom) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.prenom, 'Prenom', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_label(form.prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                    
                         {{ form_widget(form.prenom, {'attr':{'class':'form-control' }}) }}       
                     </div>
                     <div class="invalid-feedback">
@@ -102,7 +68,7 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        {{ form_label(form.ecole, 'Ecole', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.ecole, 'Etablissement', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.ecole, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -161,14 +127,14 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        {{ form_label(form.equipeid, 'Categorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.equipeid, 'Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.equipeid, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.equipeid) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.equipe2id, ' Deuxiéme Categorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.equipe2id, ' Deuxiéme Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.equipe2id, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -190,6 +156,40 @@
                     {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}   
                 </div>                              
                 {% endif %} 
+                <hr>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.ref) }}
+                    </div>
+                </div>
+                {% if adherant.id is null or app.user.id == adherant.id or app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
+                        {{ form_row(form.password.second, {'attr':{'required':'true' }})}}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+                {% else %}
+                <div hidden>
+                    {{ form_widget(form.password) }}
+                </div>
+                {% endif %}
                 <div hidden >
                         {{ form_widget(form.createdat, {'attr':{'class':'form-control' }}) }}                               
                         {{ form_widget(form.updatedat, {'attr':{'class':'form-control' }}) }}                               
@@ -232,7 +232,7 @@
                         {{ form_errors(form.supervisor_nom) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.supervisor_prenom, 'Prenom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.supervisor_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.supervisor_prenom, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -303,7 +303,7 @@
                         {{ form_errors(form.supervisor2_nom) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.supervisor2_prenom, 'Prenom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.supervisor2_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.supervisor2_prenom, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">

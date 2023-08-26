@@ -15,9 +15,9 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon">
-                                    <i data-feather="percent"></i>
+                                    <i data-feather="user"></i>
                                 </div>
-                                Performances                       
+                                Liste des Acteurs                        
                             </h1>
                         </div>
                     </div>
@@ -27,43 +27,42 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
+            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="col-12 col-xl-auto mb-3">
+                    <a class="btn btn-sm btn-light text-primary" href="{{ path('app_acteur_new') }}" style="float:right">
+                        <i class="me-1" data-feather="plus"></i>
+                        Ajouter Acteur                                                                                    
+                    </a>
+                </div>
+            {% endif %}
                 <div class="card-body">
-                    <table id="datatablesSimple">
+                    <table class="table" id="datatablesSimple">
                         <thead>
                             <tr>
                                 <tr>
-                                    <th>Date de Création</th>
-                                    <th>Adhérent</th>
-                                    <th>Objective</th>
-                                    <th>Note</th>
+                                    <th>#</th>
+                                    <th>Nom</th>
+                                    <th>Poste</th>
                                     <th></th>
                                 </tr>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for nt in notes %}
+                            {% for acteur in acteurs %}
                                 <tr>
-                                    <td width="45%">
-                                        {{  nt.createdat|date('d/m/Y') }}
-                                    </td>
-                                    <td width="45%">
-                                        <a href="{{ path('app_adherant_show',{'id' : nt.adherantid.id})}}">{{ nt.adherantid.nom }} {{ nt.adherantid.prenom }}</a>                                                    </td>
-                                    <td width="45%">
-                                        <a href="{{ path('app_objectif_show',{'id' : nt.objectifid.id})}}">{{ nt.objectifid.nom }}</a>                                                    </td>
-                                    </td>
-                                    <td width="45%">
-                                        {{ nt.note }}%
-                                    </td>
+                                    <td>{{ acteur.id }}</td>
+                                    <td>{{ acteur.nom }} {{ acteur.prenom }}</td>
+                                    <td>{{ acteur.poste.nom }}</td>
                                     <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_note_show', {'id': nt.id}) }}">
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_acteur_show', {'id': acteur.id}) }}">
                                             <i class="fa-solid fa-eye" style="color:green"></i>
                                         </a>
-                                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or (app.user.roles['ROLE_COACH'] is defined and nt.coachid.id == app.user.id) %}
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_note_edit', {'id': nt.id}) }}">
+                                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_acteur_edit', {'id': acteur.id}) }}">
                                             <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                         </a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
-                                            {{ include('note/_delete_form.html.twig') }}
+                                            {{ include('acteur/_delete_form.html.twig') }}
                                         </a>
                                         {% endif %}
                                     </td>
@@ -75,8 +74,6 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <h4 style="float:right">Moyenne: <b> {{ nts != 'N/A' ? nts|number_format(1)~'%' : 'N/A' }} </b></h4>
-
                 </div>
             </div>
         </div>

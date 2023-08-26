@@ -4,17 +4,20 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Administrateur
+ * Acteur
  *
- * @ORM\Table(name="Administrateur", indexes={})
+ * @ORM\Table(name="Acteur", indexes={})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
-class Administrateur extends User
+class Acteur implements \Serializable
 {
     /**
      * @var int
@@ -54,25 +57,14 @@ class Administrateur extends User
     private $prenom;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="num_tel", type="string", length=191, nullable=false)
+     * @var \Poste
+     * 
+     * @ORM\ManyToOne(targetEntity="Poste")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="poste", referencedColumnName="id" )
+     * })
      */
-    private $numTel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="CIN", type="string", length=191, nullable=false)
-     */
-    private $cin;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse", type="string", length=191, nullable=false)
-     */
-    private $adresse;
+    private $poste;
 
     /**
      * @var \Club
@@ -83,6 +75,19 @@ class Administrateur extends User
      * })
      */
     protected $clubid;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+    
+
+    /**
+     * @Vich\UploadableField(mapping="acteur_image", fileNameProperty="image")
+     * @var File|null
+    */
+    private  $imageFile = null;
+
     
 
     public function getId(): ?int
@@ -138,38 +143,14 @@ class Administrateur extends User
         return $this;
     }
 
-    public function getNumTel(): ?string
+    public function getPoste(): ?Poste
     {
-        return $this->numTel;
+        return $this->poste;
     }
 
-    public function setNumTel(string $numTel): self
+    public function setPoste(?Poste $poste): self
     {
-        $this->numTel = $numTel;
-
-        return $this;
-    }
-
-    public function getCin(): ?string
-    {
-        return $this->cin;
-    }
-
-    public function setCin(string $cin): self
-    {
-        $this->cin = $cin;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): self
-    {
-        $this->adresse = $adresse;
+        $this->poste = $poste;
 
         return $this;
     }
@@ -186,7 +167,31 @@ class Administrateur extends User
         return $this;
     }
 
-    
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile instanceof UploadedFile) {
+            $this->updatedat = new \DateTime();
+        }
+    }
 
     public function getNomprenom()
     {
@@ -206,6 +211,17 @@ class Administrateur extends User
         }
 
          return $rls;
+    }
+
+    public function serialize()
+    {
+        $this->imageFile = base64_encode($this->imageFile);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->imageFile = base64_decode($this->imageFile);
+
     }
 
 }

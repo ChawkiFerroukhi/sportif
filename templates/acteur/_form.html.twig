@@ -1,0 +1,93 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                Image          
+            </div>
+            <div class="card-body text-center">
+                <div class="small font-italic text-muted mb-4">
+                    No larger than 5 MB </br>                        
+                    {% if acteur is defined %}
+                        <img src="{{ vich_uploader_asset(acteur, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body text-center">
+                {{ form_widget(form.imageFile, {'attr':{'title':'', 'width':'10' }}) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche d'inscription                                            
+            </div>
+            <div class="card-body">
+                <hr>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.nom, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.prenom, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.prenom) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.poste, 'Poste', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.poste, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.poste) }}
+                    </div>
+                </div>
+
+
+                {% if app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.clubid, 'Club', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.clubid) }}
+                    </div>
+                </div>
+                {% else %} 
+                <div hidden>
+                    {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}   
+                </div>                              
+                {% endif %} 
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
+
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#acteur_imageFile_file").change(function () {
+    filePreview(this);
+});
+</script>
+

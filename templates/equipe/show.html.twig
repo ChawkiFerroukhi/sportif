@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adherant{% endblock %}
+{% block title %}Adhérent{% endblock %}
 
 {% block content %}
 <main>
@@ -145,7 +145,7 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Coach</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Entaîneur</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_coach_show',{'id' : equipe.coachid.id})}}">{{ equipe.coachid.nom }} {{ equipe.coachid.prenom }}</a> 
                                     <hr>  
                                 </div>
@@ -161,7 +161,7 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Categorie</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Catégorie</h2>
                                     <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_niveau_show',{'id' : equipe.niveauid.id})}}">{{ equipe.niveauid.sectionid.nom }} : {{ equipe.niveauid.nom }}</a> 
                                     <hr>  
                                 </div>

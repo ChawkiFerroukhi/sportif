@@ -17,8 +17,8 @@
                             <div class="row align-items-center justify-content-between pt-3">
                                 <div class="col-auto mb-3">
                                     <h1 class="page-header-title">
-                                        <div class="page-header-icon"><i data-feather="bookmark"></i></div>
-                                        {{ club.nom }}
+                                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                                        Statistiques
                                     </h1>
                                 </div>
                             </div>
@@ -70,6 +70,15 @@
                         <div class="card-header">Adhérants<span style="float:right">Total: {{ totalAdherants }}</span></div>
                         <div class="card-body text-center">
                             <div id="adherants" ></div>
+                            <hr>
+                            <div class="row" style="margin-top:27px;">
+                                {% for niveau in niveaux %}
+                                <div class="col-3">
+                                    <h6><small>{{ niveau.nom }}: </small>{{ F[niveau.id]|length +M[niveau.id]|length }}</h6>
+
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,6 +87,14 @@
                         <div class="card-header">Proportion par sexe<span style="float:right">Total: {{ totalAdherants }}</span></div>
                         <div class="card-body text-center">
                             <div id="sex" ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12" style="margin-bottom:25px;">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Revenues</div>
+                        <div class="card-body text-center">
+                            <div id="revenues" ></div>
                         </div>
                     </div>
                 </div>
@@ -100,16 +117,24 @@
                 </div>
 
                 
-                <div class="col-xl-6" style="margin-bottom:25px;">
+                <div class="col-xl-6">
                     <div class="card mb-4 mb-xl-0">
                         <div class="card-header">Tests Effectés<span style="float:right">Total: {{ totalTests }}</span></div>
                         <div class="card-body text-center">
                             <div id="tests" ></div>
+                            <hr>
+                            <div class="row">
+                                {% for niveau in niveaux %}
+                                <div class="col-3">
+                                    <h6><small>{{ niveau.nom }}: </small>{{ testes[niveau.id] }}</h6>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-6" style="margin-bottom:25px;">
-                    <div class="card mb-4 mb-xl-0">
+                    <div class="card mb-4 mb-xl-0" style="padding-bottom:12px;">
                         <div class="card-header">Performance moyenne<span style="float:right">Total: {{ totalNotes }}</span></div>
                         <div class="card-body text-center">
                             <div id="notes" ></div>
@@ -266,12 +291,38 @@ var data = [
     element: 'adherants',
     data: [
         {% for niveau in niveaux %}
-        {% if IMC[niveau.id] != 'N/A' %}
                 {label: "{{ niveau.nom }}", value: {{ F[niveau.id]|length +M[niveau.id]|length }} },
-        {% endif %}
         {% endfor %}
     ]
     });
+
+    data = [
+    {% for id,niveau in niveaux %}
+        { 
+            y : '{{ niveau.nom }}',
+            a : {{ payments[niveau.id] }},
+        },
+    {% endfor %}
+    
+    ],
+    config = {
+        data: data,
+        xkey: 'y',
+        ykeys: [ 
+            'a',
+        ],
+        labels: [
+            'Revenues(dt)',
+        ],
+        fillOpacity: 0.6,
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        resize: true,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black']
+    };
+    config.element = 'revenues';
+    Morris.Bar(config);
 </script>
 
 {% endblock %}
