@@ -6,7 +6,7 @@ use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class NoteType extends AbstractType
@@ -23,11 +23,10 @@ class NoteType extends AbstractType
                 'choices' => $options['choices_adh'],
                 'choice_label' => 'nom', // optional: specify the property to use as the label
             ])
-            ->add('observation',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Observation',
-                ],
-                'required' => true
+            ->add('observation', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
         ;
     }

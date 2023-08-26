@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 
 
 
@@ -17,11 +17,10 @@ class MaladieType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('description',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Description',
-                ],
-                'required' => false
+            ->add('description', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])    
             ->add('clubid', null, [
                 'label' => 'Club',

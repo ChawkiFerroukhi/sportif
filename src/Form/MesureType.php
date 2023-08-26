@@ -6,7 +6,7 @@ use App\Entity\Mesure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -24,11 +24,10 @@ class MesureType extends AbstractType
             ->add('cuisse')
             ->add('biceps')
             ->add('age')
-            ->add('diagnostic',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Description',
-                ],
-                'required' => true
+            ->add('diagnostic', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
             ->add('doctorid',ChoiceType::class,[
                 'choices' => $options['doctors'],

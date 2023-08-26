@@ -7,8 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
+
 
 class BlogType extends AbstractType
 {
@@ -21,11 +23,10 @@ class BlogType extends AbstractType
                     'placeholder' => 'URL Youtube..'
                 )
             ])
-            ->add('content',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Content',
-                ],
-                'required' => true
+            ->add('content', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
             ->add('isVisible',ChoiceType::class,[
                 'choices' => [

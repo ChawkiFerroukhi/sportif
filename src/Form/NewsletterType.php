@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 
 class NewsletterType extends AbstractType
 {
@@ -21,11 +21,10 @@ class NewsletterType extends AbstractType
                 ],
                 'required' => true
             ])
-            ->add('body',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Contenu',
-                ],
-                'required' => true
+            ->add('body', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
         ;
     }

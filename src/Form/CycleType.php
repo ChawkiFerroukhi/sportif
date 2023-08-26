@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
@@ -18,11 +18,10 @@ class CycleType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('description',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Description',
-                ],
-                'required' => false
+            ->add('description', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
             ->add('startdate',DateType::class, [ 
                 'widget' => 'single_text',

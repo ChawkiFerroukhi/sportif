@@ -6,7 +6,7 @@ use App\Entity\Teste;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -23,11 +23,10 @@ class TesteType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('nom')
-            ->add('description',CKEditorType::class,[
-                'attr' => [
-                    'placeholder' => 'Description',
-                ],
-                'required' => false
+            ->add('description', TinymceType::class, [
+                "attr" => [
+                    "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
+                ]
             ])
         ;
     }
