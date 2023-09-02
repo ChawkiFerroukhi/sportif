@@ -62,18 +62,8 @@ class AdministrateurController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $postes = [];
-        if(isset($usr->getRoles()['ROLE_MASTER'])){
-            $postes = $entityManager
-                ->getRepository(Poste::class)
-                ->findAll();
-        } else {
-            $postes = $entityManager
-                ->getRepository(Poste::class)
-                ->findBy(['clubid' => $usr->getClubid()]);
-        }
         $administrateur = new Administrateur();
-        $form = $this->createForm(AdministrateurType::class, $administrateur, ['postes' => $postes]);
+        $form = $this->createForm(AdministrateurType::class, $administrateur, []);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -141,17 +131,7 @@ class AdministrateurController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
         }
-        $postes = [];
-        if(isset($usr->getRoles()['ROLE_MASTER'])){
-            $postes = $entityManager
-                ->getRepository(Poste::class)
-                ->findAll();
-        } else {
-            $postes = $entityManager
-                ->getRepository(Poste::class)
-                ->findBy(['clubid' => $usr->getClubid()]);
-        }
-        $form = $this->createForm(AdministrateurType::class, $administrateur,['postes' => $postes]);
+        $form = $this->createForm(AdministrateurType::class, $administrateur,[]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)

@@ -39,12 +39,6 @@ class AdministrateurType extends AbstractType
             ->add('numTel')
             ->add('cin')
             ->add('adresse')
-            ->add('poste',ChoiceType::class,[
-                'choices' => $options['postes'],
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir une poste',
-                'required' => false
-            ])
             ->add('clubid', null, [
                 'label' => 'Club',
                 'choice_label' => 'nom',
@@ -57,7 +51,6 @@ class AdministrateurType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Administrateur::class,
-            'postes' => []
         ]);
     }
 }
