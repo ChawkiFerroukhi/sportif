@@ -117,12 +117,15 @@
                                 </div>
                             </div>
                             <div class="row gx-3 mb-3">
+                                {% if administrateur.clubid is not null %}
+                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Poste</h2>
-                                    <p class=" mb-1" for="inputFirstName">{{ administrateur.poste.nom }}</p>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <a href="{{path('app_club_show',{'id' : administrateur.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ administrateur.clubid }}</p></a>
                                     <hr>  
                                 </div>
+                                {% endif %}
 
                                 <div class="col-md-6">
                                     <hr>
@@ -131,17 +134,7 @@
                                     <hr>  
                                 </div>
                             </div>
-                            {% if administrateur.clubid is not null %}
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-6">
-                                    <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
-                                    <a href="{{path('app_club_show',{'id' : administrateur.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ administrateur.clubid }}</p></a>
-                                    <hr>  
-                                </div>
-                            </div>
-                            {% endif %}
+                            
                             {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
