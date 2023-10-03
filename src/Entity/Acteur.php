@@ -207,7 +207,7 @@ class Acteur implements \Serializable
         $roles = array_unique($roles);
         $rls = [];
         foreach($roles as $role) {
-            $rls[$role] = true;
+            $rls[$role] = $role;
         }
 
          return $rls;

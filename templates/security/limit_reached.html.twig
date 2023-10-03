@@ -1,0 +1,21 @@
+{% extends 'security/index.html.twig' %}
+
+{% block title %}
+    Limite de Sections atteinte
+{% endblock %}
+
+{% block content %}
+            <div class="row">
+                <div class="col-4">
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-4 mb-0 col-4" >
+                    <a class="small" href="{{ path('app_club_index') }}" >
+                        <button class="btn btn-primary" type="submit" >
+                            Dashboard                  
+                        </button>
+                    </a>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+{% endblock %}

@@ -28,9 +28,9 @@ class ActeurController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_acteur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])&& !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_acteur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $acteurs = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
@@ -58,9 +58,9 @@ class ActeurController extends AbstractController
     public function organigramme(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_acteur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])&& !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_acteur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $acteurs = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
@@ -120,9 +120,9 @@ class ActeurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_acteur_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_acteur_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $postes = [];
         if(isset($usr->getRoles()['ROLE_MASTER'])){
@@ -189,7 +189,7 @@ class ActeurController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_administrateur_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $postes = [];
         if(isset($usr->getRoles()['ROLE_MASTER'])){
@@ -230,7 +230,7 @@ class ActeurController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_acteur_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$acteur->getId(), $request->request->get('_token'))) {
             $entityManager->remove($acteur);

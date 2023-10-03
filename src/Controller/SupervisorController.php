@@ -25,9 +25,9 @@ class SupervisorController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_supervisor_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_supervisor_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $supervisors = [];
@@ -56,9 +56,9 @@ class SupervisorController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_supervisor_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_supervisor_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $supervisor = new Supervisor();
@@ -109,6 +109,10 @@ class SupervisorController extends AbstractController
     public function show(Supervisor $supervisor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if($usr->getId() != $supervisor->getId() && !isset($usr->getRoles()["app_supervisor_show"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -125,9 +129,9 @@ class SupervisorController extends AbstractController
     public function edit(Request $request, Supervisor $supervisor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_supervisor_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if($usr->getId() != $supervisor->getId() && !isset($usr->getRoles()["app_supervisor_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $form = $this->createForm(SupervisorType::class, $supervisor);
@@ -172,7 +176,7 @@ class SupervisorController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_supervisor_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$supervisor->getId(), $request->request->get('_token'))) {
             $entityManager->remove($supervisor);

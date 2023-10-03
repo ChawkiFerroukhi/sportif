@@ -38,6 +38,10 @@ class TesteController extends AbstractController
     public function new(Cycle $cycle,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_teste_new']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $teste = new Teste();
         $form = $this->createForm(TesteType::class, $teste,[
             'choices' => $cycle->getCoursid()->getNiveauid()->getEquipes()
@@ -70,7 +74,6 @@ class TesteController extends AbstractController
     public function show(Teste $teste,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -86,6 +89,10 @@ class TesteController extends AbstractController
     public function edit(Request $request, Teste $teste, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_teste_edit']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(TesteType::class, $teste);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -110,6 +117,11 @@ class TesteController extends AbstractController
     #[Route('/{id}', name: 'app_teste_delete', methods: ['POST'])]
     public function delete(Request $request, Teste $teste, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_teste_delete']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$teste->getId(), $request->request->get('_token'))) {
             $entityManager->remove($teste);
             $entityManager->flush();

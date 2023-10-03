@@ -19,6 +19,7 @@ class ClubType extends AbstractType
             ->add('nom')
             ->add('adresse')
             ->add('numTel')
+            ->add('nbSections')
             ->add('dateFondation',DateType::class, [ 
                 'widget' => 'single_text',
             ])

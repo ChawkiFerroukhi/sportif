@@ -20,6 +20,12 @@ class MesureController extends AbstractController
     public function index(Dossiermedical $dossier,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        $adherant = $dossier->getAdherantid();
+        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId()) && !isset($usr->getRoles()['app_mesure_index']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
+        }
         $mesures = $entityManager
             ->getRepository(Mesure::class)
             ->findBy(['dossierMedicalid'=> $dossier->getId()]);
@@ -39,9 +45,9 @@ class MesureController extends AbstractController
     public function new(Dossiermedical $dossier,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_mesure_new'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $mesure = new Mesure();
         $sections = $entityManager
@@ -95,9 +101,9 @@ class MesureController extends AbstractController
         $usr = $this->getUser();
 
         $adherant = $mesure->getDossiermedicalid()->getAdherantid();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId()) && !isset($usr->getRoles()['app_mesure_show']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
         }
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -114,10 +120,9 @@ class MesureController extends AbstractController
     public function edit(Request $request, Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_mesure_edit'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $doctors = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
@@ -158,9 +163,9 @@ class MesureController extends AbstractController
     public function delete(Request $request, Mesure $mesure, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_mesure_delete'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$mesure->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mesure);

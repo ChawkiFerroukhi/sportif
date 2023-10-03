@@ -444,7 +444,7 @@ class Adherant extends User
         $roles = array_unique($roles);
         $rls = [];
         foreach($roles as $role) {
-            $rls[$role] = true;
+            $rls[$role] = $role;
         }
 
          return $rls;

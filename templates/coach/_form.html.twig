@@ -46,7 +46,7 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">
-                        {{ form_label(form.numTel, 'Phone number', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.numTel, 'Num Tel', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.numTel, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -71,7 +71,15 @@
                         {{ form_errors(form.adresse) }}
                     </div>
                 </div>
-
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.sectionid, 'Section', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.sectionid, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.sectionid) }}
+                    </div>
+                </div>
                 {% if app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">

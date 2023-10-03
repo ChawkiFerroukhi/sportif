@@ -103,6 +103,12 @@ class Club implements \Serializable
      */
     private $color2;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbSections", type="integer", nullable=false)
+     */
+    private $nbSections = 1;
 
 
     public function getId(): ?int
@@ -297,6 +303,18 @@ class Club implements \Serializable
     {
         $this->color2 = $color2;
 
+        return $this;
+    }
+
+    public function getNbSections(): int{
+
+        return $this->nbSections;
+
+    }
+
+    public function setNbSections(int $nbSections): self {
+
+        $this->nbSections = $nbSections;
         return $this;
     }
 

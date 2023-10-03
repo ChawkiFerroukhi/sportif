@@ -41,7 +41,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nom</th>
-                                            <th>Nb° Administrateurs</th>
+                                            <th>Nb° Acteurs</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -50,7 +50,7 @@
                                         <tr>
                                             <td>{{ poste.id }}</td>
                                             <td>{{ poste.nom }}</td>
-                                            <td>{{ poste.administrateurs|length }}</td>
+                                            <td>{{ poste.Acteurs|length }}</td>
                                             <td>
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_poste_show', {'id': poste.id}) }}">
                                             <i class="fa-solid fa-eye" style="color:green"></i>

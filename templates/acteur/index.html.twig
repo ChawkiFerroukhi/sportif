@@ -27,7 +27,7 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
-            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+            {% if app.user.roles['app_acteur_new'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3">
                     <a class="btn btn-sm btn-light text-primary" href="{{ path('app_acteur_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
@@ -54,13 +54,17 @@
                                     <td>{{ acteur.nom }} {{ acteur.prenom }}</td>
                                     <td>{{ acteur.poste.nom }}</td>
                                     <td>
+                                        {% if app.user.roles['app_acteur_show'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_acteur_show', {'id': acteur.id}) }}">
                                             <i class="fa-solid fa-eye" style="color:green"></i>
                                         </a>
-                                        {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                        {% endif %}
+                                        {% if app.user.roles['app_acteur_edit'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_acteur_edit', {'id': acteur.id}) }}">
                                             <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                         </a>
+                                        {% endif %}
+                                        {% if app.user.roles['app_acteur_delete'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
                                             {{ include('acteur/_delete_form.html.twig') }}
                                         </a>

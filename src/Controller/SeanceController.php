@@ -38,6 +38,10 @@ class SeanceController extends AbstractController
     public function new(Cycle $cycle,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_seance_new']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -88,6 +92,10 @@ class SeanceController extends AbstractController
     public function edit(Request $request, Seance $seance, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_seance_edit']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -116,6 +124,10 @@ class SeanceController extends AbstractController
     public function delete(Request $request, Seance $seance, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_seance_delete']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$seance->getId(), $request->request->get('_token'))) {
             $entityManager->remove($seance);
             $entityManager->flush();

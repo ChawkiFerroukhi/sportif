@@ -48,26 +48,20 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Liste des Administrateurs</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Acteurs</h2>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
                                                 <th width="10%">
-                                                    Nom
-                                                </th>
-                                                <th width="45%">
-                                                    Réference
+                                                    Nom et Prenom
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  administrateur in  poste.administrateurs %}
+                                            {% for  acteur in  poste.acteurs %}
                                                 <tr>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_administrateur_show',{'id' : administrateur.id})}}">{{  administrateur.nom }} {{  administrateur.prenom }}</a>
-                                                    </td>
-                                                    <td width="45%">
-                                                        {{ administrateur.ref }}                                                   
+                                                        <a href="{{ path('app_acteur_show',{'id' : acteur.id})}}">{{  acteur.nom }} {{  acteur.prenom }}</a>
                                                     </td>
                                                 </tr>
                                             {% else %}

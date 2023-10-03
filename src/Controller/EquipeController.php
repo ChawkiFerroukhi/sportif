@@ -33,9 +33,9 @@ class EquipeController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_equipe_index'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $equipes = $entityManager
             ->getRepository(Equipe::class)
@@ -56,6 +56,10 @@ class EquipeController extends AbstractController
     public function new(Niveau $niveau,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_equipe_new'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $equipe = new Equipe();
         $doctors = $entityManager
             ->getRepository(Doctor::class)
@@ -204,6 +208,11 @@ class EquipeController extends AbstractController
     public function edit(Request $request, Equipe $equipe, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_equipe_edit'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $doctors = $entityManager
             ->getRepository(Doctor::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -239,6 +248,10 @@ class EquipeController extends AbstractController
     public function delete(Request $request, Equipe $equipe, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_equipe_delete'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$equipe->getId(), $request->request->get('_token'))) {
             $entityManager->remove($equipe);
             $entityManager->flush();

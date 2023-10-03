@@ -28,9 +28,9 @@ class AdministrateurController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_administrateur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])&& !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_administrateur_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $administrateurs = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
@@ -58,9 +58,9 @@ class AdministrateurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_administrateur_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_administrateur_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $administrateur = new Administrateur();
         $form = $this->createForm(AdministrateurType::class, $administrateur, []);
@@ -129,7 +129,7 @@ class AdministrateurController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_administrateur_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $form = $this->createForm(AdministrateurType::class, $administrateur,[]);
         $form->handleRequest($request);
@@ -173,7 +173,7 @@ class AdministrateurController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_administrateur_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$administrateur->getId(), $request->request->get('_token'))) {
             $entityManager->remove($administrateur);

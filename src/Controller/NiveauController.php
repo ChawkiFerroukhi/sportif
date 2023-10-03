@@ -18,9 +18,9 @@ class NiveauController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_niveau_index'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $niveaux = $entityManager
             ->getRepository(Niveau::class)
@@ -41,6 +41,10 @@ class NiveauController extends AbstractController
     public function new(Section $section,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_niveau_new'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $niveau = new Niveau();
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
@@ -88,6 +92,10 @@ class NiveauController extends AbstractController
     public function edit(Request $request, Niveau $niveau, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_niveau_edit'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(NiveauType::class, $niveau);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -114,6 +122,10 @@ class NiveauController extends AbstractController
     public function delete(Request $request, Niveau $niveau, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_niveau_delete'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$niveau->getId(), $request->request->get('_token'))) {
             $entityManager->remove($niveau);
             $entityManager->flush();

@@ -27,7 +27,7 @@
         <!-- Main page content-->
         <div class="container-fluid px-4">
             <div class="card">
-            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or app.user.roles['app_doctor_new'] is defined  %}
                 <div class="col-12 col-xl-auto mb-3">
                     <a class="btn btn-sm btn-light text-primary" href="{{ path('app_doctor_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>

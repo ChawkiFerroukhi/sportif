@@ -82,8 +82,9 @@ class BlogController extends AbstractController
     public function new(Section $section,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if($usr->getClubid() != $section->getClubid() || !$usr->getRoles()['ROLE_ADMIN']){
-            return $this->redirectToRoute('app_club_show', ['id' => $usr->getClubid()->getId() ], Response::HTTP_SEE_OTHER);
+        if(!isset($usr->getRoles()['app_blog_new']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
             
         $sections = $entityManager
@@ -144,8 +145,9 @@ class BlogController extends AbstractController
     {
         $usr = $this->getUser();
 
-        if($usr->getClubid() != $blog->getClubid() && !$usr->getRoles()['ROLE_ADMIN']){
-            return $this->redirectToRoute('app_club_show', ['id' => $usr->getClubid()->getId() ], Response::HTTP_SEE_OTHER);
+        if(!isset($usr->getRoles()['app_blog_edit']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -182,6 +184,11 @@ class BlogController extends AbstractController
     #[Route('/{id}', name: 'app_blog_delete', methods: ['POST'])]
     public function delete(Request $request, Blog $blog, EntityManagerInterface $entityManager): Response
     {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['app_blog_delete']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$blog->getId(), $request->request->get('_token'))) {
             $entityManager->remove($blog);
             $entityManager->flush();

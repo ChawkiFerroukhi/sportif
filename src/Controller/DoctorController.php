@@ -24,9 +24,9 @@ class DoctorController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_doctor_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_doctor_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $doctors = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
@@ -54,9 +54,9 @@ class DoctorController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_doctor_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_doctor_new"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $doctor = new Doctor();
@@ -106,9 +106,9 @@ class DoctorController extends AbstractController
     public function show(Doctor $doctor, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && $usr->getId() != $doctor->getId() && !isset($usr->getRoles()["app_doctor_show"])) {
+        if($usr->getId() != $doctor->getId() && !isset($usr->getRoles()["app_doctor_show"]) && !isset($usr->getRoles()["ROLE_MASTER"])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $sections = $entityManager
@@ -128,7 +128,7 @@ class DoctorController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_doctor_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $form = $this->createForm(DoctorType::class, $doctor);
@@ -173,7 +173,7 @@ class DoctorController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_doctor_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$doctor->getId(), $request->request->get('_token'))) {
             $entityManager->remove($doctor);

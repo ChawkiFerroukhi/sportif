@@ -43,9 +43,9 @@ class MaladieController extends AbstractController
     public function new(Request $request,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_maladie_new'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $maladie = new Maladie();
         $form = $this->createForm(MaladieType::class, $maladie);
@@ -97,10 +97,9 @@ class MaladieController extends AbstractController
     public function edit(Request $request, Maladie $maladie, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_maladie_edit'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $form = $this->createForm(MaladieType::class, $maladie);
         $form->handleRequest($request);
@@ -126,9 +125,9 @@ class MaladieController extends AbstractController
     public function delete(Request $request, Maladie $maladie, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_DOCTOR'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_maladie_delete'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$maladie->getId(), $request->request->get('_token'))) {
             $entityManager->remove($maladie);

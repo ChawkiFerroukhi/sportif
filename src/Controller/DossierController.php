@@ -20,7 +20,7 @@ class DossierController extends AbstractController
     public function index(Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId()) && !isset($usr->getRoles()['app_dossier_index']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
             return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -44,7 +44,7 @@ class DossierController extends AbstractController
     public function new(Adherant $adherant, Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if( $usr->getId() == $adherant->getId() && $usr->getId() != $adherant->getSupervisorId() && $usr->getId() != $adherant->getSupervisor2Id() && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if( $usr->getId() == $adherant->getId() && $usr->getId() != $adherant->getSupervisorId() && $usr->getId() != $adherant->getSupervisor2Id() && !isset($usr->getRoles()['app_dossier_new']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
             return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -78,6 +78,10 @@ class DossierController extends AbstractController
     public function show(Dossier $dossier, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if($usr->getId() == $dossier->getAdherantid()->getId() && $usr->getId() != $dossier->getAdherantid()->getSupervisorId() && $usr->getId() != $dossier->getAdherantid()->getSupervisor2Id() && !isset($usr->getRoles()["app_dossier_show"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['dossierid' => $this->getUser()->getDossierid()]);
@@ -95,7 +99,7 @@ class DossierController extends AbstractController
     {
         $usr = $this->getUser();
         $adherant = $dossier->getAdherantid();
-        if( $usr->getId() == $adherant->getId() && $usr->getId() != $adherant->getSupervisorId() && $usr->getId() != $adherant->getSupervisor2Id() && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if( $usr->getId() == $adherant->getId() && $usr->getId() != $adherant->getSupervisorId() && $usr->getId() != $adherant->getSupervisor2Id() && !isset($usr->getRoles()["app_dossier_edit"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
             return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -123,6 +127,10 @@ class DossierController extends AbstractController
     public function delete(Request $request, Dossier $dossier, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_dossier_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$dossier->getId(), $request->request->get('_token'))) {
             $entityManager->remove($dossier);
             $entityManager->flush();

@@ -40,7 +40,10 @@ class CycleController extends AbstractController
     public function new(Cours $cours,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
+        if(!isset($usr->getRoles()["app_cycle_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -89,7 +92,10 @@ class CycleController extends AbstractController
     public function edit(Request $request, Cycle $cycle, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
+        if(!isset($usr->getRoles()["app_cycle_edit"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -116,6 +122,10 @@ class CycleController extends AbstractController
     public function delete(Request $request, Cycle $cycle, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_cycle_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$cycle->getId(), $request->request->get('_token'))) {
             $entityManager->remove($cycle);
             $entityManager->flush();

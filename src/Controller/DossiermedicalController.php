@@ -19,6 +19,10 @@ class DossiermedicalController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_dossiermedical_index"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $dossiermedicals = $entityManager
             ->getRepository(Dossiermedical::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -37,6 +41,11 @@ class DossiermedicalController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        
+        if(!isset($usr->getRoles()["app_dossiermedical_new"]) && !isset($usr->getRoles()["ROLE_DOCTOR"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $dossiermedical = new Dossiermedical();
         $form = $this->createForm(DossiermedicalType::class, $dossiermedical);
         $form->handleRequest($request);
@@ -61,9 +70,9 @@ class DossiermedicalController extends AbstractController
     {
         $usr = $this->getUser();
         $adherant = $dossiermedical->getAdherantid();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && !isset($usr->getRoles()['app_dossiermedical_show']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -80,6 +89,11 @@ class DossiermedicalController extends AbstractController
     public function edit(Request $request, Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $adherant = $dossiermedical->getAdherantid();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_DOCTOR']) && !isset($usr->getRoles()['app_dossiermedical_edit']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(DossiermedicalType::class, $dossiermedical);
         $form->handleRequest($request);
 
@@ -101,6 +115,10 @@ class DossiermedicalController extends AbstractController
     public function delete(Request $request, Dossiermedical $dossiermedical, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()["app_dossiermedical_delete"]) && !isset($usr->getRoles()["ROLE_DOCTOR"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$dossiermedical->getId(), $request->request->get('_token'))) {
             $entityManager->remove($dossiermedical);
             $entityManager->flush();

@@ -33,7 +33,7 @@ class UserController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_user_index'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -89,7 +89,7 @@ class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_user_new'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -132,7 +132,7 @@ class UserController extends AbstractController
     public function show(User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_user_show'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -151,7 +151,7 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_user_edit'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -185,8 +185,7 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_user_delete'])) {
             $this->user = $usr;
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }

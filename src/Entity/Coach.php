@@ -53,6 +53,16 @@ class Coach extends User
     private $prenom;
 
     /**
+     * @var \Section
+     *
+     * @ORM\ManyToOne(targetEntity="Section")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sectionId", referencedColumnName="id" , onDelete="CASCADE")
+     * })
+     */
+    protected $sectionid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="num_tel", type="string", length=191, nullable=false)
@@ -138,6 +148,18 @@ class Coach extends User
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getSectionid(): ?Section
+    {
+        return $this->sectionid;
+    }
+
+    public function setSectionid(Section $sectionid): self
+    {
+        $this->sectionid = $sectionid;
 
         return $this;
     }
@@ -237,7 +259,7 @@ class Coach extends User
         $roles = array_unique($roles);
         $rls = [];
         foreach($roles as $role) {
-            $rls[$role] = true;
+            $rls[$role] = $role;
         }
 
          return $rls;

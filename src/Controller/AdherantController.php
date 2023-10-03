@@ -32,9 +32,9 @@ class AdherantController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()["app_adherant_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if(!isset($usr->getRoles()["app_adherant_index"]) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
 
         $adherants = [];
@@ -94,7 +94,7 @@ class AdherantController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_adherant_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $adherant = new Adherant();
@@ -222,7 +222,7 @@ class AdherantController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_adherant_show"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && $usr->getId() != $adherant->getId()) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -242,7 +242,7 @@ class AdherantController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_adherant_edit"]) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $adherant->getSupervisorid()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId() ) && $usr->getId() != $adherant->getId()) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $supervisors = $entityManager
         ->getRepository(Supervisor::class)
@@ -311,7 +311,7 @@ class AdherantController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_adherant_delete"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$adherant->getId(), $request->request->get('_token'))) {
             $entityManager->remove($adherant);

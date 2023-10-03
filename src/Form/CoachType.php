@@ -18,6 +18,12 @@ class CoachType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
+            ->add('sectionid',null,[
+                'label' => 'Section',
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une section',
+                'required' => true
+            ])
             ->add('Email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

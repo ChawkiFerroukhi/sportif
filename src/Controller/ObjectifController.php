@@ -19,9 +19,9 @@ class ObjectifController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_index'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $objectifs = $entityManager
             ->getRepository(Objectif::class)
@@ -41,6 +41,10 @@ class ObjectifController extends AbstractController
     public function new(Request $request, Cycle $cycle,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_new'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $objectif = new Objectif();
         $form = $this->createForm(ObjectifType::class, $objectif);
         $form->handleRequest($request);
@@ -73,6 +77,10 @@ class ObjectifController extends AbstractController
     public function show(Objectif $objectif,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_show'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $this->user = $usr;
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -88,6 +96,10 @@ class ObjectifController extends AbstractController
     public function edit(Request $request, Objectif $objectif, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_edit'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(ObjectifType::class, $objectif);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -113,6 +125,10 @@ class ObjectifController extends AbstractController
     public function delete(Request $request, Objectif $objectif, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_delete'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$objectif->getId(), $request->request->get('_token'))) {
             $entityManager->remove($objectif);
             $entityManager->flush();

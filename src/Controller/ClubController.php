@@ -375,9 +375,9 @@ class ClubController extends AbstractController
     public function edit(Request $request, Club $club, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !(isset($usr->getRoles()['ROLE_ADMIN']) && $usr->getClubid()->getId() === $club->getId()) ) {
+        if(!isset($usr->getRoles()['app_club_edit']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $form = $this->createForm(ClubType::class, $club);
@@ -402,7 +402,12 @@ class ClubController extends AbstractController
     #[Route('/{id}', name: 'app_club_delete', methods: ['POST'])]
     public function delete(Request $request, Club $club, EntityManagerInterface $entityManager): Response
     {
+        
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['app_club_delete']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$club->getId(), $request->request->get('_token'))) {
             $entityManager->remove($club);
             $entityManager->flush();

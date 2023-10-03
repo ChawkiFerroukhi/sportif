@@ -118,7 +118,7 @@
                         {{ form_errors(form.supervisorId) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.supervisor2Id, 'Deuxiéme Parent', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.supervisor2Id, 'Deuxiéme Parent (Optionnel)', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.supervisor2Id, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -127,14 +127,14 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        {{ form_label(form.equipeid, 'Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.equipeid, 'Niveau', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.equipeid, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.equipeid) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.equipe2id, ' Deuxiéme Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.equipe2id, 'Deuxiéme Niveau (Optionnel)', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.equipe2id, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">

@@ -20,17 +20,18 @@
             <input class="form-control" type="email" value="{{ last_username }}" name="Email" id="inputEmail" placeholder ="Enter email adress" />
         </div>
         <div class="mb-3">
-            <label class="small mb-1" for="inputPassword">
+            <label class="small mb-1" for="inputPassword" >
                 Mot de passe               
             </label>
-            <input class="form-control" type="password" name="password" id="inputPassword" placeholder="Enter password" />
+            <input class="form-control z-0" type="password" name="password" id="inputPassword" placeholder="Enter password" ></input>
+
         </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="mb-3">
                 <div class="form-check">
                     <label class="form-check-label" for="rememberPasswordCheck">
-                        <input class="form-check-input" name="_remember_me" type="checkbox" value="" />
-                        Remember password                      
+                        <input class="form-check-input" id="showPSW" type="checkbox" onclick="myFunction()" />
+                        Afficher mot de passe                    
                     </label>
                 </div>
             </div>
@@ -44,4 +45,15 @@
             </div>
         </form>
     {% endblock %}
-    
+{% block scripts %}
+<script>
+    function myFunction() {
+        var x = document.getElementById("inputPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script
+{% endblock %}

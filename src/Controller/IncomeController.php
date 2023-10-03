@@ -21,9 +21,9 @@ class IncomeController extends AbstractController
     public function index( EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER'])) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_index'])) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if(isset($usr->getRoles()['ROLE_MASTER'])) {
             $incomes = $entityManager
@@ -67,21 +67,21 @@ class IncomeController extends AbstractController
     public function indexUser(User $user, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if (isset($user->getRoles()['ROLE_ADHERANT']) && !isset($usr->getRoles()['ROLE_ADMIN'])) {
+        if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
             if($usr->getId() != $user->getSupervisorid()->getId() ) {
                 if($user->getSupervisor2id()!= null) {
                     if($user->getSupervisor2id()!=$usr->getId()) {
                         $this->user = $usr;
-                        return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+                        return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
                     }
                 } else {
                     $this->user = $usr;
                 }
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
             }
-        } else if(!isset($usr->getRoles()['ROLE_ADMIN']) && !isset($usr->getRoles()['ROLE_MASTER']) && $usr->getId() != $user->getId()) {
+        } else if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_index_user']) && $usr->getId() != $user->getId()) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $incomes = $entityManager
             ->getRepository(Income::class)
@@ -122,6 +122,10 @@ class IncomeController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_new'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -165,6 +169,10 @@ class IncomeController extends AbstractController
     public function newAdh(User $user,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_new_user']) && $usr->getId() != $user->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -208,6 +216,11 @@ class IncomeController extends AbstractController
     public function show(Income $income, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        $user = $income->getUserid();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_new_user']) && $usr->getId() != $user->getId()) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -224,6 +237,10 @@ class IncomeController extends AbstractController
     public function edit(Request $request, Income $income, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_edit'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -263,6 +280,11 @@ class IncomeController extends AbstractController
     #[Route('/{id}', name: 'app_income_delete', methods: ['POST'])]
     public function delete(Request $request, Income $income, EntityManagerInterface $entityManager): Response
     {
+
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_delete'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete'.$income->getId(), $request->request->get('_token'))) {
             $entityManager->remove($income);
             $entityManager->flush();

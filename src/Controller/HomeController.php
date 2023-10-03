@@ -32,9 +32,26 @@ class HomeController extends AbstractController
         
         return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/access-denied', name: 'app_home_access_denied', methods: ['GET'])]
+    public function accessDenied(): Response
+    {
+        return $this->renderForm('security/access_denied.html.twig', [
+        ]);    
+    }
+    #[Route('/limit-reached', name: 'app_home_limit_reached', methods: ['GET'])]
+    public function limitReached(): Response
+    {
+        return $this->renderForm('security/limit_reached.html.twig', [
+        ]);    
+    }
     #[Route('/newsletter/{id}', name: 'app_newsletter_index', methods: ['POST','GET'])]
     public function newsletter(Section $section,Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_newsletter_index'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $newsletter = new Newsletter();
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -97,6 +114,11 @@ class HomeController extends AbstractController
     #[Route('/newsletter/master', name: 'app_newsletter_master', methods: ['POST','GET'])]
     public function newsletter_master(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $newsletter = new Newsletter();
         $sections = $entityManager
             ->getRepository(Section::class)

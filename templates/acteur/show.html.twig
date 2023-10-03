@@ -72,18 +72,21 @@
                                     <hr>  
                                 </div>
                             </div>
-                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="row">
+                                    {% if app.user.roles['app_acteur_edit'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                     <div class="col-6">
                                         <a class="btn btn-outline-warning" href="{{ path('app_acteur_edit',{'id' : acteur.id}) }}" style="float:left">Modifier</a>                            
                                     </div>
+                                    {% endif %}
+                                    {% if app.user.roles['app_acteur_delete'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                                     <div class="col-6">
                                         <a style="float:right">
                                             {{ include('acteur/_delete_form.html.twig') }}
                                         </a>  
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             {% endif %}

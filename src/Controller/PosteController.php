@@ -20,6 +20,10 @@ class PosteController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_poste_index']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         if(isset($usr->getRoles()['ROLE_MASTER'])){
             $postes = $entityManager
                 ->getRepository(Poste::class)
@@ -44,9 +48,9 @@ class PosteController extends AbstractController
     public function new(Request $request,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_poste_new']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $poste = new Poste();
         $form = $this->createForm(PosteType::class, $poste);
@@ -83,6 +87,10 @@ class PosteController extends AbstractController
     public function show(Poste $poste,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_poste_show']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
         $this->user = $usr;
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -98,10 +106,9 @@ class PosteController extends AbstractController
     public function edit(Request $request, Poste $poste, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_poste_edit']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $form = $this->createForm(PosteType::class, $poste);
         $form->handleRequest($request);
@@ -127,9 +134,9 @@ class PosteController extends AbstractController
     public function delete(Request $request, Poste $poste, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_ADMIN']) ) {
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_poste_delete']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_show', ["id" => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$poste->getId(), $request->request->get('_token'))) {
             $entityManager->remove($poste);
