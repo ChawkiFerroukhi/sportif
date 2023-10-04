@@ -94,7 +94,7 @@ class UserType extends AbstractType
 
                     'Ajouter Dossier Medical' => 'app_dossiermedical_new',
                     'Modifier Dossier Medical' => 'app_dossiermedical_edit',
-                    'Afficher Dossier Medicals' => 'app_dossiermedical_index',
+                    'Afficher Dossiers Medicaux' => 'app_dossiermedical_index',
                     'Fiche Dossier Medical' => 'app_dossiermedical_show',
                     'Supprimer Dossier Medical' => 'app_dossiermedical_delete',
 
