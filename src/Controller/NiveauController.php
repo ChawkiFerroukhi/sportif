@@ -132,6 +132,6 @@ class NiveauController extends AbstractController
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_niveau_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_section_show', ['id' => $niveau->getSectionid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

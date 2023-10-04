@@ -144,10 +144,10 @@
                     <div class="collapse" id="collapseTriso" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                             <a class="nav-link" href="{{ path('app_encaissement_index')}}">
-                                Entrées
+                                Encaissements
                             </a>
                             <a class="nav-link" href="{{ path('app_decaissement_index')}}">
-                                Sorties
+                                Decaissements
                             </a>
                         </nav>
                     </div>
@@ -167,7 +167,7 @@
                             {% if app.user.roles['ROLE_ADMIN'] is defined %}
                             <a class="nav-link" href="{{ path('app_user_index')}}">
                                 <i data-feather="log-in" style="margin-right:5px;"></i>
-                                Droits d'accés
+                                    Droits d'accés
                             </a>
                             <a class="nav-link" href="{{ path('app_poste_index') }}">
                                     <i data-feather="users" style="margin-right:5px;"></i>
@@ -189,40 +189,20 @@
                             </div>
                             {{ section.nom}}                                                         
                         </a>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="nav-link-icon">
-                                <i data-feather="grid"></i>
-                            </div>
-                            Catégories                                
-                            <div class="sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </div>
-                        </a>
-                        <div class="collapse" id="collapsePages" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            {% for niveau in section.niveaux %}
+                            <a class="nav-link" href="{{ path('app_niveau_show',{'id' : niveau.id})}}">
+                                {{niveau.nom}}
+                            </a>
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                                {% for niveau in section.niveaux %}
-                                <a class="nav-link" href="{{ path('app_niveau_show',{'id' : niveau.id})}}">
-                                    {{niveau.nom}}
-                                </a>
+                                {% for equipe in niveau.equipes %}
+                                    <a class="nav-link" href="{{ path('app_equipe_show',{'id':equipe.id})}}">
+                                        {{equipe.nom}}
+                                    </a>
                                 {% endfor %}
                             </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
-                            <div class="nav-link-icon"><i data-feather="menu"></i></div>
-                            Niveaux
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseUtilities" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav">
-                                {% for niveau in section.niveaux %}
-                                    {% for equipe in niveau.equipes %}
-                                <a class="nav-link" href="{{ path('app_equipe_show',{'id':equipe.id})}}">
-                                    {{equipe.nom}}
-                                </a>
-                                    {% endfor %}
-                                {% endfor %}
-                            </nav>
-                        </div>
+                            {% endfor %}
+                        </nav>
                         <a class="nav-link" href="{{ path('app_adherant_index_section',{'id' : section.id}) }}">
                             <div class="nav-link-icon">
                                 <i data-feather="users"></i>
@@ -235,12 +215,14 @@
                             </div>
                             Publications
                         </a>
+                        {% if app.user.roles['app_newsletter_index'] is defined %}
                         <a class="nav-link" href="{{ path('app_newsletter_index',{'id' : section.id}) }}">
                             <div class="nav-link-icon">
                                 <i data-feather="mail"></i>
                             </div>
                             Newsletter                                                         
                         </a>
+                        {% endif %}
                     {% endif %} 
                 {% endif %}
                 <!-- Sidenav Accordion (Pages)-->

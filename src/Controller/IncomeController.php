@@ -68,7 +68,7 @@ class IncomeController extends AbstractController
     {
         $usr = $this->getUser();
         if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
-            if($usr->getId() != $user->getSupervisorid()->getId() ) {
+            if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
                 if($user->getSupervisor2id()!= null) {
                     if($user->getSupervisor2id()!=$usr->getId()) {
                         $this->user = $usr;
@@ -76,10 +76,10 @@ class IncomeController extends AbstractController
                     }
                 } else {
                     $this->user = $usr;
+                    return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
                 }
-            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
             }
-        } else if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_index_user']) && $usr->getId() != $user->getId()) {
+        } else if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_index']) && $usr->getId() != $user->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }

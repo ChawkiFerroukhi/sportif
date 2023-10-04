@@ -49,7 +49,7 @@ class ClubController extends AbstractController
         $usr = $this->getUser();
         if(!isset($usr->getRoles()['ROLE_MASTER']) ) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $section = new Section();
         $club = new Club();
@@ -78,6 +78,11 @@ class ClubController extends AbstractController
     public function stats(EntityManagerInterface $entityManager, SeanceRepository $seanceRepo): Response
     {
         $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_club_stats'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', ['id' => $usr->getClubid()->getId()], Response::HTTP_SEE_OTHER);
+        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

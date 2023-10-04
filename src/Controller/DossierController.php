@@ -20,9 +20,22 @@ class DossierController extends AbstractController
     public function index(Adherant $adherant, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if( $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorId()->getId() && ( $adherant->getSupervisor2id() != null && $usr->getId() != $adherant->getSupervisor2id()->getId()) && !isset($usr->getRoles()['app_dossier_index']) && !isset($usr->getRoles()['ROLE_MASTER']) ) {
+        $user = $adherant;
+        if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
+            if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
+                if($user->getSupervisor2id()!= null) {
+                    if($user->getSupervisor2id()!=$usr->getId()) {
+                        $this->user = $usr;
+                        return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+                    }
+                } else {
+                    $this->user = $usr;
+                    return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+                }
+            }
+        } else if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_dossier_index']) && $usr->getId() != $user->getId()) {
             $this->user = $usr;
-            return $this->redirectToRoute('app_adherant_show', ['id' => $adherant->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
         $dossiers = $entityManager
             ->getRepository(Dossier::class)

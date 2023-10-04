@@ -23,7 +23,20 @@ class PresenceController extends AbstractController
     public function indexAdherant(Adherant $adherant,EntityManagerInterface $entityManager, PresenceRepository $presenceRepo, SeanceRepository $seanceRepo): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_presence_adherant_index']) && $usr->getId() != $adherant->getId() && $usr->getId() != $adherant->getSupervisorid()->getId() && $usr->getId() != $adherant->getSupervisor2id()->getId()) {
+        $user = $adherant;
+        if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
+            if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
+                if($user->getSupervisor2id()!= null) {
+                    if($user->getSupervisor2id()!=$usr->getId()) {
+                        $this->user = $usr;
+                        return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+                    }
+                } else {
+                    $this->user = $usr;
+                    return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+                }
+            }
+        } else if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_presence_index']) && $usr->getId() != $user->getId()) {
             $this->user = $usr;
             return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }        

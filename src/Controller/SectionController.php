@@ -92,10 +92,6 @@ class SectionController extends AbstractController
     public function show(Section $section, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_section_show'])) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
-        }
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);

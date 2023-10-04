@@ -46,43 +46,41 @@
                         <div class="card-body">
 
                             <div class="row gx-3 mb-3">
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                     <a class="btn btn-outline-success" href="{{ path('app_payment_index_user',{'id' : adherant.id}) }}" style="display:block">Paiements</a>
-                                    {% endif %} 
                                 </div>
+                                {% endif %} 
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                     <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : adherant.id}) }}" style="display:block">Salaires</a>
-                                    {% endif %} 
                                 </div>
+                                {% endif %} 
                             </div>
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_COACH'] is defined %}
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_COACH'] is defined %}
                                     <a class="btn btn-outline-success" href="{{ path('app_note_index',{'id' : adherant.id}) }}" style="display:block">Performances</a>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_COACH'] is defined %}
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_COACH'] is defined %}
                                     <a class="btn btn-outline-success" href="{{ path('app_presence_adherant_index',{'id' : adherant.id}) }}" style="display:block">Présence</a>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="row gx-3 mb-3">
-
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_DOCTOR'] is defined %}
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id or app.user.roles['ROLE_DOCTOR'] is defined %}
                                     <a class="btn btn-outline-success" href="{{ path('app_dossiermedical_show',{'id' : adherant.dossiermedicalid.id}) }}" style="display:block">Dossier Medical</a>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                  <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or adherant.supervisorid.id == app.user.id or ( adherant.supervisor2id.id is defined and adherant.supervisor2id.id == app.user.id ) or adherant.id == app.user.id %}
                                     <a class="btn btn-outline-success" href="{{ path('app_dossier_index',{'id' : adherant.id}) }}" style="display:block">Dossier Personnel</a>
-                                    {% endif %} 
                                 </div>
+                                {% endif %} 
                             </div>
 
                                

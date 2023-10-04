@@ -38,12 +38,11 @@
                             <!-- Form Row-->
                             
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
+                                {% if app.user.roles['ROLE_ADMIN'] is defined %}
                                 <div class="col-md-6">
-                                    {% if app.user.roles['ROLE_ADMIN'] is defined %}
                                     <a class="btn btn-outline-success" href="{{ path('app_niveau_new',{'id' : section.id}) }}" style="display:block">Ajouter Catégorie</a>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
                                 <div class="col-md-6">
                                     <a class="btn btn-outline-success" href="{{ path('app_blog_index',{'id' : section.id}) }}" style="display:block">Liste des Publications</a>
                                 </div>

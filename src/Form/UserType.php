@@ -59,6 +59,7 @@ class UserType extends AbstractType
                     'Modifier Club' => 'app_club_edit',
                     'Afficher Clubs' => 'app_club_index',
                     'Fiche Club' => 'app_club_show',
+                    'Statistiques Club' => 'app_club_stats',
                     'Supprimer Club' => 'app_club_delete', 
 
                     'Ajouter Coach' => 'app_coach_new',
@@ -186,7 +187,7 @@ class UserType extends AbstractType
                     'Ajouter Parent' => 'app_supervisor_new',
                     'Modifier Parent' => 'app_supervisor_edit',
                     'Afficher Parents' => 'app_supervisor_index',
-                    'Fiche Parent' => 'app_parent_show',
+                    'Fiche Parent' => 'app_supervisor_show',
                     'Supprimer Parent' => 'app_supervisor_delete',
 
                     'Ajouter Teste' => 'app_teste_new',

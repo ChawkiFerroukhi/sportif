@@ -37,10 +37,7 @@ class CoursController extends AbstractController
     #[Route('/{id}/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
     public function new(Niveau $niveau,Request $request, EntityManagerInterface $entityManager): Response
     {
-        if(!isset($usr->getRoles()["app_cours_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
-        }
+        
         $usr = $this->getUser();
         $sections = $entityManager
             ->getRepository(Section::class)

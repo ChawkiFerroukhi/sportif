@@ -64,6 +64,13 @@ class Dossiermedical
      */
     private $mesures;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="dossiermedicalid")
+     */
+    private $documents;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -151,6 +158,36 @@ class Dossiermedical
             // set the owning side to null (unless already changed)
             if ($mesure->getDossierMedicalid() === $this) {
                 $mesure->setDossierMedicalid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Document>
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+            $documents->setDossiermedicalid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): self
+    {
+        if ($this->documents->removeElement($document)) {
+            // set the owning side to null (unless already changed)
+            if ($document->getDossiermedicalid() === $this) {
+                $document->setDossiermedicalid(null);
             }
         }
 

@@ -77,10 +77,6 @@ class ObjectifController extends AbstractController
     public function show(Objectif $objectif,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_objectif_show'])) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
-        }
         $this->user = $usr;
         $sections = $entityManager
             ->getRepository(Section::class)
