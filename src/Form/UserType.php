@@ -92,11 +92,11 @@ class UserType extends AbstractType
                     'Fiche Docteur' => 'app_doctor_show',
                     'Supprimer Docteur' => 'app_doctor_delete',
 
-                    'Ajouter Dossiermedical' => 'app_dossiermedical_new',
-                    'Modifier Dossiermedical' => 'app_dossiermedical_edit',
-                    'Afficher Dossiermedicals' => 'app_dossiermedical_index',
-                    'Fiche Dossiermedical' => 'app_dossiermedical_show',
-                    'Supprimer Dossiermedical' => 'app_dossiermedical_delete',
+                    'Ajouter Dossier Medical' => 'app_dossiermedical_new',
+                    'Modifier Dossier Medical' => 'app_dossiermedical_edit',
+                    'Afficher Dossier Medicals' => 'app_dossiermedical_index',
+                    'Fiche Dossier Medical' => 'app_dossiermedical_show',
+                    'Supprimer Dossier Medical' => 'app_dossiermedical_delete',
 
                     'Ajouter Dossier' => 'app_dossier_new',
                     'Modifier Dossier' => 'app_dossier_edit',
