@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="card">
-            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+            {% if app.user.roles['app_user_new'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="col-12 col-xl-auto mb-3">
                     <a class="btn btn-sm btn-light text-primary" href="{{ path('app_user_new') }}" style="float:right">
                         <i class="me-1" data-feather="plus"></i>
@@ -128,12 +128,16 @@
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_user_show', {'id': user.id}) }}">
                                             <i class="fa-solid fa-eye" style="color:green"></i>
                                         </a>
+                                        {% if app.user.roles['app_user_edit'] or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_user_edit', {'id': user.id}) }}">
                                             <i class="fa-solid fa-pen-to-square" style="color:orange"></i>
                                         </a>
+                                        {% endif %}
+                                        {% if app.user.roles['app_user_delete'] or app.user.roles['ROLE_MASTER'] is defined %}
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2">
                                             {{ include('user/_delete_form.html.twig') }}
                                         </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% else %}

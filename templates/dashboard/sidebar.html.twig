@@ -113,25 +113,39 @@
                     </a>                      
                     <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            {% if app.user.roles['app_acteur_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_acteur_index')}}">
                                 Acteurs
-                            </a><a class="nav-link" href="{{ path('app_administrateur_index')}}">
+                            </a>
+                            {% endif %}
+                            {% if app.user.roles['app_administrateur_index'] is defined%}
+                            <a class="nav-link" href="{{ path('app_administrateur_index')}}">
                                 Administrateurs
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_coach_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_coach_index')}}">
                                 Entaîneurs
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_doctor_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_doctor_index')}}">
                                 Docteurs
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_adherant_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_adherant_index')}}">
                                 Adhérents
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_supervisor_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_supervisor_index')}}">
                                 Parents
                             </a>
+                            {% endif %}                           
                         </nav>
                     </div>
+                    {% if app.user.roles['app_encaissement_index'] is defined or app.user.roles['app_decaissement_index'] is defined %}
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTriso" aria-expanded="false" aria-controls="collapsePages">
                         <div class="nav-link-icon">
                             <i data-feather="dollar-sign"></i>
@@ -143,14 +157,19 @@
                     </a>
                     <div class="collapse" id="collapseTriso" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            {% if app.user.roles['app_encaissement_index'] is defined %}
                             <a class="nav-link" href="{{ path('app_encaissement_index')}}">
                                 Encaissements
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_decaissement_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_decaissement_index')}}">
                                 Decaissements
                             </a>
+                            {% endif %}
                         </nav>
                     </div>
+                    {% endif %}
                     {% endif %}
                     {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_DOCTOR'] is defined %}
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseParams" aria-expanded="false" aria-controls="collapsePages">
@@ -164,20 +183,24 @@
                     </a>
                     <div class="collapse" id="collapseParams" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                            {% if app.user.roles['ROLE_ADMIN'] is defined %}
+                            {% if app.user.roles['app_user_index'] is defined %}
                             <a class="nav-link" href="{{ path('app_user_index')}}">
                                 <i data-feather="log-in" style="margin-right:5px;"></i>
                                     Droits d'accés
                             </a>
+                            {% endif %}
+                            {% if app.user.roles['app_poste_index'] is defined %}
                             <a class="nav-link" href="{{ path('app_poste_index') }}">
                                     <i data-feather="users" style="margin-right:5px;"></i>
                                     Postes
                                 </a>
                             {% endif %}
+                            {% if app.user.roles['app_maladie_index']%}
                                 <a class="nav-link" href="{{ path('app_maladie_index') }}">
                                     <i data-feather="heart" style="margin-right:5px;"></i>
                                     Santé
                                 </a>
+                            {% endif %}
                         </nav>
                     </div>
                     {% endif %}
