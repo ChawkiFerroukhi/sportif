@@ -137,12 +137,7 @@
                             <a class="nav-link" href="{{ path('app_adherant_index')}}">
                                 Adhérents
                             </a>
-                            {% endif %}
-                            {% if app.user.roles['app_supervisor_index'] is defined%}
-                            <a class="nav-link" href="{{ path('app_supervisor_index')}}">
-                                Parents
-                            </a>
-                            {% endif %}                           
+                            {% endif %}                         
                         </nav>
                     </div>
                     {% if app.user.roles['app_encaissement_index'] is defined or app.user.roles['app_decaissement_index'] is defined %}
@@ -159,12 +154,12 @@
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
                             {% if app.user.roles['app_encaissement_index'] is defined %}
                             <a class="nav-link" href="{{ path('app_encaissement_index')}}">
-                                Encaissements
+                                Entrées
                             </a>
                             {% endif %}
                             {% if app.user.roles['app_decaissement_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_decaissement_index')}}">
-                                Decaissements
+                                Sorties
                             </a>
                             {% endif %}
                         </nav>
