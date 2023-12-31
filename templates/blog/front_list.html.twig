@@ -17,12 +17,10 @@ Publication {{ section.nom }} {{ section.clubid.nom }}
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="menu">
-                            <ul>
+                        <div class="row">
                             {% for stn in sections %}
-                                <li {% if stn.id == section.id %}class="active"{% endif %}><a href="{{ path('app_blog_front_list',{'id' : stn.id})}}">{{ stn.nom }}</a></li>
+                                <a class="col-2 m-1 p-1 btn btn-{% if stn.id == section.id %}success{% else %}info{% endif %}" href="{{ path('app_blog_front_list',{'id' : stn.id})}}"><button class=" btn">{{ stn.nom }}</button></a>
                             {% endfor %}
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -32,49 +30,47 @@ Publication {{ section.nom }} {{ section.clubid.nom }}
         <section class="blog-post-area">
             <div class="container">
                 <div class="row">
-                    <div class="blog-post-area-style">
-                        <div class="col-md-12" style="
-                            text-align:center;
-                        ">    
-                            <h3 style="
-                            font-family: Geometria;
-                            font-weight: 700;
-                            font-size: 40px;
-                            color: #061e37;
-                            ">
-                                {{section.nom}}
-                            </h3>
-                        </div>
-                        <div class="post">
-                            <h4><span class="date">
-                                <p>{{ section.description|raw }}</p>
-                            </span></h4>  
-                        </div>                      
-                        <div class="col-md-12">
-                            <div class="single-post">
-                                <hr>
-                                <h3><a href="#">Publications</a></h3>
-                                <hr>
-                            </div>
-                        </div>
-                        {% for blg in blogs %}
-                        {% if blg.isVisible %}
-                        <div class="col-md-3">
-                            <div class="single-post">
-                                <img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;">
-                                <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
-                                <h4><span>
-                                {% if blg.createdat == blg.updatedat %}
-                                    {{ blg.createdat|date('d M Y') }}
-                                {% else %} 
-                                    {{ blg.updatedat|date('d M Y') }}
-                                {% endif %}
-                                </span></h4>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
+                    <div class="col-md-12" style="
+                        text-align:center;
+                    ">    
+                        <h3 style="
+                        font-family: Geometria;
+                        font-weight: 700;
+                        font-size: 40px;
+                        color: #061e37;
+                        ">
+                            {{section.nom}}
+                        </h3>
                     </div>
+                    <div class="post">
+                        <h4><span class="date">
+                            <p>{{ section.description|raw }}</p>
+                        </span></h4>  
+                    </div>                      
+                    <div class="col-md-12">
+                        <div class="single-post">
+                            <hr>
+                            <h3>Publications</h3>
+                            <hr>
+                        </div>
+                    </div>
+                    {% for blg in blogs %}
+                    {% if blg.isVisible %}
+                    <div class="col-md-3">
+                        <div class="single-post">
+                            <a href="{{ path('app_blog_front',{'id':blg.id})}}"><img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;"></a>
+                            <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
+                            <h4><span>
+                            {% if blg.createdat == blg.updatedat %}
+                                {{ blg.createdat|date('d M Y') }}
+                            {% else %} 
+                                {{ blg.updatedat|date('d M Y') }}
+                            {% endif %}
+                            </span></h4>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </section>

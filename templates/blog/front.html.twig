@@ -35,12 +35,10 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="menu">
-                            <ul>
+                        <div class="row">
                             {% for stn in sections %}
-                                <li {% if stn.id == blog.sectionid.id %}class="active"{% endif %}><a href="{{ path('app_blog_front_list',{'id' : stn.id})}}">{{ stn.nom }}</a></li>
+                                <a class="col-2 m-1 p-1 btn btn-{% if stn.id == blog.sectionid.id %}success{% else %}info{% endif %}" href="{{ path('app_blog_front_list',{'id' : stn.id})}}"><button class=" btn ">{{ stn.nom }}</button></a>
                             {% endfor %}
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -55,86 +53,84 @@
         </section>
         <section class="blog-post-area">
             <div class="container">
-                <div class="row">
-                    <div class="blog-post-area-style">
+                <div class="row">                        
+                    <div class="col-md-12" style="
+                        text-align:center;
+                    ">
                         
-                        <div class="col-md-12" style="
-                            text-align:center;
+                        <h3 style="
+                        font-family: Geometria;
+                        font-weight: 700;
+                        font-size: 40px;
+                        color: #061e37;
                         ">
-                            
-                            <h3 style="
-                            font-family: Geometria;
-                            font-weight: 700;
-                            font-size: 40px;
-                            color: #061e37;
-                            ">
-                                {{blog.title}}
-                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined and app.user.clubid == blog.clubid %}
-                                <a  class="btn-outline edit" href="{{ path('app_blog_edit',{'id' : blog.id}) }}" style="float:right">
-                                    Modifier
-                                </a>                        
-                                {% endif %}
-                            </h3>
-                            <hr>
-                        </div>
-                        <div class="col-md-12">
-                            <img src="{{ vich_uploader_asset(blog, 'coverFile') }}">
-                            <hr>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="post">
-                                <h4><span class="date">
-                                <p>{{ blog.content|raw }}</p>
-                                </span></h4>
-                                <hr>
-                                {% if blog.video is not null %}
-                                <div class="container" style="display: flex; width: 100%; height: 50rem; flex-direction: column; overflow: hidden;">
-                                    <iframe style="flex-grow: 1; border: none; margin: 0; padding: 0;"
-                                    src="{{ blog.video }}"
-                                    allowfullscreen>
-                                    </iframe> 
-                                </div>
-                                {% endif %}  
-                                <h4><span class="author">
-                                {% if blog.createdat == blog.updatedat %}
-                                Publié le <span clas="author-name">{{ blog.createdat|date('d M Y') }}</span>
-                                {% else %} 
-                                Modifié le <span clas="author-name">{{ blog.updatedat|date('d M Y') }}</span>
-                                {% endif %}
-                                </span>
-                                </h4>
-                                
-                                
-                                
-                            </div>
-                        </div> 
-                        <div class="col-md-12">
-                            <div class="single-post">
-                                <hr>
-                                <h3><a href="#">Publications Similaires</a></h3>
-                                <hr>
-                            </div>
-                        </div>
-                        {% for blg in blogs %}
-                        {% if blg.isVisible %}
-                        {% if blg.id != blog.id %}
-                        <div class="col-md-3">
-                            <div class="single-post">
-                                <img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;">
-                                <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
-                                <h4><span>
-                                {% if blg.createdat == blg.updatedat %}
-                                    {{ blg.createdat|date('d M Y') }}
-                                {% else %} 
-                                    {{ blg.updatedat|date('d M Y') }}
-                                {% endif %}
-                                </span></h4>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                            {{blog.title}}
+                            {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined and app.user.clubid == blog.clubid %}
+                            <a  class="btn-outline edit" href="{{ path('app_blog_edit',{'id' : blog.id}) }}" style="float:right">
+                                Modifier
+                            </a>                        
+                            {% endif %}
+                        </h3>
+                        <hr>
                     </div>
+                    <div class="col-md-12">
+                        <img src="{{ vich_uploader_asset(blog, 'coverFile') }}">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="post">
+                            <h4><span class="date">
+                            <p>{{ blog.content|raw }}</p>
+                            </span></h4>
+                            </br>  
+                            <h4><span class="author" style="float:right">
+                            {% if blog.createdat == blog.updatedat %}
+                            Publié le <span clas="author-name">{{ blog.createdat|date('d M Y') }}</span>
+                            {% else %} 
+                            Modifié le <span clas="author-name">{{ blog.updatedat|date('d M Y') }}</span>
+                            {% endif %}
+                            </span>
+                            </h4>
+                            <hr>
+                            {% if blog.video is not null %}
+                            <div class="container" style="display: flex; width: 100%; height: 50rem; flex-direction: column; overflow: hidden;">
+                                <iframe style="flex-grow: 1; border: none; margin: 0; padding: 0;"
+                                src="{{ blog.video }}"
+                                allowfullscreen>
+                                </iframe> 
+                            </div>
+                            {% endif %}
+                            
+                            
+                            
+                        </div>
+                    </div> 
+                    <div class="col-md-12">
+                        <div class="single-post">
+                            <hr>
+                            <h3><a href="#">Publications Similaires</a></h3>
+                            <hr>
+                        </div>
+                    </div>
+                    {% for blg in blogs %}
+                    {% if blg.isVisible %}
+                    {% if blg.id != blog.id %}
+                    <div class="col-md-3">
+                        <div class="single-post">
+                            <a href="{{ path('app_blog_front',{'id':blg.id})}}"><img src="{{ vich_uploader_asset(blg, 'coverFile') }}" alt="" style="width:16em;height:10em;"></a>
+                            <h3><a href="{{ path('app_blog_front',{'id':blg.id})}}">{{ blg.title }}</a></h3>
+                            <h4><span>
+                            {% if blg.createdat == blg.updatedat %}
+                                {{ blg.createdat|date('d M Y') }}
+                            {% else %} 
+                                {{ blg.updatedat|date('d M Y') }}
+                            {% endif %}
+                            </span></h4>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </section>
