@@ -27,7 +27,7 @@ class EquipeType extends AbstractType
             ->add('coachid',ChoiceType::class,[
                 'choices' => $options['coachs'],
                 'choice_label' => 'nomprenom',
-                'placeholder' => 'Choisir un coach',
+                'placeholder' => 'Choisir un Entraîneur',
                 'required' => false
             ])
             ->add('coach_Email', EmailType::class, [

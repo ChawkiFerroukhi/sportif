@@ -24,7 +24,7 @@ class PresenceController extends AbstractController
     {
         $usr = $this->getUser();
         $user = $adherant;
-        if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
+        if (isset($usr->getRoles()['ROLE_ADHERANT']) ) {
             if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
                 if($user->getSupervisor2id()!= null) {
                     if($user->getSupervisor2id()!=$usr->getId()) {
@@ -41,10 +41,19 @@ class PresenceController extends AbstractController
             return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }        
         $presences = $presenceRepo->getOrdered($adherant->getId());
-        if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
+        if(isset($_GET['from']) && !empty($_GET['from'])){
             $tmp = [];
             foreach($presences as $presence) {
-                if($presence->getDate() >= new \DateTime($_GET['from']) && $presence->getDate() <= new \DateTime($_GET['to'])) {
+                if($presence->getDate() >= new \DateTime($_GET['from'])) {
+                    $tmp[] = $presence;
+                }
+            }
+            $presences = $tmp;
+        }
+        if(isset($_GET['to']) && !empty($_GET['to'])) {
+            $tmp = [];
+            foreach($presences as $presence) {
+                if($presence->getDate() <= new \DateTime($_GET['to'])) {
                     $tmp[] = $presence;
                 }
             }
@@ -59,28 +68,8 @@ class PresenceController extends AbstractController
                 $dates[$date] = 1;
             }
         }
-        $seances = $seanceRepo->getOrdered($adherant->getEquipeid()->getId());
-        $seances2 = [];
-        if($adherant->getEquipe2id()!=null) {
-            $seances2 = $seanceRepo->getOrdered($adherant->getEquipe2id()->getId());
-        }
-        $dts=[];
-        foreach($seances as $presence) {
-            $date = date('Y-m',$presence->getDate()->getTimestamp());
-            if(isset($dts[$date])) {
-                $dts[$date] ++;
-            } else {
-                $dts[$date] = 1;
-            }
-        }
-        foreach($seances2 as $presence) {
-            $date = date('Y-m',$presence->getDate()->getTimestamp());
-            if(isset($dts[$date])) {
-                $dts[$date] ++;
-            } else {
-                $dts[$date] = 1;
-            }
-        }
+
+        
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
@@ -88,7 +77,6 @@ class PresenceController extends AbstractController
         return $this->render('presence/index.html.twig', [
             'presences' => $presences,
             'dates' => $dates,
-            'dts' => $dts,
             'GET' => $_GET,
             'adherant' => $adherant,
             'sections' => $sections,

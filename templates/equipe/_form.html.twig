@@ -33,148 +33,151 @@
                 </div>
 
                 <hr>
-                <h6> Fiche Entaîneur </h6>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.coach_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_Email, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_Email) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">     
-                        {{ form_label(form.coach_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                           
-                        {{ form_widget(form.coach_ref, {'attr':{'class':'form-control' }}) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_ref) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">                                
-                        {{ form_widget(form.coach_password) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_password) }}
-                    </div>
-                </div>
+                <h6 onclick="toggleFormMenu('ficheEntraineur')">Nouvel Entaîneur <i data-feather="chevron-down"> </i></h6>
 
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.coach_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_nom, {'attr':{'class':'form-control' }}) }}                               
+                <div id="ficheEntraineur" class="formMenu">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.coach_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_nom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.coach_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_prenom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_prenom) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_nom) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.coach_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_numTel, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_numTel) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.coach_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_adresse, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_adresse) }}
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.coach_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_prenom, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_prenom) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.coach_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_numTel, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_numTel) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.coach_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_adresse, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_adresse) }}
-                    </div>
-                </div>
 
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.coach_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.coach_cin, {'attr':{'class':'form-control' }}) }}                               
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.coach_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_cin, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_cin) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.coach_cin) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.coach_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.coach_Email, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_Email) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">     
+                            {{ form_label(form.coach_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                           
+                            {{ form_widget(form.coach_ref, {'attr':{'class':'form-control' }}) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_ref) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">                                
+                            {{ form_widget(form.coach_password) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coach_password) }}
+                        </div>
                     </div>
                 </div>
-
                 <hr>
-                <h6> Fiche Docteur </h6>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.doctor_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_Email, {'attr':{'class':'form-control' }}) }}                               
+                <h6 onclick="toggleFormMenu('ficheDocteur')"> Nouvel Docteur <i data-feather="chevron-down"> </i></h6>
+                <div id="ficheDocteur" class="formMenu">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.doctor_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_nom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.doctor_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_prenom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_prenom) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_Email) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.doctor_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_numTel, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_numTel) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.doctor_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_adresse, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_adresse) }}
+                        </div>
                     </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">        
-                        {{ form_label(form.doctor_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_ref, {'attr':{'class':'form-control' }}) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_ref) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">                                
-                        {{ form_widget(form.doctor_password) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_password) }}
-                    </div>
-                </div>
 
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.doctor_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_nom, {'attr':{'class':'form-control' }}) }}                               
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.doctor_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_cin, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_cin) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_nom) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.doctor_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_Email, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_Email) }}
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.doctor_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_prenom, {'attr':{'class':'form-control' }}) }}                               
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">        
+                            {{ form_label(form.doctor_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.doctor_ref, {'attr':{'class':'form-control' }}) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_ref) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_prenom) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.doctor_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_numTel, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_numTel) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.doctor_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_adresse, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_adresse) }}
-                    </div>
-                </div>
-
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.doctor_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.doctor_cin, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.doctor_cin) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">                                
+                            {{ form_widget(form.doctor_password) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.doctor_password) }}
+                        </div>
                     </div>
                 </div>
+                <hr>
                 <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>

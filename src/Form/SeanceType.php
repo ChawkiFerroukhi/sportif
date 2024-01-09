@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SeanceType extends AbstractType
@@ -20,8 +21,19 @@ class SeanceType extends AbstractType
                 'choices' => $options['choices'],
                 'choice_label' => 'nom', // optional: specify the property to use as the label
             ])
-            ->add('date',DateType::class, [ 
+            ->add('date',TimeType::class, [ 
                 'widget' => 'single_text',
+            ])
+            ->add('day',ChoiceType::class, [
+                'choices' => [
+                    'Lundi' => 'Lundi',
+                    'Mardi' => 'Mardi',
+                    'Mercredi' => 'Mercredi',
+                    'Jeudi' => 'Jeudi',
+                    'Vendredi' => 'Vendredi',
+                    'Samedi' => 'Samedi',
+                    'Dimanche' => 'Dimanche',
+                ],
             ])
             ->add('description', TinymceType::class, [
                 "attr" => [

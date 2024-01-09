@@ -73,9 +73,9 @@ class Niveau
 
     /**
      *
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="niveauid")
+     * @ORM\OneToMany(targetEntity=Cycle::class, mappedBy="niveauid")
      */
-    private $courses;
+    private $cycles;
 
     /**
      * @var string
@@ -180,29 +180,29 @@ class Niveau
     }
 
     /**
-     * @return Collection<int, Cours>
+     * @return Collection<int, Cycle>
      */
-    public function getCourses(): Collection
+    public function getCycles(): Collection
     {
-        return $this->courses;
+        return $this->cycles;
     }
 
-    public function addCours(Cours $cours): self
+    public function addCycle(Cycle $cycle): self
     {
-        if (!$this->courses->contains($cours)) {
-            $this->courses[] = $cours;
-            $cours->setNiveauid($this);
+        if (!$this->cycles->contains($cycle)) {
+            $this->cycles[] = $cycle;
+            $cycle->setNiveauid($this);
         }
 
         return $this;
     }
 
-    public function removeCours(Cours $cours): self
+    public function removeCycle(Cycle $cycle): self
     {
-        if ($this->courses->removeElement($cours)) {
+        if ($this->cycles->removeElement($cycle)) {
             // set the owning side to null (unless already changed)
-            if ($cours->getNiveauid() === $this) {
-                $cours->setNiveauid(null);
+            if ($cycle->getNiveauid() === $this) {
+                $cycle->setNiveauid(null);
             }
         }
 

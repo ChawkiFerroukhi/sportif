@@ -158,7 +158,7 @@ class PaymentController extends AbstractController
             $payment->setUpdatedAt(new \DateTime());
             $payment->setClubid($payment->getUserid()->getClubid());
             if($payment->getMode()=="En Ligne") {
-                $response = $this->client->request('POST', 'https://api.konnect.network/api/v2/payments/init-payment', [
+                $response = $this->client->request('POST', 'https://api.preprod.konnect.network/api/v2/payments/init-payment', [
                     'headers' => [
                         'Accept' => 'application/json',
                         'x-api-key' => $_ENV['PAYMENT_API_KEY'],
@@ -203,7 +203,7 @@ class PaymentController extends AbstractController
     public function success(Payment $payment, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
-        $response = $this->client->request('GET', 'https://api.konnect.network/api/v1/payments/'.$payment->getRef(), [
+        $response = $this->client->request('GET', 'https://api.preprod.konnect.network/api/v1/payments/'.$payment->getRef(), [
             'headers' => [
                 'Accept' => 'application/json',
             ]
@@ -345,7 +345,7 @@ class PaymentController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
-        $section = $payment->getUserid()->getEquipeid()->getNiveauid()->getSectionid();
+        $section = new Section();
         $users = [];
         if(isset($usr->getRoles()["ROLE_MASTER"])) {
             $users = $entityManager

@@ -3,11 +3,18 @@
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header">
-                Fiche Seance                                            
+                Fiche Séance                                            
             </div>
             <div class="card-body">
                 <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        {{ form_label(form.day, 'Jour', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.day, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.date) }}
+                    </div>
+                    <div class="col-md-6">
                         {{ form_label(form.date, 'Date', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.date, {'attr':{'class':'form-control' }}) }}                               
                     </div>

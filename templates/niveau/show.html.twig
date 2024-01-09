@@ -43,7 +43,7 @@
                                         <a class="btn btn-outline-success" href="{{ path('app_equipe_new',{'id' : niveau.id}) }}" style="display:block">Ajouter Niveau</a> 
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-outline-success" href="{{ path('app_cours_new',{'id' : niveau.id}) }}" style="display:block">Ajouter Cours</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_cycle_new',{'id' : niveau.id}) }}" style="display:block">Ajouter Cycle</a>
                                 </div>
                             </div>
                             {% endif %}
@@ -80,7 +80,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">
-                                    <h2 class="small mb-1" for="inputFirstName">Liste des Cours</h2>
+                                    <h2 class="small mb-1" for="inputFirstName">Liste des Cycles</h2>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
@@ -96,15 +96,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for  cours in  niveau.courses %}
+                                            {% for  cycle in  niveau.cycles %}
                                                 <tr>
                                                     <td width="45%">
-                                                        {{  cours.id }}
+                                                        {{  cycle.id }}
                                                     </td>
                                                     <td width="45%">
-                                                        <a href="{{ path('app_cours_show',{'id' : cours.id})}}">{{ cours.nom }}</a></td>
+                                                        <a href="{{ path('app_cycle_show',{'id' : cycle.id})}}">{{ cycle.nom }}</a></td>
                                                     <td width="45%">
-                                                        {{ cours.createdat | date('d/m/Y') }}
+                                                        {{ cycle.createdat | date('d/m/Y') }}
                                                     </td>
                                                 </tr>
                                             {% else %}

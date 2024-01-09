@@ -196,7 +196,14 @@ class Equipe
      */
     public function getAdherants(): Collection
     {
-        return $this->adherants;
+        $adhs = [];
+        foreach($this->adherants2 as $adherant) {
+            if (!$this->adherants->contains($adherant)) {
+                $adhs[] = $adherant;
+            }
+        }
+        $resArray = array_merge($this->adherants->toArray(), $adhs);
+        return new ArrayCollection($resArray);
     }
 
     public function addAdherant(Adherant $adherant): self

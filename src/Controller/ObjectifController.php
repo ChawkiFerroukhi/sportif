@@ -69,7 +69,7 @@ class ObjectifController extends AbstractController
             'objectif' => $objectif,
             'form' => $form,
             'sections' => $sections,
-            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $cycle->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -84,7 +84,7 @@ class ObjectifController extends AbstractController
         return $this->render('objectif/show.html.twig', [
             'objectif' => $objectif,
             'sections' => $sections,
-            'section' => $objectif->getCycleid()->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $objectif->getCycleid()->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -113,7 +113,7 @@ class ObjectifController extends AbstractController
             'objectif' => $objectif,
             'form' => $form,
             'sections' => $sections,
-            'section' => $objectif->getCycleid()->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $objectif->getCycleid()->getNiveauid()->getSectionid()
         ]);
     }
 

@@ -57,7 +57,7 @@ class NoteController extends AbstractController
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $note = new Note();
-        $adherants = array_merge($teste->getEquipeid()->getAdherants()->toArray(), $teste->getEquipeid()->getAdherants2()->toArray());
+        $adherants = $teste->getEquipeid()->getAdherants();
         $form = $this->createForm(NoteType::class, $note,[
             'choices_adh' => $adherants,
             'choices_obj' => $teste->getCycleid()->getObjectifs()

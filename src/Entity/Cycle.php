@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Cycle.
  *
- * @ORM\Table(name="Cycle", indexes={@ORM\Index(name="coursId", columns={"coursId"}), @ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Cycle", indexes={@ORM\Index(name="niveauId", columns={"niveauId"}), @ORM\Index(name="clubId", columns={"clubId"})})
  *
  * @ORM\Entity
  */
@@ -48,16 +48,16 @@ class Cycle
     private $nom;
 
     /**
-     * @var \Cours
+     * @var \Niveau
      *
-     * @ORM\ManyToOne(targetEntity="Cours")
+     * @ORM\ManyToOne(targetEntity="Niveau")
      *
      * @ORM\JoinColumns({
      *
-     *   @ORM\JoinColumn(name="coursId", referencedColumnName="id" , onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="niveauId", referencedColumnName="id" , onDelete="CASCADE")
      * })
      */
-    private $coursid;
+    private $niveauid;
 
     /**
      * @var string
@@ -146,14 +146,14 @@ class Cycle
         return $this;
     }
 
-    public function getCoursid(): ?Cours
+    public function getNiveauid(): ?Niveau
     {
-        return $this->coursid;
+        return $this->niveauid;
     }
 
-    public function setCoursid(?Cours $coursid): self
+    public function setNiveauid(?Niveau $niveauid): self
     {
-        $this->coursid = $coursid;
+        $this->niveauid = $niveauid;
 
         return $this;
     }

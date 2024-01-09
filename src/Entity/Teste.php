@@ -53,6 +53,13 @@ class Teste
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=191, nullable=false, options={"default"="non-effectué"})
+     */
+    private $status;
+
+    /**
      * @var \Equipe
      *
      * @ORM\ManyToOne(targetEntity="Equipe")
@@ -144,6 +151,18 @@ class Teste
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

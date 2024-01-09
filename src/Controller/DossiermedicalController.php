@@ -92,9 +92,30 @@ class DossiermedicalController extends AbstractController
         $sections = $entityManager
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $mesures = $dossiermedical->getMesures();
+        if(isset($_GET['from']) && !empty($_GET['from'])){
+            $tmp = [];
+            foreach($mesures as $mesure) {
+                if($mesure->getDate() >= new \DateTime($_GET['from'])) {
+                    $tmp[] = $mesure;
+                }
+            }
+            $mesures = $tmp;
+        }
+        if(isset($_GET['to']) && !empty($_GET['to'])) {
+            $tmp = [];
+            foreach($mesures as $mesure) {
+                if($mesure->getDate() <= new \DateTime($_GET['to'])) {
+                    $tmp[] = $mesure;
+                }
+            }
+            $mesures = $tmp;
+        }
         $this->user = $usr;
         return $this->render('dossiermedical/show.html.twig', [
             'dossiermedical' => $dossiermedical,
+            'mesures' => $mesures,
+            'GET' => $_GET,
             'sections' => $sections,
             'section' => $dossiermedical->getAdherantid()->getEquipeid()->getNiveauid()->getSectionid(),
         ]);

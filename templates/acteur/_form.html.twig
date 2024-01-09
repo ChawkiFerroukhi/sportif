@@ -7,10 +7,10 @@
             </div>
             <div class="card-body text-center">
                 <div class="small font-italic text-muted mb-4">
-                    No larger than 5 MB </br>                        
                     {% if acteur is defined %}
                         <img src="{{ vich_uploader_asset(acteur, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
                     {% endif %}
+                    Pas plus que 5 MB (750x500px idéallement) </br>                        
                 </div>
             </div>
             <div class="card-body text-center">

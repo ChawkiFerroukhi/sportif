@@ -23,6 +23,12 @@ class TesteType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('nom')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'effectué' => 'effectué',
+                    'non-effectué' => 'non-effectué',
+                ],
+            ])
             ->add('description', TinymceType::class, [
                 "attr" => [
                     "toolbar" => "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",

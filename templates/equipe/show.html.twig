@@ -38,7 +38,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{prs != 'N/A' ? prs|number_format(2) : 'N/A'}}%</h3>
+                                <h3>{{prs != 'N/A' ? prs|number_format(2)~'%' : 'Pas de données'}}</h3>
                                 <span>Taux de Présence</span>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{seances}}</h3>
-                                <span>Séances Restantes</span>
+                                <span>Séances Effectuées</span>
                                 </div>
                             </div>
                             </div>
@@ -72,7 +72,7 @@
                                 <i class="icon-graph primary font-large-2 float-left"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                <h3>{{nts != 'N/A' ? nts|number_format(2) : 'N/A'}}%</h3>
+                                <h3>{{nts != 'N/A' ? nts|number_format(2) ~ '%' : 'Pas de données'}}</h3>
                                 <span>Note Moyenne</span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                 <h3>{{testes}}</h3>
-                                <span>Tests Restants</span>
+                                <span>Tests Effectués</span>
                                 </div>
                             </div>
                             </div>
@@ -113,7 +113,7 @@
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
-                                    <a class="btn btn-outline-success" href="{{ path('app_seance_index',{'id' : equipe.id}) }}" style="display:block">Liste des Seances</a>
+                                    <a class="btn btn-outline-success" href="{{ path('app_seance_index',{'id' : equipe.id}) }}" style="display:block">Liste des Séances</a>
                                 </div>
                                 <div class="col-md-6">
                                     <a class="btn btn-outline-success" href="{{ path('app_teste_index',{'id' : equipe.id}) }}" style="display:block">Liste des Tests</a>
@@ -197,19 +197,7 @@
                                                     </td>
                                                 </tr>
                                             {% endfor %}
-                                            {% for  adherant in  equipe.adherants2 %}
-                                                <tr>
-                                                    <td width="45%">
-                                                        {{  adherant.licence }}
-                                                    </td>
-                                                    <td width="45%">
-                                                        <a href="{{ path('app_adherant_show',{'id' : adherant.id})}}">{{ adherant.nom }} {{ adherant.prenom }}</a>                                                    </td>
-                                                    <td width="45%">
-                                                        {{ adherant.birthdate | date('d/m/Y') }}
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            {% if equipe.adherants|length == 0 and equipe.adherants2|length == 0 %}
+                                            {% if equipe.adherants|length == 0 %}
                                                 <tr>
                                                     <td colspan="17">
                                                         aucune entrée

@@ -13,7 +13,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Section
  *
- * @ORM\Table(name="Section", indexes={@ORM\Index(name="clubId", columns={"clubId"})})
+ * @ORM\Table(name="Section", indexes={@ORM\Index(name="clubId", columns={"clubId"})}, uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_section_nom_clubid", columns={"nom", "clubId"})
+ * })
  * @ORM\Entity
  * @Vich\Uploadable
  */

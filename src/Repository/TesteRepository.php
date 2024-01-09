@@ -51,15 +51,18 @@ class TesteRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getByNew($id) : array {
+    public function getByNew($id): array {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
         $qb->select('p')
-        ->from(Teste::class,'p')
-        ->where('p.date > CURRENT_DATE()')
-        ->where('p.equipeid = '.$id)
-        ->orderBy('p.date','ASC');
+            ->from(Teste::class, 'p')
+            ->where($qb->expr()->eq('p.status', ':status'))
+            ->andWhere($qb->expr()->eq('p.equipeid', ':equipeid'))
+            ->orderBy('p.date', 'ASC')
+            ->setParameter('status', 'effectué')
+            ->setParameter('equipeid', $id);
+
         return $qb->getQuery()->getResult();
     }
 

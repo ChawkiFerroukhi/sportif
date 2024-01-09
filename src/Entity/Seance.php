@@ -42,7 +42,13 @@ class Seance
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     private $date;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="day", type="string", length=5000, nullable=true)
+     */
+    private $day;
 
     /**
      * @var string
@@ -166,6 +172,18 @@ class Seance
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDay(): ?string
+    {
+        return $this->day;
+    }
+
+    public function setDay(string $day): self
+    {
+        $this->day = $day;
 
         return $this;
     }

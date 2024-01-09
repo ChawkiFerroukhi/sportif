@@ -42,7 +42,9 @@
                         {{ form_errors(form.description) }}
                     </div>
                 </div>
-                
+                <div hidden>
+                    {{ form_widget(form.status, {'attr':{'class':'form-control' }}) }}                               
+                </div>
                 <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>

@@ -21,7 +21,7 @@ class DossierController extends AbstractController
     {
         $usr = $this->getUser();
         $user = $adherant;
-        if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
+        if (isset($usr->getRoles()['ROLE_ADHERANT']) ) {
             if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
                 if($user->getSupervisor2id()!= null) {
                     if($user->getSupervisor2id()!=$usr->getId()) {

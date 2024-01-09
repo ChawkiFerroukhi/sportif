@@ -44,7 +44,7 @@ class TesteController extends AbstractController
         }
         $teste = new Teste();
         $form = $this->createForm(TesteType::class, $teste,[
-            'choices' => $cycle->getCoursid()->getNiveauid()->getEquipes()
+            'choices' => $cycle->getNiveauid()->getEquipes()
         ]);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -66,7 +66,7 @@ class TesteController extends AbstractController
             'teste' => $teste,
             'form' => $form,
             'sections' => $sections,
-            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $cycle->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -93,7 +93,9 @@ class TesteController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
-        $form = $this->createForm(TesteType::class, $teste);
+        $form = $this->createForm(TesteType::class, $teste,[
+            'choices' => $teste->getCycleid()->getNiveauid()->getEquipes()
+        ]);
         $form->handleRequest($request);
         $sections = $entityManager
             ->getRepository(Section::class)
@@ -112,6 +114,22 @@ class TesteController extends AbstractController
             'sections' => $sections,
             'section' => $teste->getEquipeid()->getNiveauid()->getSectionid()
         ]);
+    }
+
+    #[Route('/{id}/edit/status', name: 'app_teste_edit_status', methods: ['GET', 'POST'])]
+    public function editStatus(Request $request, Teste $teste, EntityManagerInterface $entityManager): Response
+    {
+        $usr = $this->getUser();
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_teste_edit']) ) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
+        $status = $teste->getStatus() == 'effectué' ? 'non-effectué' : 'effectué';
+        $teste->setStatus($status);
+        $entityManager->persist($teste, true);
+        $entityManager->flush();
+        $this->user = $usr;
+        return $this->redirectToRoute('app_teste_index', ['id' => $teste->getEquipeid()->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_teste_delete', methods: ['POST'])]

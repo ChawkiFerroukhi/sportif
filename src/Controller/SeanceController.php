@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/seance')]
 class SeanceController extends AbstractController
 {
-    #[Route('/equipe/{id}', name: 'app_seance_index', methods: ['GET'])]
+    #[Route('/niveau/{id}', name: 'app_seance_index', methods: ['GET'])]
     public function index(Equipe $equipe,EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
@@ -47,7 +47,7 @@ class SeanceController extends AbstractController
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $seance = new Seance();
         $form = $this->createForm(SeanceType::class, $seance,[
-            'choices' => $cycle->getCoursid()->getNiveauid()->getEquipes()
+            'choices' => $cycle->getNiveauid()->getEquipes()
         ]);
         $form->handleRequest($request);
 
@@ -69,7 +69,7 @@ class SeanceController extends AbstractController
             'form' => $form,
             'cycle' => $cycle,
             'sections' => $sections,
-            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $cycle->getNiveauid()->getSectionid()
         ]);
     }
 
@@ -100,7 +100,7 @@ class SeanceController extends AbstractController
             ->getRepository(Section::class)
             ->findBy(['clubid' => $this->getUser()->getClubid()]);
         $form = $this->createForm(SeanceType::class, $seance,[
-            'choices' => $seance->getCycleid()->getCoursid()->getNiveauid()->getEquipes()
+            'choices' => $seance->getCycleid()->getNiveauid()->getEquipes()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -115,7 +115,7 @@ class SeanceController extends AbstractController
             'seance' => $seance,
             'form' => $form,
             'sections' => $sections,
-            'section' => $seance->getCycleid()->getCoursid()->getNiveauid()->getSectionid()
+            'section' => $seance->getCycleid()->getNiveauid()->getSectionid()
 
         ]);
     }
@@ -134,6 +134,6 @@ class SeanceController extends AbstractController
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_seance_index', ['id' => $seance->getEquipeid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

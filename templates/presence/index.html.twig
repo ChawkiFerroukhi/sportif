@@ -34,11 +34,11 @@
                         <!-- Form Group (first name)-->
                         <div class="col-md-4">
                             <h2 class="small mb-1" for="inputFirstName">Début</h2>
-                            <input class="form-control" type="date" name="from" required {% if GET['from'] is defined and GET['from'] is not null %} value="{{ GET['from'] |date('Y-m-d') }}" {% endif %}></input>
+                            <input class="form-control" type="date" name="from"  {% if GET['from'] is defined and GET['from'] != '' %} value="{{ GET['from'] |date('Y-m-d') }}" {% endif %}></input>
                         </div>
                         <div class="col-md-4">
                             <h2 class="small mb-1" for="inputFirstName">Fin</h2>
-                            <input class="form-control" type="date" name="to" required {% if GET['to'] is defined and GET['to'] is not null %} value="{{ GET['to'] |date('Y-m-d') }}" {% endif %}></input>
+                            <input class="form-control" type="date" name="to"  {% if GET['to'] is defined and GET['to'] !='' %} value="{{ GET['to'] |date('Y-m-d') }}" {% endif %}></input>
                         </div>
                         <div class="col-md-4">
                             <br>
@@ -103,15 +103,15 @@
 <script>
 var data = [
     {% for date,data in dates %}
-        { y: '{{ date|date("Y-m") }}', a: {{ data }},b : {{dts[date] is defined ? dts[date] : 0}} },
+        { y: '{{ date|date("Y-m") }}', a: {{ data }} },
     {% endfor %}
     
     ],
     config = {
         data: data,
         xkey: 'y',
-        ykeys: [ 'a','b'],
-        labels: [ 'Présences','Séances'],
+        ykeys: [ 'a'],
+        labels: [ 'Présences'],
         fillOpacity: 0.6,
         hideHover: 'auto',
         behaveLikeLine: true,

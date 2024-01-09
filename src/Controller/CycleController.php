@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cycle;
-use App\Entity\Cours;
+use App\Entity\Niveau;
 use App\Entity\Section;
 use App\Form\CycleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,7 +37,7 @@ class CycleController extends AbstractController
     }
 
     #[Route('/{id}/new', name: 'app_cycle_new', methods: ['GET', 'POST'])]
-    public function new(Cours $cours,Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Niveau $niveau,Request $request, EntityManagerInterface $entityManager): Response
     {
         $usr = $this->getUser();
         if(!isset($usr->getRoles()["app_cycle_new"]) && !isset($usr->getRoles()['ROLE_MASTER'])) {
@@ -54,8 +54,8 @@ class CycleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $cycle->setCreatedAt(new \DateTime());
             $cycle->setUpdatedAt(new \DateTime());
-            $cycle->setCoursid($cours);
-            $cycle->setClubid($cours->getClubid());            
+            $cycle->setNiveauid($niveau);
+            $cycle->setClubid($niveau->getClubid());            
             $entityManager->persist($cycle);
             $entityManager->flush();
 
@@ -68,7 +68,7 @@ class CycleController extends AbstractController
             'cycle' => $cycle,
             'form' => $form,
             'sections' => $sections,
-            'section' => $cours->getNiveauid()->getSectionid(),
+            'section' => $niveau->getSectionid(),
         ]);
     }
 
@@ -84,7 +84,7 @@ class CycleController extends AbstractController
         return $this->render('cycle/show.html.twig', [
             'cycle' => $cycle,
             'sections' => $sections,
-            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid(),
+            'section' => $cycle->getNiveauid()->getSectionid(),
         ]);
     }
 
@@ -114,7 +114,7 @@ class CycleController extends AbstractController
             'cycle' => $cycle,
             'form' => $form,
             'sections' => $sections,
-            'section' => $cycle->getCoursid()->getNiveauid()->getSectionid(),
+            'section' => $cycle->getNiveauid()->getSectionid(),
         ]);
     }
 
@@ -132,6 +132,6 @@ class CycleController extends AbstractController
         }
 
         $this->user = $usr;
-        return $this->redirectToRoute('app_cours_show', ['id' => $cycle->getCoursid()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_niveau_show', ['id' => $cycle->getNiveauid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

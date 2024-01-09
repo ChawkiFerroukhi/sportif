@@ -166,38 +166,77 @@ class EquipeController extends AbstractController
         }
         $adherants = $equipe->getAdherants();
         $nbPres = 0;
+        $pres = [];
         foreach($adherants as $adherant) {
             $presences = $entityManager
                 ->getRepository(Presence::class)
                 ->findBy(['adherantid' => $adherant->getId()]);
+            
             foreach($presences as $presence) {
-                $date = $presence->getDate()->format( 'Y-m-d' );
-                $dt = new \DateTime($date);
+                $day = $presence->getDate()->format( 'N' );
+                switch($day) {
+                    case 1:
+                        $day = "Lundi";
+                        break;
+                    case 2:
+                        $day = "Mardi";
+                        break;
+                    case 3:
+                        $day = "Mercredi";
+                        break;
+                    case 4:
+                        $day = "Jeudi";
+                        break;
+                    case 5:
+                        $day = "Vendredi";
+                        break;
+                    case 6:
+                        $day = "Samedi";
+                        break;
+                    case 7:
+                        $day = "Dimanche";
+                        break;
+                }
+                echo '
+                <script>
+                    console.log("'.$day.'");
+                </script>';
                 $seance = $entityManager
                     ->getRepository(Seance::class)
-                    ->findOneBy(['equipeid' => $adherant->getEquipeid(),'date' => $dt]);
+                    ->findOneBy(['equipeid' => $equipe->getId(),'day' => $day]);
                 if($seance) {
                     $nbPres++;
+                    array_push($pres,$presence);
                 }
             }
         }
-        $seances = $seanceRepo->getByOld($equipe->getId());
+        $uniqueDates = [];
+        $seances = 0;
+
+        foreach ($pres as $obj) {
+            $date = $obj->getDate()->format('Y-m-d');
+            
+            // Check if date is already in uniqueDates array
+            if (!in_array($date, $uniqueDates)) {
+                $uniqueDates[] = $date;
+                $seances++;
+            }
+        }
         
-        if(count($adherants) != 0 && count($seances) != 0){
-            $prs = $nbPres/(count($seances)*count($adherants));
+        if(count($adherants) != 0 && $seances != 0){
+            $prs = $nbPres/($seances*count($adherants));
             $prs *= 100;
         } else {
             $prs = "N/A";
         }
         
-        $seances = $seanceRepo->getByNew($equipe->getId());
         $testes = $testeRepo->getByNew($equipe->getId());
         $this->user = $usr;
         return $this->render('equipe/show.html.twig', [
             'equipe' => $equipe,
             'prs' => $prs,
             'nts' => $nts,
-            'seances' => count($seances),
+            'seances' => $seances,
             'testes' => count($testes),
             'sections' => $sections,
             'section' => $equipe->getNiveauid()->getSectionid(),

@@ -62,7 +62,23 @@
                                     <hr>  
                                 </div>
                             </div>
-
+                            <form method="GET">
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-4">
+                                    <h2 class="small mb-1" for="inputFirstName">Début</h2>
+                                    <input class="form-control" type="date" name="from"  {% if GET['from'] is defined and GET['from'] != '' %} value="{{ GET['from'] |date('Y-m-d') }}" {% endif %}></input>
+                                </div>
+                                <div class="col-md-4">
+                                    <h2 class="small mb-1" for="inputFirstName">Fin</h2>
+                                    <input class="form-control" type="date" name="to"  {% if GET['to'] is defined and GET['to'] != '' %} value="{{ GET['to'] |date('Y-m-d') }}" {% endif %}></input>
+                                </div>
+                                <div class="col-md-4">
+                                    <br>
+                                    <button class="btn btn-outline-success" type="submit" style="float:left">Filtrer</button>
+                                </div>
+                            </div>
+                            </form>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
@@ -201,7 +217,7 @@
 
 <script>
 var data = [
-    {% for mesure in dossiermedical.mesures|sort((a, b) => a.date <=> b.date) %}
+    {% for mesure in mesures|sort((a, b) => a.date <=> b.date) %}
         { y: '{{ mesure.date|date("Y-m-d") }}', a: 0, b: {{ mesure.imc }} },
     {% endfor %}
     ],
@@ -222,7 +238,7 @@ var data = [
     Morris.Area(config);
 
     data = [
-    {% for mesure in dossiermedical.mesures|sort((a, b) => a.date <=> b.date) %}
+    {% for mesure in mesures|sort((a, b) => a.date <=> b.date) %}
         { y: '{{ mesure.date|date("Y-m-d") }}', a: {{ mesure.taille }}*100, b: {{ mesure.poids }} },
     {% endfor %}
     ],

@@ -43,7 +43,7 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">
-                        {{ form_label(form.numTel, 'Phone number', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_label(form.numTel, 'Téléphone', {'label_attr':{'class':'small mb-1' }}) }}                                   
                         {{ form_widget(form.numTel, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
@@ -196,146 +196,155 @@
                         {{ form_widget(form.dossierMedicalId, {'attr':{'class':'form-control' }}) }}                                                          
                 </div>
                 <hr>
-                <h6> Fiche Parent </h6>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.supervisor_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_Email, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_Email) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">   
-                        {{ form_label(form.supervisor_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_ref, {'attr':{'class':'form-control' }})}}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_ref) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_widget(form.supervisor_password) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_password) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_nom, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_nom) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_prenom, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_prenom) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_numTel, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_numTel) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_adresse, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_adresse) }}
-                    </div>
-                </div>
 
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.supervisor_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor_cin, {'attr':{'class':'form-control' }}) }}                               
+                <h6 onclick="toggleFormMenu('ficheParent1')">Nouvel Parent <i data-feather="chevron-down"> </i></h6>
+
+                <div id="ficheParent1" class="formMenu">
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_nom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_prenom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_prenom) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor_cin) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_numTel, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_numTel) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_adresse, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_adresse) }}
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.supervisor_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_cin, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_cin) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.supervisor_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_Email, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_Email) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">   
+                            {{ form_label(form.supervisor_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor_ref, {'attr':{'class':'form-control' }})}}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_ref) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_widget(form.supervisor_password) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor_password) }}
+                        </div>
                     </div>
                 </div>
-
                 <hr>
-                <h6> Fiche Deuxiéme Parent </h6>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.supervisor2_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_Email, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_Email) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">   
-                        {{ form_label(form.supervisor2_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_ref, {'attr':{'class':'form-control' }})}}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_ref) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_widget(form.supervisor2_password) }}  
-                    </div>                            
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_password) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor2_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_nom, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_nom) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor2_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_prenom, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_prenom) }}
-                    </div>
-                </div>
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor2_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_numTel, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_numTel) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.supervisor2_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_adresse, {'attr':{'class':'form-control' }}) }}                               
-                    </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_adresse) }}
-                    </div>
-                </div>
+                <h6 onclick="toggleFormMenu('ficheParent2')">Nouvel Deuxiéme Parent <i data-feather="chevron-down"> </i></h6>
 
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-12">
-                        {{ form_label(form.supervisor2_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
-                        {{ form_widget(form.supervisor2_cin, {'attr':{'class':'form-control' }}) }}                               
+                <div id="ficheParent2" class="formMenu">
+                    
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor2_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_nom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor2_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_prenom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_prenom) }}
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        {{ form_errors(form.supervisor2_cin) }}
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor2_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_numTel, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_numTel) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.supervisor2_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_adresse, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_adresse) }}
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.supervisor2_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_cin, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_cin) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.supervisor2_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_Email, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_Email) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">   
+                            {{ form_label(form.supervisor2_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.supervisor2_ref, {'attr':{'class':'form-control' }})}}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_ref) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_widget(form.supervisor2_password) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.supervisor2_password) }}
+                        </div>
                     </div>
                 </div>
+                <hr>
                 <button class="btn btn-outline-primary">
                         {{ button_label|default('Sauvegarder') }}
                 </button>
