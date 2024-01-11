@@ -8,8 +8,8 @@
             <div class="card-body text-center">
                 <div class="small font-italic text-muted mb-4">
                     No larger than 5 MB </br>                        
-                    {% if coach is defined %}
-                        <img src="{{ vich_uploader_asset(coach.picture, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
+                    {% if staff is defined %}
+                        <img src="{{ vich_uploader_asset(staff.picture, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
                     {% endif %}
                 </div>
             </div>
@@ -39,6 +39,15 @@
                     <div class="col-md-12">
                         {{ form_label(form.prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                    
                         {{ form_widget(form.prenom, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.adresse) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.poste, 'Poste', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.poste, {'attr':{'class':'form-control' }}) }}       
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.adresse) }}
@@ -104,7 +113,7 @@
                     <div class="invalid-feedback">
                         {{ form_errors(form.ref) }}
                     </div>
-                </div>{% if coach.id is null or app.user.id == coach.id or app.user.roles['ROLE_MASTER'] is defined %}
+                </div>{% if staff.id is null or app.user.id == staff.id or app.user.roles['ROLE_MASTER'] is defined %}
                 <div class="row gx-3 mb-3">
                     <div class="col-md-12">                                
                         {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
@@ -137,7 +146,7 @@ function filePreview(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-$("#coach_image_imageFile_file").change(function () {
+$("#staff_image_imageFile_file").change(function () {
     filePreview(this);
 });
 </script>
