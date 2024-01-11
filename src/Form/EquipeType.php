@@ -30,6 +30,14 @@ class EquipeType extends AbstractType
                 'placeholder' => 'Choisir un Entraîneur',
                 'required' => false
             ])
+            ->add('staffid',ChoiceType::class,[
+                'choices' => $options['staff'],
+                'choice_label' => 'nomprenom',
+                'placeholder' => 'Choisir un Staff',
+                'required' => false,
+                'mapped' => false
+            ])
+
             ->add('coach_Email', EmailType::class, [
                 'required' => false,
                 'label' => 'Nom',
@@ -125,6 +133,60 @@ class EquipeType extends AbstractType
                 'label' => 'Adresse',
                 'mapped' => false,
             ])
+
+            ->add('staff_nom', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+            ->add('staff_Email', EmailType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+            ->add('staff_password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'form-control password-field']],
+                'required' => false,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('staff_ref', TextType::class, [
+                'required' => false,
+                'label' => 'Nom',
+                'mapped' => false,
+            ])
+            ->add('staff_prenom', TextType::class, [
+                'required' => false,
+                'label' => 'Prenom',
+                'mapped' => false,
+            ])
+
+            ->add('staff_numTel', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'mapped' => false,
+            ])
+
+            ->add('staff_cin', TextType::class, [
+                'required' => false,
+                'label' => 'CIN',
+                'mapped' => false,
+            ])
+
+            ->add('staff_adresse', TextType::class, [
+                'required' => false,
+                'label' => 'Adresse',
+                'mapped' => false,
+            ])
+
+            ->add('staff_poste', TextType::class, [
+                'required' => false,
+                'label' => 'Poste',
+                'mapped' => false,
+            ])
         ;
     }
 
@@ -134,6 +196,7 @@ class EquipeType extends AbstractType
             'data_class' => Equipe::class,
             'coachs' => [],
             'doctors' => [],
+            'staff' => []
         ]);
     }
 }

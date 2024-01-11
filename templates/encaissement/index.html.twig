@@ -157,7 +157,7 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Reférence</th>
-                                    <th>Désignation</th>
+                                    <th>Etat</th>
                                     <th></th>
                                 </tr>
                             </tr>
@@ -168,7 +168,7 @@
                                     <td>{{ encaissement.id }}</td>
                                     <td>{{ encaissement.date|date('d/m/Y') }}</td>
                                     <td>{{ encaissement.ref }}</td>
-                                    <td>{{ encaissement.designation }}</td>
+                                    <td>{{ encaissement.status }}</td>
                                     <td>
                                         {% if encaissement.type == 'paiement' %}
                                             <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_payment_show', {'id': encaissement.id}) }}">

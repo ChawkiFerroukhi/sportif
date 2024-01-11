@@ -143,6 +143,15 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Catégorie</h2>
+                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_niveau_show',{'id' : equipe.niveauid.id})}}">{{ equipe.niveauid.sectionid.nom }} : {{ equipe.niveauid.nom }}</a> 
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <hr>
                                     <h2 class="small mb-1" for="inputFirstName">Entaîneur</h2>
@@ -156,16 +165,38 @@
                                     <hr>  
                                 </div>
                             </div>
-
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
-                                <div class="col-md-12">
+                                 <div class="col-md-12">
                                     <hr>
-                                    <h2 class="small mb-1" for="inputFirstName">Catégorie</h2>
-                                    <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_niveau_show',{'id' : equipe.niveauid.id})}}">{{ equipe.niveauid.sectionid.nom }} : {{ equipe.niveauid.nom }}</a> 
-                                    <hr>  
+                                    <h2 class="small mb-1" for="inputFirstName">
+                                        Liste des Staff
+                                    </h2>
+                                    <hr>
+
+                                    {% for  staff in  equipe.staffMembers %}
+                                    <div class="col-md-12">
+                                        <p class=" mb-1" for="inputFirstName"><a href="{{ path('app_staff_show',{'id' : staff.id})}}">{{ staff.nom }} {{ staff.prenom }} - {{ staff.poste }}</a></p> 
+                                    </div>
+                                    <hr>
+                                    {% endfor %}
+                                    {% if equipe.staffMembers|length == 0 %}
+                                        <tr>
+                                            <td colspan="17">
+                                                aucune entrée
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    <div class="col-4">
+                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                        <a class="btn btn-sm btn-light text-primary" href="{{ path('app_equipe_edit_staff',{'id' : equipe.id}) }}" style="float:left">
+                                            <i class="me-1" data-feather="plus"></i>
+                                            Ajouter Staff                                                                              
+                                        </a>
+                                    {% endif %}
+                                    </div>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-12">

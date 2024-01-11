@@ -133,6 +133,11 @@
                                 Docteurs
                             </a>
                             {% endif %}
+                            {% if app.user.roles['app_staff_index'] is defined%}
+                            <a class="nav-link" href="{{ path('app_staff_index')}}">
+                                Staff
+                            </a>
+                            {% endif %}
                             {% if app.user.roles['app_adherant_index'] is defined%}
                             <a class="nav-link" href="{{ path('app_adherant_index')}}">
                                 Adhérents

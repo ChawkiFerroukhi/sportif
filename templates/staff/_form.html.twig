@@ -1,0 +1,152 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                Image          
+            </div>
+            <div class="card-body text-center">
+                <div class="small font-italic text-muted mb-4">
+                    No larger than 5 MB </br>                        
+                    {% if coach is defined %}
+                        <img src="{{ vich_uploader_asset(coach.picture, 'imageFile') }}" alt="Image" class="img-thumbnail" width="600px" height="50%" id="image"/>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body text-center">
+                {{ form_widget(form.image, {'attr':{'title':'', 'width':'10' }}) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche d'inscription                                            
+            </div>
+            <div class="card-body">
+                <hr>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.nom, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.prenom, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.adresse) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.numTel, 'Num Tel', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.numTel, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.numTel) }}
+                    </div>
+                </div>
+                 <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.cin, 'CIN', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.cin, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.cin) }}
+                    </div>
+                </div>
+                 <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.adresse, 'Adresse', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.adresse, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.adresse) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.sectionid, 'Section', {'label_attr':{'class':'small mb-1' }}) }}                                    
+                        {{ form_widget(form.sectionid, {'attr':{'class':'form-control' }}) }}       
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.sectionid) }}
+                    </div>
+                </div>
+                {% if app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.clubid, 'Club', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.clubid) }}
+                    </div>
+                </div>
+                {% else %} 
+                <div hidden>
+                    {{ form_widget(form.clubid, {'attr':{'class':'form-control' }}) }}   
+                </div>                              
+                {% endif %} 
+                <hr>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.Email, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Email) }}
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.ref, {'attr':{'class':'form-control' }}) }}  
+                    </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.ref) }}
+                    </div>
+                </div>{% if coach.id is null or app.user.id == coach.id or app.user.roles['ROLE_MASTER'] is defined %}
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">                                
+                        {{ form_row(form.password.first, {'attr':{'required':'true' }})}}  
+                        {{ form_row(form.password.second, {'attr':{'required':'true' }})}}                      </div>                            
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+                {% else %}
+                <div hidden>
+                    {{ form_widget(form.password) }}
+                </div>
+                {% endif %}
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script>
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#coach_image_imageFile_file").change(function () {
+    filePreview(this);
+});
+</script>

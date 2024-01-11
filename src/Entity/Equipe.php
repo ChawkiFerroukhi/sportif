@@ -86,6 +86,16 @@ class Equipe
     private $coachid;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Staff")
+     * @ORM\JoinTable(
+     *     name="equipe_staff",
+     *     joinColumns={@ORM\JoinColumn(name="equipeid", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="staffid", referencedColumnName="id")}
+     * )
+     */
+    private $staffMembers;
+
+    /**
      *
      * @ORM\OneToMany(targetEntity=Adherant::class, mappedBy="equipeid")
      */
@@ -259,6 +269,30 @@ class Equipe
                 $adherant->setEquipe2id(null);
             }
         }
+
+        return $this;
+    }
+    
+    /**
+     * @return Collection|Staff[]
+     */
+    public function getStaffMembers(): Collection
+    {
+        return $this->staffMembers;
+    }
+
+    public function addStaffMember(Staff $staff): self
+    {
+        if (!$this->staffMembers->contains($staff)) {
+            $this->staffMembers[] = $staff;
+        }
+
+        return $this;
+    }
+
+    public function removeStaffMember(Staff $staff): self
+    {
+        $this->staffMembers->removeElement($staff);
 
         return $this;
     }

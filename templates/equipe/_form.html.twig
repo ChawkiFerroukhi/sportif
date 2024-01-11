@@ -33,7 +33,7 @@
                 </div>
 
                 <hr>
-                <h6 onclick="toggleFormMenu('ficheEntraineur')">Nouvel Entaîneur <i data-feather="chevron-down"> </i></h6>
+                <h6 onclick="toggleFormMenu('ficheEntraineur')">Nouvel Entaîneur <i data-feather="chevron-right" id="ficheEntraineur-icon"> </i></h6>
 
                 <div id="ficheEntraineur" class="formMenu">
                     <div class="row gx-3 mb-3">
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <hr>
-                <h6 onclick="toggleFormMenu('ficheDocteur')"> Nouvel Docteur <i data-feather="chevron-down"> </i></h6>
+                <h6 onclick="toggleFormMenu('ficheDocteur')"> Nouvel Docteur <i data-feather="chevron-right" id="ficheDocteur-icon"> </i></h6>
                 <div id="ficheDocteur" class="formMenu">
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
@@ -176,6 +176,18 @@
                             {{ form_errors(form.doctor_password) }}
                         </div>
                     </div>
+                </div>
+                <div hidden>
+                    {{ form_widget(form.staff_nom, {'attr':{'class':'form-control' }}) }} 
+                    {{ form_widget(form.staff_prenom, {'attr':{'class':'form-control' }}) }}  
+                    {{ form_widget(form.staff_numTel, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_adresse, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_cin, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_Email, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_password, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_poste, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.staff_ref, {'attr':{'class':'form-control' }}) }}
+                    {{ form_widget(form.staffid, {'attr':{'class':'form-control' }}) }}                    
                 </div>
                 <hr>
                 <button class="btn btn-outline-primary">

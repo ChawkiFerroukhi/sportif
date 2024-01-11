@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Equipe;
 use App\Entity\Niveau;
 use App\Entity\Coach;
+use App\Entity\Staff;
 use App\Entity\Doctor;
 use App\Entity\Section;
 use App\Entity\Seance;
@@ -197,10 +198,6 @@ class EquipeController extends AbstractController
                         $day = "Dimanche";
                         break;
                 }
-                echo '
-                <script>
-                    console.log("'.$day.'");
-                </script>';
                 $seance = $entityManager
                     ->getRepository(Seance::class)
                     ->findOneBy(['equipeid' => $equipe->getId(),'day' => $day]);
@@ -261,6 +258,7 @@ class EquipeController extends AbstractController
         $form = $this->createForm(EquipeType::class, $equipe,[
             'doctors' => $doctors,
             'coachs' => $coaches,
+            'staff' => []
         ]);
         $form->handleRequest($request);
         $sections = $entityManager
@@ -276,6 +274,66 @@ class EquipeController extends AbstractController
 
         $this->user = $usr;
         return $this->renderForm('equipe/edit.html.twig', [
+            'equipe' => $equipe,
+            'form' => $form,
+            'sections' => $sections,
+            'section' => $equipe->getNiveauid()->getSectionid(),
+        ]);
+    }
+
+    #[Route('/{id}/edit/staff', name: 'app_equipe_edit_staff', methods: ['GET', 'POST'])]
+    public function editStaff(Equipe $equipe, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $usr = $this->getUser();
+
+        if(!isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_equipe_edit'])) {
+            $this->user = $usr;
+            return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
+        }
+        $staff = $entityManager
+            ->getRepository(Staff::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+        $form = $this->createForm(EquipeType::class, $equipe,[
+            'doctors' => [ $equipe->getDoctorid()],
+            'coachs' => [ $equipe->getCoachid()],
+            'staff' => $staff
+        ]);
+        $form->handleRequest($request);
+        $sections = $entityManager
+            ->getRepository(Section::class)
+            ->findBy(['clubid' => $this->getUser()->getClubid()]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($form->get('staffid')->getData()) {
+                $equipe->addStaffMember($form->get('staffid')->getData());
+            } else if ($form->get('staff_nom')->getData()) {
+                $staff = new Staff();
+                $staff->setCreatedAt(new \DateTime());
+                $staff->setUpdatedAt(new \DateTime());
+                $staff->setEmail($form->get('staff_Email')->getData());
+                $staff->setPassword($this->passwordHasher->hashPassword(
+                    $staff,
+                    $form->get('staff_password')->getData()
+                ));
+                $staff->setRef($form->get('staff_ref')->getData());
+                $staff->setNom($form->get('staff_nom')->getData());
+                $staff->setPrenom($form->get('staff_prenom')->getData());
+                $staff->setNumTel($form->get('staff_numTel')->getData());
+                $staff->setAdresse($form->get('staff_adresse')->getData());
+                $staff->setCin($form->get('staff_cin')->getData());
+                $staff->setPoste($form->get('staff_poste')->getData());
+                $staff->setClubid($equipe->getClubid());
+                $entityManager->persist($staff);
+                $equipe->addStaffMember($staff);
+            } 
+            $entityManager->flush();
+
+            $this->user = $usr;
+            return $this->redirectToRoute('app_equipe_show', ['id' => $equipe->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        $this->user = $usr;
+        return $this->renderForm('equipe/edit.staff.html.twig', [
             'equipe' => $equipe,
             'form' => $form,
             'sections' => $sections,

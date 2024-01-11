@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\Collection;
  * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"user" = "User", "adherant" = "Adherant", "administrateur" = "Administrateur", "coach" = "Coach", "doctor" = "Doctor", "supervisor" = "Supervisor", "master" = "Master"})
+ * @ORM\DiscriminatorMap({"user" = "User", "adherant" = "Adherant", "administrateur" = "Administrateur", "coach" = "Coach", "doctor" = "Doctor", "supervisor" = "Supervisor", "master" = "Master", "staff" = "Staff"})
  */
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface

@@ -74,8 +74,13 @@
             </style>
             <script>
                 function toggleFormMenu(id) {
-                var formMenu = document.getElementById(id);
-                formMenu.style.display = (formMenu.style.display === "block") ? "none" : "block";
+                    var formMenu = document.getElementById(id);
+                    formMenu.style.display = (formMenu.style.display === "block") ? "none" : "block";
+                    var icon = document.getElementById(id+"-icon");            
+                    icon.setAttribute('data-feather', (formMenu.style.display === "block") ? 'chevron-down' : 'chevron-right' );
+                    // After changing the attribute, call Feather Icons to redraw the icon
+                    feather.replace();
+
                 }
             </script>
             

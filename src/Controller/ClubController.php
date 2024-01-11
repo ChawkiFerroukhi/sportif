@@ -114,6 +114,7 @@ class ClubController extends AbstractController
         $totalPresences = 0;
         $totalNotes = 0;
         $totalImc = 0;
+        $totalRevenues = 0;
         foreach($section->getNiveaux() as $niveau) {
             $F[$niveau->getId()] = [];
             $M[$niveau->getId()] = [];
@@ -151,18 +152,7 @@ class ClubController extends AbstractController
                         $nts += $note->getNote();
                     }
                 }
-                $sncs = $seanceRepo->getOrdered($equipe->getId());
-                if(isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
-                    $tmp = [];
-                    foreach($sncs as $snc) {
-                        if($snc->getDate() >= new \DateTime($_GET['from']) && $snc->getDate() <= new \DateTime($_GET['to'])) {
-                            $tmp[] = $snc;
-                        }
-                    }
-                    $sncs = $tmp;
-                }
-                $seances[$niveau->getId()] = array_merge($seances[$niveau->getId()], $sncs);
-                $nbSeances += count($sncs);
+                $pres = [];
                 foreach($equipe->getAdherants() as $adherant) {
                     if(!isset($F[$niveau->getId()][$adherant->getId()]) && !isset($M[$niveau->getId()][$adherant->getId()])){
                         $nb++;
@@ -181,18 +171,39 @@ class ClubController extends AbstractController
                             $presences = $tmp;
                         }
                         foreach($presences as $presence) {
-                            $date = $presence->getDate()->format( 'Y-m-d' );
-                            $dt = new \DateTime($date);
+                            $day = $presence->getDate()->format( 'N' );
+                            switch($day) {
+                                case 1:
+                                    $day = "Lundi";
+                                    break;
+                                case 2:
+                                    $day = "Mardi";
+                                    break;
+                                case 3:
+                                    $day = "Mercredi";
+                                    break;
+                                case 4:
+                                    $day = "Jeudi";
+                                    break;
+                                case 5:
+                                    $day = "Vendredi";
+                                    break;
+                                case 6:
+                                    $day = "Samedi";
+                                    break;
+                                case 7:
+                                    $day = "Dimanche";
+                                    break;
+                            }
                             $seance = $entityManager
                                 ->getRepository(Seance::class)
-                                ->findOneBy(['equipeid' => $adherant->getEquipeid(),'date' => $dt]);
-                            $seance2 = $entityManager
-                                ->getRepository(Seance::class)
-                                ->findOneBy(['equipeid' => $adherant->getEquipe2id(),'date' => $dt]);
-                            if($seance || $seance2) {
+                                ->findOneBy(['equipeid' => $adherant->getEquipeid(),'day' => $day]);
+                            if($seance) {
                                 $nbPres++;
+                                array_push($pres,$presence);
                             }
                         }
+                        
                         $payments = $entityManager
                             ->getRepository(Payment::class)
                             ->findBy(['userid' => $adherant->getId()]);
@@ -217,9 +228,27 @@ class ClubController extends AbstractController
                         $M[$niveau->getId()][$adherant->getId()] = $adherant;
                     }
                 }
+                $uniqueDates = [];
+                foreach ($pres as $obj) {
+                    $date = $obj->getDate()->format('Y-m-d');
+                    // Check if date is already in uniqueDates array
+                    if (!in_array($date, $uniqueDates)) {
+                        $uniqueDates[] = $date;
+                        $nbSeances++;
+                        
+                    }
+                }
+                
+                $seances[$niveau->getId()] = array_merge($seances[$niveau->getId()],$uniqueDates);
             }
+            echo '
+                <script>
+                    console.log("'.$niveau->getNom().'","'.$nbSeances.'","'.$nbPres.'");
+                </script>';
             foreach($seances[$niveau->getId()] as $seance) {
-                $date = date('Y-m',$seance->getDate()->getTimestamp());
+                $date = new \DateTime($seance);
+                
+                $date = $date->format( 'Y-m' );
                 if(isset($dts[$niveau->getId()][$date])) {
                     $dts[$niveau->getId()][$date] ++;
                 } else {
@@ -228,7 +257,7 @@ class ClubController extends AbstractController
                     $dates[] = $date;
                 }
             }
-
+            
             $IMC[$niveau->getId()] = $nb != 0 && $imc != 0 ? $imc / $nb : 'N/A';
             $TESTES[$niveau->getId()] = $nbNotes != 0 && $nts != 0 ? $nts/$nbNotes : 'N/A';
             $PRESENCE[$niveau->getId()] = $nb != 0 && $nbSeances !=0 ? $nbPres/($nbSeances*$nb) * 100 : 'N/A';
@@ -242,6 +271,7 @@ class ClubController extends AbstractController
             $totalNotes += $nbNotes;
             $totalImc += $nbImc;
             $PAYMENT[$niveau->getId()] = $totalPayment;
+            $totalRevenues += $totalPayment;
         }
         foreach($niveaux as $niveau) {
             foreach($dates as $date) {
@@ -272,6 +302,7 @@ class ClubController extends AbstractController
             'totalPresences' => $totalPresences,
             'totalNotes' => $totalNotes,
             'totalImc' => $totalImc,
+            'totalRevenues' => $totalRevenues,
             'seances' => $nbSEANCES,
             'payments' => $PAYMENT,
             'imc' => $nbIMC,

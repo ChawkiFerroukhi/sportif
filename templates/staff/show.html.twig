@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adhérent{% endblock %}
+
+{% block content %}
+<main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
+    {% endif %}
+                    <div class="col-lg-12" >
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                                {{ staff.nom }} {{ staff.prenom }} - {{ staff.poste }} 
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <div class="row">
+            <div class="col-xl-4">
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Image</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(staff.picture, 'imageFile') }}" alt="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Fiche Entaîneur</div>
+                        <div class="card-body">
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-12">
+                                    {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined  or staff.id == app.user.id %}
+                                    <a class="btn btn-outline-success" href="{{ path('app_income_index_user',{'id' : staff.id}) }}" style="display:block">Salaires</a>
+                                    {% endif %} 
+                                </div>
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Nom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.nom }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Prénom</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.prenom }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Num Telephone</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.numTel }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Email</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.Email }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">CIN</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.cin }}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Adresse</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.adresse }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Création</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.createdat|date('d/m/Y')}}</p>
+                                    <hr>  
+                                </div>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Date de Modification</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.updatedat|date('d/m/Y') }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Reférence</h2>
+                                    <p class=" mb-1" for="inputFirstName">{{ staff.ref }}</p>
+                                    <hr>  
+                                </div>
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h2 class="small mb-1" for="inputFirstName">Club</h2>
+                                    <a href="{{path('app_club_show',{'id' : staff.clubid.id}) }}"> <p class=" mb-1" for="inputFirstName">{{ staff.clubid }}</p></a>
+                                    <hr>  
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-12">
+                                    <h2 class="small mb-1" for="inputFirstName">Niveaux</h2>
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th width="45%">
+                                                    #
+                                                </th>
+                                                <th width="45%">
+                                                    Nom
+                                                </th>
+                                                <th width="45%">
+                                                    Catégorie
+                                                </th>
+                                                <th width="45%">
+                                                    Date de Création
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for  equipe in  staff.equipes %}
+                                                <tr>
+                                                    <td width="45%">
+                                                        {{  equipe.id}}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_equipe_show',{'id' : equipe.id})}}">{{ equipe.nom }}</a>
+                                                    </td>
+
+                                                    <td width="45%">
+                                                        <a href="{{ path('app_niveau_show',{'id' : equipe.niveauid.id})}}">{{ equipe.niveauid.sectionid.nom }} : {{ equipe.niveauid.nom }}</a>
+                                                    </td>
+                                                    <td width="45%">
+                                                        {{ equipe.createdat | date('d/m/Y') }}
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="17">
+                                                        aucune entrée
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% if app.user.roles['ROLE_ADMIN'] is defined or app.user.roles['ROLE_MASTER'] is defined %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_staff_edit',{'id' : staff.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                    <div class="col-6">
+                                        <a style="float:right">
+                                            {{ include('staff/_delete_form.html.twig') }}
+                                        </a>  
+                                    </div>
+                                </div>
+                                {% elseif app.user.roles['ROLE_COACH'] is defined and staff.id == app.user.id %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-warning" href="{{ path('app_staff_edit',{'id' : staff.id}) }}" style="float:left">Modifier</a>                            
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}

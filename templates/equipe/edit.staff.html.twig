@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+   <main>
+        {% if app.user.roles['ROLE_MASTER'] is defined %}
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="background-color: red;">
+    {% else %}
+        <header class="page-header page-header-dark bg-gradient" style="background-color: {{ app.user.clubid.color }};">
+                    <div class="col-lg-12 bg-gradient pb-10" style="background-color: {{ app.user.clubid.color2 }};flex:right">
+                        <img class="img-account-profile mb-2" src="{{ vich_uploader_asset(app.user.clubid, 'logoFile') }}" alt="" style="float:right; margin-top: 1rem; margin-right: 1rem;" />
+                    </div>
+    {% endif %}
+                    <div class="col-lg-12" >
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon">
+                                    <i data-feather="plus"></i>
+                                </div>
+                                Ajouter un Staff                          
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container-xl px-4 mt-4">
+            {{ include('equipe/_form.staff.html.twig') }}
+        </div>
+    </main>
+{% endblock %}

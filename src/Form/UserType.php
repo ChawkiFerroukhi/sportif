@@ -183,6 +183,12 @@ class UserType extends AbstractType
                     'Afficher Sections' => 'app_section_index',
                     'Fiche Section' => 'app_section_show',
                     'Supprimer Section' => 'app_section_delete',
+
+                    'Ajouter Staff' => 'app_staff_new',
+                    'Modifier Staff' => 'app_staff_edit',
+                    'Afficher Staffs' => 'app_staff_index',
+                    'Fiche Staff' => 'app_staff_show',
+                    'Supprimer Staff' => 'app_staff_delete',
                     
                     'Ajouter Parent' => 'app_supervisor_new',
                     'Modifier Parent' => 'app_supervisor_edit',

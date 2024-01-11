@@ -1,4 +1,154 @@
 {{ form_start(form) }}
+{% set currentSection = sections[0] %}
+{% set currentCategory = currentSection.niveaux[0] %}
+
+{% set currentSection2 = sections[0] %}
+{% set currentCategory2 = currentSection2.niveaux[0] %}
+<script>
+ var sections = []
+ {% for option in sections %}
+    sections.push({ 
+        nom : "{{ option.nom }}",
+        id : {{ option.id }},
+        niveaux : [
+            {% for niveau in option.niveaux %}
+            { 
+                nom : "{{ niveau.nom }}",
+                id : {{ niveau.id }},
+                equipes : [
+                    {% for equipe in niveau.equipes %}
+                    {
+                        nom : "{{ equipe.nom }}",
+                        id : {{ equipe.id }},
+                    },
+                    {% endfor%}
+                ]
+            },
+            {% endfor%}
+        ]
+        })
+{% endfor %}
+var currentSection = sections[0]
+var currentCategory = currentSection.niveaux[0]
+
+var currentSection2 = sections[0]
+var currentCategory2 = currentSection2.niveaux[0]
+
+console.log(sections)
+function handleSectionChange(selectElement) {
+    currentSection = sections[selectElement.value];
+    currentCategory = currentSection.niveaux[0];
+    updateCategoryOptions(currentSection.niveaux);
+    updateEquipeOptions(currentCategory.equipes);
+
+
+    // You can perform additional actions here based on the selected option.
+    // For example, update the UI, make an AJAX request, etc.
+}
+function handleSection2Change(selectElement) {
+    currentSection2 = sections[selectElement.value];
+    currentCategory2 = currentSection2.niveaux[0];
+    updateCategory2Options(currentSection2.niveaux);
+    updateEquipe2Options(currentCategory2.equipes);
+
+
+    // You can perform additional actions here based on the selected option.
+    // For example, update the UI, make an AJAX request, etc.
+}
+
+function handleCategoryChange(selectElement) {
+    console.log(selectElement.value)
+    currentCategory = currentSection.niveaux[selectElement.value];
+    var equipesItem = document.getElementById('adherant_equipeid')
+    updateEquipeOptions(currentCategory.equipes);
+
+    // You can perform additional actions here based on the selected option.
+    // For example, update the UI, make an AJAX request, etc.
+}
+function handleCategory2Change(selectElement) {
+    console.log(selectElement.value)
+    currentCategory2 = currentSection2.niveaux[selectElement.value];
+    var equipesItem = document.getElementById('adherant_equipe2id')
+    updateEquipe2Options(currentCategory2.equipes);
+
+    // You can perform additional actions here based on the selected option.
+    // For example, update the UI, make an AJAX request, etc.
+}
+
+function updateCategoryOptions( newOptions) {
+    // Clear existing options
+    let selectElement = document.getElementById('niveaux')
+    selectElement.innerHTML = '';
+    if(newOptions.length == 0) {
+        newOptions.push({
+            value: "-1",
+            nom: "Choisir une catégorie" 
+        })
+    }
+    // Add new options
+    newOptions.forEach(function(option,index) {
+        var optionElement = document.createElement('option');
+        optionElement.value = index;
+        optionElement.text = option.nom;
+        selectElement.add(optionElement);
+    });
+}
+function updateCategory2Options( newOptions) {
+    // Clear existing options
+    let selectElement = document.getElementById('niveaux2')
+    selectElement.innerHTML = '';
+    if(newOptions.length == 0) {
+        newOptions.push({
+            value: "-1",
+            nom: "Choisir une catégorie" 
+        })
+    }
+    // Add new options
+    newOptions.forEach(function(option,index) {
+        var optionElement = document.createElement('option');
+        optionElement.value = index;
+        optionElement.text = option.nom;
+        selectElement.add(optionElement);
+    });
+}
+
+function updateEquipeOptions( newOptions) {
+    // Clear existing options
+    let selectElement = document.getElementById('adherant_equipeid')
+    selectElement.innerHTML = '';
+    if(newOptions.length == 0) {
+        newOptions.push({
+            value: "-1",
+            nom: "Choisir une équipe" 
+        })
+    }
+    // Add new options
+    newOptions.forEach(function(option) {
+        var optionElement = document.createElement('option');
+        optionElement.value = option.id;
+        optionElement.text = option.nom;
+        selectElement.add(optionElement);
+    });
+}
+function updateEquipe2Options( newOptions) {
+    // Clear existing options
+    let selectElement = document.getElementById('adherant_equipe2id')
+    selectElement.innerHTML = '';
+    if(newOptions.length == 0) {
+        newOptions.push({
+            value: "-1",
+            nom: "Choisir une équipe" 
+        })
+    }
+    // Add new options
+    newOptions.forEach(function(option) {
+        var optionElement = document.createElement('option');
+        optionElement.value = option.id;
+        optionElement.text = option.nom;
+        selectElement.add(optionElement);
+    });
+}
+</script>
 <div class="row">
     <div class="col-xl-4">
         <div class="card mb-4">
@@ -126,19 +276,77 @@
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
-                        {{ form_label(form.equipeid, 'Niveau', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                    <div class="col-md-4">
+                        
+                        {{ form_label(form.equipeid, 'Section', {'label_attr':{'class':'small mb-1' }}) }}                                  
+                        <select onchange="handleSectionChange(this)" class="form-control">
+                            <option value="-1">
+                                Choisir une Section
+                            </option>
+                        {% for index,option in sections %}
+                            <option value="{{ index }}" >
+                                {{ option.nom }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.equipeid, 'Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                  
+                        <select id="niveaux" onchange="handleCategoryChange(this)" class="form-control">
+                            <option value="-1">
+                                Choisir une Categorie
+                            </option>
+                        {% for index,option in currentSection.niveaux %}
+                            <option value="{{ index }}" >
+                                {{ option.nom }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.equipeid, 'Niveau', {'label_attr':{'class':'small mb-1' }}) }}                                  
                         {{ form_widget(form.equipeid, {'attr':{'class':'form-control' }}) }}                               
+
                     </div>
                     <div class="invalid-feedback">
                         {{ form_errors(form.equipeid) }}
                     </div>
-                    <div class="col-md-6">
-                        {{ form_label(form.equipe2id, 'Deuxiéme Niveau (Optionnel)', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                </div>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-4">
+                        
+                        {{ form_label(form.equipe2id, 'Deuxiéme Section', {'label_attr':{'class':'small mb-1' }}) }}                                  
+                        <select onchange="handleSection2Change(this)" class="form-control">
+                            <option value="-1">
+                                Choisir une Section
+                            </option>
+                        {% for index,option in sections %}
+                            <option value="{{ index }}" >
+                                {{ option.nom }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.equipe2id, 'Deuxiéme Catégorie', {'label_attr':{'class':'small mb-1' }}) }}                                  
+                        <select id="niveaux2" onchange="handleCategory2Change(this)" class="form-control">
+                            <option value="-1">
+                                Choisir une Categorie
+                            </option>
+                        {% for index,option in currentSection2.niveaux %}
+                            <option value="{{ index }}" >
+                                {{ option.nom }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.equipe2id, 'Deuxiéme Niveau', {'label_attr':{'class':'small mb-1' }}) }}                                  
                         {{ form_widget(form.equipe2id, {'attr':{'class':'form-control' }}) }}                               
                     </div>
                     <div class="invalid-feedback">
-                        {{ form_errors(form.equipe2id) }}
+                        {{ form_errors(form.equipeid) }}
                     </div>
                 </div>
                 {% if app.user.roles['ROLE_MASTER'] is defined %}
@@ -197,7 +405,7 @@
                 </div>
                 <hr>
 
-                <h6 onclick="toggleFormMenu('ficheParent1')">Nouvel Parent <i data-feather="chevron-down"> </i></h6>
+                <h6 onclick="toggleFormMenu('ficheParent1')">Nouvel Parent <i data-feather="chevron-right" id="ficheParent1-icon"> </i></h6>
 
                 <div id="ficheParent1" class="formMenu">
 
@@ -271,7 +479,7 @@
                     </div>
                 </div>
                 <hr>
-                <h6 onclick="toggleFormMenu('ficheParent2')">Nouvel Deuxiéme Parent <i data-feather="chevron-down"> </i></h6>
+                <h6 onclick="toggleFormMenu('ficheParent2')">Nouvel Deuxiéme Parent <i data-feather="chevron-right" id="ficheParent2-icon"> </i></h6>
 
                 <div id="ficheParent2" class="formMenu">
                     

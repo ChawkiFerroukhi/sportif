@@ -1,0 +1,134 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Fiche Niveau                                          
+            </div>
+            <div class="card-body">
+                <div hidden>
+                    {{ form_widget(form.nom, {'attr':{'class':'form-control' }}) }} 
+
+                    {{ form_widget(form.coach_nom, {'attr':{'class':'form-control' }}) }} 
+                    {{ form_widget(form.coach_prenom, {'attr':{'class':'form-control' }}) }}  
+                    {{ form_widget(form.coach_numTel, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.coach_adresse, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.coach_cin, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.coach_Email, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.coach_password, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.coach_ref, {'attr':{'class':'form-control' }}) }}
+                    {{ form_widget(form.coachid, {'attr':{'class':'form-control' }}) }} 
+
+                    {{ form_widget(form.doctor_nom, {'attr':{'class':'form-control' }}) }} 
+                    {{ form_widget(form.doctor_prenom, {'attr':{'class':'form-control' }}) }}  
+                    {{ form_widget(form.doctor_numTel, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.doctor_adresse, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.doctor_cin, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.doctor_Email, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.doctor_password, {'attr':{'class':'form-control' }}) }}                               
+                    {{ form_widget(form.doctor_ref, {'attr':{'class':'form-control' }}) }}
+                    {{ form_widget(form.doctorid, {'attr':{'class':'form-control' }}) }} 
+
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-12">
+                        {{ form_label(form.staffid, 'Entaîneur', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                        {{ form_widget(form.staffid, {'attr':{'class':'form-control' }}) }}                               
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.staffid) }}
+                    </div>
+                </div>
+
+                <hr>
+                <h6 onclick="toggleFormMenu('ficheStaff')">Nouvel Staff <i data-feather="chevron-right" id="ficheStaff-icon"> </i></h6>
+
+                <div id="ficheStaff" class="formMenu">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.staff_nom, 'Nom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_nom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.staff_prenom, 'Prénom', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_prenom, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_prenom) }}
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.staff_poste, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_poste, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_poste) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            {{ form_label(form.staff_numTel, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_numTel, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_numTel) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(form.staff_adresse, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_adresse, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_adresse) }}
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.staff_cin, null, {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_cin, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_cin) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            {{ form_label(form.staff_Email, 'Email', {'label_attr':{'class':'small mb-1' }}) }}                                   
+                            {{ form_widget(form.staff_Email, {'attr':{'class':'form-control' }}) }}                               
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_Email) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">     
+                            {{ form_label(form.staff_ref, 'Reférence', {'label_attr':{'class':'small mb-1' }}) }}                           
+                            {{ form_widget(form.staff_ref, {'attr':{'class':'form-control' }}) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_ref) }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">                                
+                            {{ form_widget(form.staff_password) }}  
+                        </div>                            
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.staff_password) }}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button class="btn btn-outline-primary">
+                        {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
