@@ -110,7 +110,7 @@ class AdherantType extends AbstractType
             ])
             ->add('supervisor_ref', TextType::class, [
                 'required' => false,
-                'label' => 'Reférence',
+                'label' => 'Référence',
                 'mapped' => false,
             ])
             ->add('supervisor_nom', TextType::class, [
@@ -162,7 +162,7 @@ class AdherantType extends AbstractType
             ])
             ->add('supervisor2_ref', TextType::class, [
                 'required' => false,
-                'label' => 'Reférence',
+                'label' => 'Référence',
                 'mapped' => false,
             ])
             ->add('supervisor2_nom', TextType::class, [

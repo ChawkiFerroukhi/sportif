@@ -25,7 +25,7 @@ class PaymentType extends AbstractType
             ])
             ->add('mode',ChoiceType::class,[
                 'choices' => [
-                    'Cheque' => 'Cheque',
+                    'Chèque' => 'Chèque',
                     'Virement' => 'Virement',
                     'En Ligne' => 'En Ligne',
                     'Cash' => 'Cash',

@@ -68,7 +68,7 @@ class IncomeController extends AbstractController
     {
         $usr = $this->getUser();
         if (isset($user->getRoles()['ROLE_ADHERANT']) ) {
-            if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId()) {
+            if($user->getId() != $usr->getId() && $usr->getId() != $user->getSupervisorid()->getId() && $usr->getId() != $user->getSupervisor2id()->getId() && !isset($usr->getRoles()['ROLE_MASTER']) && !isset($usr->getRoles()['app_income_index'])) {
                 if($user->getSupervisor2id()!= null) {
                     if($user->getSupervisor2id()!=$usr->getId()) {
                         $this->user = $usr;
