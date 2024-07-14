@@ -11,7 +11,7 @@ class UserChecker implements UserCheckerInterface
     public function checkPreAuth(UserInterface $user)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.igm-s.tech/application/api/'.$_ENV['APP_SECRET']);
+        curl_setopt($ch, CURLOPT_URL, 'https://api.mbm-lab.com/application/api/'.$_ENV['APP_SECRET']);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
