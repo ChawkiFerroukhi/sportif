@@ -58,10 +58,10 @@ class SectionController extends AbstractController
             $this->user = $usr;
             return $this->redirectToRoute('app_home_access_denied', [], Response::HTTP_SEE_OTHER);
         }
-        if($club->getNbSections() >= count($club->getSections())) {
-            $this->user = $usr;
-            return $this->redirectToRoute('app_home_limit_reached', [], Response::HTTP_SEE_OTHER);
-        }
+        // if($club->getNbSections() >= count($club->getSections())) {
+            // $this->user = $usr;
+            // return $this->redirectToRoute('app_home_limit_reached', [], Response::HTTP_SEE_OTHER);
+        // }
         $section = new Section();
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
